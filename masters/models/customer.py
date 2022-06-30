@@ -6,6 +6,7 @@ class Customer(models.Model):
     firm = models.CharField(max_length=64, blank=True)
     pan = models.CharField(max_length=64, blank=True)
     gst = models.CharField(max_length=64, blank=True)
+    aadhar = models.CharField(max_length=64, blank=True)
     contact = models.CharField(max_length=64, blank=True)
     email = models.EmailField(blank=True)
     address = models.TextField(blank=True)
