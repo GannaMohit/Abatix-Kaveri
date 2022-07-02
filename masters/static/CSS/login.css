@@ -1,0 +1,135 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+
+*{
+  padding: 0px;
+}
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0px;
+  background: #E5E9EF;
+}
+
+#bg-box {
+  position: absolute;
+  width: 37.5vw;
+  height: 66.67vh;
+  left: 59.375vw;
+  top: 16.67vh;
+  background: #FFFFFF;
+  border-radius: 1.39vh;
+}
+
+#logo {
+  position: absolute;
+  width: 56.25vw;
+  height: 100vh;
+  left: 0vw;
+  top: 0vh;
+  background: #A44B85;
+}
+
+#logo-text {
+  position: absolute;
+  width: 37.5vw;
+  height: 25.675vh;
+  top: 37.1625vh;
+  left: 9.375vw;
+}
+
+#username_text {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  width: 28.125vw;
+  height: 5.56vh;
+  left: 64.0625vw;
+  top: 25vh;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1.40625vw;
+  color: #2D2D2D;
+}
+
+#id_username {
+  position: absolute;
+  width: 28.125vw;
+  height: 8.33vh;
+  left: 64.0625vw;
+  top: 30.26vh;
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 0.859375vw;
+  border: 1px solid #000000;
+  box-sizing: border-box;
+  border-radius: 0.78125vw;
+  padding: 1%;
+}
+
+#password_text{
+  position: absolute;
+  display: flex;
+  align-items: center;
+  width: 28.125vw;
+  height: 5.56vh;
+  left: 64.0625vw;
+  top: 44.44vh;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 1.40625vw;
+  color: #2D2D2D;
+}
+
+#id_password{
+  position: absolute;
+  width: 28.125vw;
+  height: 8.33vh;
+  left: 64.0625vw;
+  top: 50vh;
+  font-family: "Inter";
+  font-weight: 400;
+  font-size: 0.859375vw;
+  border: 1px solid #000000;
+  box-sizing: border-box;
+  border-radius: 0.78125vw;
+  padding: 1%;
+}
+
+#login_button{
+  position: absolute;
+  width: 28.125vw;
+  height: 8.33vh;
+  left: 64.0625vw;
+  top: 66.67vh;
+  background: #A44B85;
+  border: 2px solid #A44B85;
+  box-sizing: border-box;
+  border-radius: 2.34375vw;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 2.03125vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FFFFFF;
+}
+
+#error {
+  position: absolute;
+  width: 28.125vw;
+  height: 8.33vh;
+  left: 64.0625vw;
+  top: 75vh;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 1.40625vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #FF0000;
+}
