@@ -1,0 +1,64 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+
+*{
+  padding: 0px;
+}
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0px;
+  background: #E5E9EF;
+}
+
+#logo {
+  position: absolute;
+  width: 56.25vw;
+  height: 100vh;
+  left: 0vw;
+  top: 0vh;
+  background: #A44B85;
+}
+
+#logo-text {
+  position: absolute;
+  width: 37.5vw;
+  height: 25.675vh;
+  top: 37.1625vh;
+  left: 9.375vw;
+}
+
+ul {
+  position: absolute;
+  width: 31.25vw;
+  height: 77.78vh;
+  left: 62.5vw;
+  top: 11.11vh;
+  margin: 0;
+}
+
+li {
+  list-style: none;
+  width: 31.25vw;
+  height: 11.11vh;
+  margin-bottom: 5.56vh;
+}
+
+button {
+  border: none;
+  width: 31.25vw;
+  height: 11.11vh;
+  background: #2D2D2D;
+  border-radius: 0.78125vw;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 2.03125vw;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+a {
+  text-decoration: none;
+}
