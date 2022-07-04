@@ -1,0 +1,209 @@
+{% extends "masters/layout.html" %}
+
+{% block title %}Stock View{% endblock %}
+
+{% block link %}
+  <link rel="stylesheet" href="{% static 'CSS/product.css' %}">
+  <script src="{% static 'CSS/product.js' %}" charset="utf-8"></script>
+{% endblock %}
+
+{% block body %}
+  <span class="inner-text">1. Tag Details</span><!--
+  --><span class="inner-text">2. Metal Details</span><!--
+  --><span class="inner-text">3. Product Details</span><!--
+  --><span class="inner-text">4. Making Details</span>
+  <div class="inner-box" style="margin-left: 3.125vw;">
+    <table class="first-row-tables">
+      <tr>
+        <td>Product ID</td>
+        <td>{{ product.id }}</td>
+      </tr>
+      <tr>
+        <td>Purchase Date</td>
+        <td>{{ product.purchase_date }}</td>
+      </tr>
+      <tr>
+        <td>Lot No.</td>
+        <td>{{ product.lot_number }}</td>
+      </tr>
+      <tr>
+        <td>Jilaba I.D.</td>
+        <td>{{ product.old_id }}</td>
+      </tr>
+      <tr>
+        <td>Register</td>
+        <td>{{ product.register_id }}</td>
+      </tr>
+      <tr>
+        <td>Design Code</td>
+        <td>{{ product.design_code }}</td>
+      </tr>
+    </table>
+    <div class="divider" id="divider-1">
+    </div>
+  </div><!--
+  --><div class="inner-box">
+    <table class="first-row-tables">
+      <tr>
+        <td>Metal</td>
+        <td>{{ product.metal.metal }}</td>
+      </tr>
+      <tr>
+        <td>Purity</td>
+        <td>{{ product.purity.purity }}</td>
+      </tr>
+      <tr>
+        <td>Type</td>
+        <td>{{ product.type.type }}</td>
+      </tr>
+      <tr>
+        <td>Category</td>
+        <td>{{ product.category.category }}</td>
+      </tr>
+      <tr>
+        <td style="padding-bottom: 8.33vh;">Description</td>
+        <td style="height: 5.56vh; padding-bottom: 5.56vh;">{{ product.description }}</td>
+      </tr>
+    </table>
+    <div class="divider" id="divider-2">
+    </div>
+  </div><!--
+  --><div class="inner-box">
+    <table class="first-row-tables">
+      <tr>
+        <td>Vendor Code</td>
+        <td>{{ product.vendor_id }}</td>
+      </tr>
+      <tr>
+        <td>Pieces</td>
+        <td>{{ product.pieces }}</td>
+      </tr>
+      <tr>
+        <td>Gross Weight</td>
+        <td>{{ product.gross_weight }}</td>
+      </tr>
+      <tr>
+        <td>Studding</td>
+        <td>{{ product.studding_weight }}</td>
+      </tr>
+      <tr>
+        <td>Less Weight</td>
+        <td>{{product.less_weight }}</td>
+      </tr>
+      <tr>
+        <td>Net Weight</td>
+        <td>{{ product.net_weight }}</td>
+      </tr>
+    </table>
+    <div class="divider" id="divider-3">
+    </div>
+  </div><!--
+  --><div class="inner-box">
+    <table class="first-row-tables">
+      <tr>
+        <td>Rate</td>
+        <td>{{ product.rate }}</td>
+      </tr>
+      <tr>
+        <td>Making Charges</td>
+        <td>{{ product.making_charges }}</td>
+      </tr>
+      <tr>
+        <td>Wastage</td>
+        <td>{{ product.wastage }}</td>
+      </tr>
+      <tr>
+        <td>M.R.P.</td>
+        <td>{{ product.mrp }}</td>
+      </tr>
+      <tr>
+        <td style="padding-bottom: 8.33vh;">Calculation</td>
+        <td style="padding-bottom: 8.33vh;">{{ product.calculation }}</td>
+      </tr>
+    </table>
+    <div class="divider" id="divider-4">
+    </div>
+  </div>
+  <span class="inner-text">5. Studding Details</span>
+  <div class="second-row-boxes">
+    <table class="second-row-tables-thead">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Type</th>
+          <th>Less</th>
+          <th>Colour</th>
+          <th>Shape</th>
+          <th>Quantity</th>
+          <th>Weight</th>
+          <th>Rate</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+    </table>
+    <table class="second-row-tables">
+      <tbody>
+        {% for stud in product.studs %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ stud.type }}</td>
+            <td>{% if stud.less %} {{ "Yes" }} {% else %} {{ "No" }} {% endif %}</td>
+            <td>{{ stud.colour }}</td>
+            <td>{{ stud.shape }}</td>
+            <td>{{ stud.quantity }}</td>
+            <td>{{ stud.weight stud.unit.symbol</td>
+            <td>{{ stud.rate }}</td>
+            <td>{{ stud.value }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<form action="<!-- TODO: Add link to product new -->" method="post">
+  <button id="product-new" type="submit" name="product_new">New</button>
+</form>
+
+<form action="<!-- TODO: Add link to product edit -->" method="post">
+  <button id="product-edit" type="submit" name="product_edit">Edit</button>
+</form>
+
+<form action="<!-- TODO: Add link to print tag -->" method="post">
+  <button id="print-tag" type="submit" name="print_tag">Print Tag</button>
+</form>
+
+<div id="bottom-nav-bar">
+  <span class="bottom-nav-background"></span>
+  <form action="<!-- TODO: Add link to first product -->" method="post">
+    <button id = "first" type="submit" name="first"
+    <!-- TODO: Disable if already first -->
+    >First</button>
+  </form>
+
+  <form action="<!-- TODO: Add link to previous product -->" method="post">
+    <button id = "previous" type="submit" name="previous"
+     <!-- TODO: Disable if no previous -->
+    >&#60; Prev</button>
+  </form>
+
+  <form action="<!-- TODO: Add link to 'goto' product-->" method="post">
+    <input id = "id" type="number" name="id" value="{{ product.id }}" min="1" max="<!-- TODO: Last product value -->" required oninput="validateID(this, '<!-- TODO: Add link to product ajax -->')" onclick="this.select()">
+  </form>
+  <span id = "slash">/</span>
+  <form action="" method="get">
+    <input id = "last-id" type="number" name="last-id" value="<!-- TODO: Last product value -->" disabled>
+  </form>
+
+  <form action="<!-- TODO: Add link to next product -->" method="post">
+    <button id = "next" type="submit" name="next"
+    <!-- TODO: Disbale if last -->
+    >Next &#62;</button>
+  </form>
+  <form action="<!-- TODO: Add link to last product -->" method="post">
+    <button id = "last" type="submit" name="last"
+    <!-- TODO: Disbale if last -->
+    >Last</button>
+  </form>
+</div>
+{% endblock %}
