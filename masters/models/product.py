@@ -43,7 +43,7 @@ class Stud_Type(models.Model):
     abbreviation = models.CharField(max_length=16, blank=True)
 
     def __str__(self):
-        return stud_type
+        return type
 
 class Unit(models.Model):
     unit = models.CharField(max_length=64, unique=True)

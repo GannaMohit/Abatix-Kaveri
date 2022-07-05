@@ -10,13 +10,16 @@ class GST_State(models.Model):
 
 class GST_Rate(models.Model):
     type = models.CharField(max_length=64, unique=True)
-    percentage = models.DecimalField(max_digits=16, decimal_places=2)
+    percentage = models.DecimalField(max_digits=8, decimal_places=2)
+
+    def __str__(self):
+        return f"{type}: {percentage}%"
 
 class HSN(models.Model):
     code = models.IntegerField()
-    sgst = models.DecimalField(max_digits=16, decimal_places=2)
-    cgst = models.DecimalField(max_digits=16, decimal_places=2)
-    igst = models.DecimalField(max_digits=16, decimal_places=2)
+    sgst = models.DecimalField(max_digits=8, decimal_places=2)
+    cgst = models.DecimalField(max_digits=8, decimal_places=2)
+    igst = models.DecimalField(max_digits=8, decimal_places=2)
     description = models.TextField(blank=True)
 
     def __str__(self):

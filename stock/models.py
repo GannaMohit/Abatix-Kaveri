@@ -8,14 +8,14 @@ class Vendor(models.Model):
     firm = models.CharField(max_length=64, blank=True)
     contact = models.CharField(max_length=16, blank=True)
     email = models.EmailField(blank=True)
-    old_id = models.IntegerField(blank=True)
+    old_id = models.CharField(max_length=16, blank=True)
     old_description = models.CharField(max_length=64, blank=True)
 
     def __str__(self):
         return name
 
 class Product(models.Model):
-    register_number = models.IntegerField(blank=True)
+    register_id = models.IntegerField(blank=True, null=True)
     metal = models.ForeignKey(Metal, on_delete=models.CASCADE, related_name="products")
     purity = models.ForeignKey(Purity, on_delete=models.CASCADE, related_name="products")
     type = models.ForeignKey(Type, on_delete=models.CASCADE, related_name="products")
@@ -31,16 +31,16 @@ class Product(models.Model):
     ("Wastage", "Wastage"),
     ("MRP", "MRP")
     ])
-    making_charges = models.DecimalField(max_digits=16, decimal_places=2, blank=True)
-    wastage = models.DecimalField(max_digits=16, decimal_places=2, blank=True)
-    mrp = models.DecimalField(max_digits=16, decimal_places=2, blank=True)
+    making_charges = models.DecimalField(max_digits=16, decimal_places=2, blank=True, null=True)
+    wastage = models.DecimalField(max_digits=16, decimal_places=2, blank=True, null=True)
+    mrp = models.DecimalField(max_digits=16, decimal_places=2, blank=True, null=True)
 
     description = models.TextField(blank=True)
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE, related_name="products")
     purchase_date = models.DateField(blank=True)
     lot_number = models.IntegerField(blank=True, null=True)
     design_code = models.CharField(max_length=32, blank=True)
-    old_id = models.IntegerField(blank=True, null=True)
+    old_id = models.CharField(max_length=16, blank=True)
 
     invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE, related_name="products", blank=True, null=True)
     home_sale = models.ForeignKey(Home_Sale, on_delete=models.CASCADE, related_name="products", blank=True, null=True)
