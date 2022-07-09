@@ -1,0 +1,91 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter&display=swap");
+
+*{
+  padding: 0px;
+}
+
+html, body {
+  width: 100vw;
+  height: 100vh;
+  margin: 0px;
+  background: #E5E9EF;
+}
+
+nav {
+  position: absolute;
+  width: 6.25vw;
+  height: 100vh;
+  background: #A44B85;
+}
+
+#nav-ul {
+  position: absolute;
+  left: 2.34375vw;
+  top: 19.44vh;
+  width: 1.5625vw;
+  height: 50vh;
+  margin: 0;
+  text-align: center;
+}
+
+.nav-li {
+  width: 1.5625vw;
+  height: 2.78vh;
+  margin-bottom: 5.56vh;
+  list-style: none;
+  color: #FFFFFF;
+}
+
+.nav-li input, #nav-avatar input, #nav-logout input {
+  width: 1.5625vw;
+  height: 2.78vh;
+}
+
+#nav-line {
+  position: absolute;
+  width: 3.125vw;
+  height: 0vh;
+  left: 1.5625vw;
+  top: 83.33vh;
+  border: 0.28vh solid #FFFFFF;
+}
+
+#nav-avatar {
+  position: absolute;
+  left: 2.34375vw;
+  top: 86.11vh;
+  width: 1.5625vw;
+  height: 2.78vh;
+  color: #FFFFFF;
+  text-align: center;
+}
+
+#nav-logout {
+  position: absolute;
+  left: 2.34375vw;
+  top: 94.44vh;
+  width: 1.5625vw;
+  height: 2.78vh;
+  color: #FFFFFF;
+  text-align: center;
+}
+
+#outer-box {
+  position: absolute;
+  width: 90.625vw;
+  height: 83.33vh;
+  left: 7.8125vw;
+  top: 2.78vh;
+  background: #FFFFFF;
+  border-radius: 1.389vh;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}

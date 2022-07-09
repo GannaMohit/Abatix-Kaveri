@@ -5,7 +5,7 @@ function validateID(element, url) {
   fetch(url, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)})
   .then(response => response.json())
   .then(function(product) {
-    if (product['sold'] === 1) {
+    if (product['sold']) {
       element.setCustomValidity("The product is already sold.");
       element.reportValidity();
       return;

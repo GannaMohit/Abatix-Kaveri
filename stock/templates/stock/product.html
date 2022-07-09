@@ -1,4 +1,5 @@
 {% extends "masters/layout.html" %}
+{% load static %}
 
 {% block title %}Stock View{% endblock %}
 
@@ -72,7 +73,7 @@
     <table class="first-row-tables">
       <tr>
         <td>Vendor Code</td>
-        <td>{{ product.vendor_id }}</td>
+        <td>{{ product.vendor.id }}</td>
       </tr>
       <tr>
         <td>Pieces</td>
@@ -143,11 +144,11 @@
     </table>
     <table class="second-row-tables">
       <tbody>
-        {% for stud in product.studs %}
+        {% for stud in product.studs.all %}
           <tr>
             <td>{{ forloop.counter }}</td>
             <td>{{ stud.type }}</td>
-            <td>{% if stud.less %} {{ "Yes" }} {% else %} {{ "No" }} {% endif %}</td>
+            <td>stud.less|yesno</td>
             <td>{{ stud.colour }}</td>
             <td>{{ stud.shape }}</td>
             <td>{{ stud.quantity }}</td>
@@ -175,34 +176,40 @@
 
 <div id="bottom-nav-bar">
   <span class="bottom-nav-background"></span>
-  <form action="<!-- TODO: Add link to first product -->" method="post">
+  <form action="{% url 'product_detail' pk=first_id %}" method="post">
+    {% csrf_token %}
     <button id = "first" type="submit" name="first"
-    <!-- TODO: Disable if already first -->
+    {% if product.id == first_id %} disabled {% endif %}
     >First</button>
   </form>
 
-  <form action="<!-- TODO: Add link to previous product -->" method="post">
+  <form action="{% url 'product_detail' product.id|add:'-1' %}" method="post">
+    {% csrf_token %}
     <button id = "previous" type="submit" name="previous"
-     <!-- TODO: Disable if no previous -->
+     {% if product.id == first_id %} disabled {% endif %}
     >&#60; Prev</button>
   </form>
 
-  <form action="<!-- TODO: Add link to 'goto' product-->" method="post">
+  <form action="{% url 'product_detail' pk=0 %}" method="post">
+    {% csrf_token %}
     <input id = "id" type="number" name="id" value="{{ product.id }}" min="1" max="<!-- TODO: Last product value -->" required oninput="validateID(this, '<!-- TODO: Add link to product ajax -->')" onclick="this.select()">
   </form>
   <span id = "slash">/</span>
   <form action="" method="get">
-    <input id = "last-id" type="number" name="last-id" value="<!-- TODO: Last product value -->" disabled>
+    {% csrf_token %}
+    <input id = "last-id" type="number" name="last-id" value="{{ last_id }}" disabled>
   </form>
 
-  <form action="<!-- TODO: Add link to next product -->" method="post">
+  <form action="{% url 'product_detail' pk=product.id|add:'1' %}" method="post">
+    {% csrf_token %}
     <button id = "next" type="submit" name="next"
-    <!-- TODO: Disbale if last -->
+    {% if product.id == last_id %} disabled {% endif %}
     >Next &#62;</button>
   </form>
-  <form action="<!-- TODO: Add link to last product -->" method="post">
+  <form action="{% url 'product_detail' pk=last_id %}" method="post">
+    {% csrf_token %}
     <button id = "last" type="submit" name="last"
-    <!-- TODO: Disbale if last -->
+    {% if product.id == last_id %} disabled {% endif %}
     >Last</button>
   </form>
 </div>

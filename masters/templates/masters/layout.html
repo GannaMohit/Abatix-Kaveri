@@ -13,17 +13,17 @@
   <body>
     <nav>
       <ul id = "nav-ul">
-        <li class="nav-li"><a href="{% url 'home' %}"><img src="{% static SVG/Home.svg %}" title="Home"></a></li>
-        <li class="nav-li"><a href="<!-- TODO: Add link to dashboard -->"><img src="{% static SVG/Dashboard.svg %}" title="Dashboard"></a></li>
-        <li class="nav-li"><a href="<!-- TODO: Add link to product -->"><img src="{% static SVG/Stock.svg %}" title="Stock"></a></li>
-        <li class="nav-li"><a href="<!-- TODO: Add link to invoice -->"><img src="{% static SVG/Sales.svg %}" title="Sales"></a></li>
-        <li class="nav-li"><a href="<!-- TODO: Add link to voucher -->"><img src="{% static SVG/Vouchers.svg %}" title="Vouchers"></a></li>
-        <li class="nav-li"><a href="{% url 'admin:index' %}"><input type="image" src="{% static SVG/Settings.svg %}" title="Settings"></a></li>
+        <li class="nav-li"><a href="{% url 'home' %}"><img src="{% static 'SVG/Home.svg' %}" title="Home"></a></li>
+        <li class="nav-li"><a href="<!-- TODO: Add link to dashboard -->"><img src="{% static 'SVG/Dashboard.svg' %}" title="Dashboard"></a></li>
+        <li class="nav-li"><a href="{% url 'product_detail' pk=1 %}"><img src="{% static 'SVG/Stock.svg' %}" title="Stock"></a></li>
+        <li class="nav-li"><a href="<!-- TODO: Add link to invoice -->"><img src="{% static 'SVG/Sales.svg' %}" title="Sales"></a></li>
+        <li class="nav-li"><a href="<!-- TODO: Add link to voucher -->"><img src="{% static 'SVG/Vouchers.svg' %}" title="Vouchers"></a></li>
+        <li class="nav-li"><a href="{% url 'admin:index' %}"><input type="image" src="{% static 'SVG/Settings.svg' %}" title="Settings"></a></li>
       </ul>
 
       <div id = "nav-line"></div>
-      <span id = "nav-avatar"><img src="{% static SVG/Avatar.svg %}" title="Avatar"></span>
-      <span id = "nav-logout"><a href="<!-- TODO: Add link to logout -->"><img src="{% static SVG/Logout.svg %}" title="Logout"></a></span>
+      <span id = "nav-avatar"><img src="{% static 'SVG/Avatar.svg' %}" title="Avatar"></span>
+      <span id = "nav-logout"><a href="<!-- TODO: Add link to logout -->"><img src="{% static 'SVG/Logout.svg' %}" title="Logout"></a></span>
       <div id="highlight"></div>
     </nav>
     <div id="outer-box">
