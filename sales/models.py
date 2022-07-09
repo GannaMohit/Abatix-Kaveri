@@ -21,6 +21,12 @@ class Invoice(models.Model):
     def __str__(self):
         return f"{customer.name} ({date})"
 
+class Home_Sale(models.Model):
+    date = models.DateField()
+
+    def __str__(self):
+        return f"{date}"
+
 class Advance(models.Model):
     date = models.DateField()
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name="advances")
@@ -30,17 +36,10 @@ class Advance(models.Model):
     def __str__(self):
         return f"{customer.name} ({date})"
 
-class Home_Sale(models.Model):
-    date = models.DateField()
-
-    def __str__(self):
-        return f"{date}"
-
 class Untagged(models.Model):
     invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE, related_name="untagged")
     metal = models.ForeignKey(Metal, on_delete=models.CASCADE, related_name="untagged")
     purity = models.ForeignKey(Purity, on_delete=models.CASCADE, related_name="untagged")
-    # TODO: Confirm if type is to be included or not
     type = models.ForeignKey(Type, on_delete=models.CASCADE, related_name="untagged")
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="untagged")
     gross_weight = models.DecimalField(max_digits=16, decimal_places=3)
