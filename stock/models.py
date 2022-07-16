@@ -36,7 +36,7 @@ class Product(models.Model):
     mrp = models.DecimalField(max_digits=16, decimal_places=2, blank=True, null=True)
 
     description = models.TextField(blank=True)
-    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE, related_name="products")
+    vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE, related_name="products", blank=True, null=True)
     purchase_date = models.DateField(blank=True)
     lot_number = models.IntegerField(blank=True, null=True)
     design_code = models.CharField(max_length=32, blank=True)

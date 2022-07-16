@@ -92,6 +92,7 @@ def migrate_stock():
 
     products = db.execute("SELECT * FROM Products ORDER BY id").fetchall()
     for product in products:
+        # TODO: Take care of blank entries in the db.
         obj = Product(register_id= None if product['register_id'] == "" else product['register_id'],
                     metal=Metal.objects.get(pk=product['metal']),
                     purity_id=product['purity'], # TODO: Handle case for purity 0
@@ -107,56 +108,74 @@ def migrate_stock():
                     wastage= 0.0 if product['wastage'] == "" else float(product['wastage']),
                     mrp= 0.0 if product['mrp'] == "" else float(product['mrp']),
                     description=product['description'],
-                    vendor=Vendor.objects.get(pk=product['vendor_id']),
+                    vendor_id=product['vendor_id'],
                     purchase_date=product['purchase_date'],
                     lot_number=product['lot_number'],
                     design_code=product['design_code'],
                     old_id=product['old_id'],
                     sold=int(product['sold']) == 1)
         obj.save()
-        studs = db.execute("SELECT * FROM Product_Studs ORDER BY id").fetchall()
-        for stud in studs:
-            obj = Stud(product=Products.objects.get(pk=stud['product_id']),
-                        type=Stud_Type.objects.get(stud['stud_type']),
-                        less=int(stud['less']) == 1,
-                        colour=stud['colour'],
-                        shape=stud['shape'],
-                        quantity=stud['quantity'],
-                        weight=stud['weight'],
-                        unit=Unit.objects.get(stud['unit']),
-                        rate=stud['rate'],
-                        value=stud['value'])
-            obj.save()
+    studs = db.execute("SELECT * FROM Product_Studs ORDER BY id").fetchall()
+    for stud in studs:
+        obj = Stud(product=Product.objects.get(pk=stud['product_id']),
+                    type=Stud_Type.objects.get(pk=stud['type']),
+                    less=int(stud['less']) == 1,
+                    colour=stud['colour'],
+                    shape=stud['shape'],
+                    quantity=1 if stud['quantity'] == "" else stud["quantity"],
+                    weight=stud['weight'],
+                    unit=Unit.objects.get(pk=stud['unit']),
+                    rate=0.0 if stud['rate'] == "" else stud["rate"],
+                    value=0.0 if stud['value'] == "" else stud["value"])
+        obj.save()
 
 def migrate_invoice():
     invoices = db.execute("SELECT * FROM Bills ORDER BY id").fetchall()
     for invoice in invoices:
-        obj1 = Customer(name=invoice["name"]
+        obj1 = Customer(name=invoice["name"],
                     firm=invoice['firm'],
                     pan=invoice['pan'],
                     gst=invoice['gst'],
-                    aadhar=invoice['aadhar'],
+                    aadhar="",
                     contact=invoice['contact'],
                     email=invoice['email'],
                     address=invoice['address'],
                     pincode=invoice['pincode'],
                     city=invoice['city'],
                     state=invoice['state'],
-                    country=invoice['country'])
+                    country="India")
         obj1.save()
-        obj2 = Invoice(invoice_number=invoice["bill_number"]
+        obj2 = Invoice(invoice_number=invoice["bill_number"],
                     date=invoice['date'],
-                    gst_invoice=invoice['gst_invoice'],
+                    gst_invoice=invoice['gst_bill'],
                     gst_state=GST_State.objects.get(pk=invoice['gst_state']),
-                    subtotal=invoice['aadhar'],
-                    sgst=invoice['contact'],
-                    cgst=invoice['email'],
-                    igst=invoice['address'],
-                    tcs=invoice['pincode'],
+                    subtotal=invoice['subtotal'],
+                    sgst=invoice['sgst'],
+                    cgst=invoice['cgst'],
+                    igst=invoice['igst'],
+                    tcs=invoice['tcs'],
                     total=invoice['total'],
-                    customer=obj1
+                    customer=obj1,
                     rates=invoice['rates'])
         obj2.save()
+
+    invoice_untagged = db.execute("SELECT * FROM Bill_Untagged ORDER BY id").fetchall()
+    for product in invoice_untagged:
+        obj = Untagged(invoice=Invoice.objects.get(pk=product["bill_id"]),
+                    metal=Metal.objects.get(pk=product['metal']),
+                    purity_id=product['purity'],
+                    type_id=2,
+                    category=Category.objects.get(pk=product['category']),
+                    gross_weight=0.0 if product['gross_weight']=="" else product["gross_weight"],
+                    less_weight=0.0 if product['less_weight']=="" else product["less_weight"],
+                    net_weight=0.0 if product['net_weight']=="" else product["net_weight"])
+        obj.save()
+
+    invoice_products = db.execute("SELECT * FROM Bill_Products ORDER BY id").fetchall()
+    for invoice_product in invoice_products:
+        obj = Product.objects.get(pk=invoice_product["product_id"])
+        obj.invoice = Invoice.objects.get(pk=invoice_product["bill_id"])
+        obj.save()
 
 def migrate_home_sale():
     home_sales = db.execute("SELECT * FROM Home_Sales ORDER BY id").fetchall()
@@ -170,7 +189,122 @@ def migrate_home_sale():
         obj.home_sale = Home_Sale.objects.get(pk=home_sale_product["home_sale_id"])
         obj.save()
 
+def migrate_advance():
+    advances = db.execute("SELECT * FROM Advances ORDER BY id").fetchall()
+    for advance in advances:
+        obj1 = Customer(name=advance["name"],
+                    firm=advance['firm'],
+                    pan=advance['pan'],
+                    gst=advance['gst'],
+                    aadhar=advance['aadhar'],
+                    contact=advance['contact'],
+                    email=advance['email'],
+                    address=advance['address'],
+                    pincode=advance['pincode'],
+                    city=advance['city'],
+                    state=advance['state'],
+                    country=advance['country'])
+        obj1.save()
+        obj2 = Advance(date=advance['date'], customer=obj1)
+        obj2.save()
+
+    bill_advances = db.execute("SELECT * FROM Bill_Advances ORDER BY id").fetchall()
+    for bill_advance in bill_advances:
+        advance = Advance.objects.get(pk=bill_advance["advance_id"])
+        advance.invoice = Invoice.objects.get(pk=bill_advance["bill_id"])
+        advance.redeemed = True
+        advance.save()
+
+def migrate_payment():
+    payments = db.execute("SELECT * FROM Bill_Payments ORDER BY id")
+    for payment in payments:
+        obj = Payment(method=payment["method"],
+                    amount=payment["amount"],
+                    date=payment["date"],
+                    name=payment["name"],
+                    card_bank=payment["card_bank"],
+                    card_number=payment["card_number"],
+                    cheque_number=payment["cheque_number"],
+                    cheque_branch=payment["cheque_branch"],
+                    cheque_account_number=payment["cheque_account_number"],
+                    cheque_ifsc=payment["cheque_ifsc"],
+                    upi_vpa=payment["upi_vpa"],
+                    upi_mobile=payment["upi_mobile"],
+                    wire_account_number=payment["wire_account_number"],
+                    wire_utr=payment["wire_utr"],
+                    wire_bank=payment["wire_bank"],
+                    invoice=Invoice.objects.get(pk=payment["bill_id"]))
+        obj.save()
+
+        payments = db.execute("SELECT * FROM Advance_Payments ORDER BY id")
+        for payment in payments:
+            obj = Payment(method=payment["method"],
+                        amount=payment["amount"],
+                        date=payment["date"],
+                        name=payment["name"],
+                        card_bank=payment["card_bank"],
+                        card_number=payment["card_number"],
+                        cheque_number=payment["cheque_number"],
+                        cheque_branch=payment["cheque_branch"],
+                        cheque_account_number=payment["cheque_account_number"],
+                        cheque_ifsc=payment["cheque_ifsc"],
+                        upi_vpa=payment["upi_vpa"],
+                        upi_mobile=payment["upi_mobile"],
+                        wire_account_number=payment["wire_account_number"],
+                        wire_utr=payment["wire_utr"],
+                        wire_bank=payment["wire_bank"],
+                        advance=Advance.objects.get(pk=payment["advance_id"]))
+            obj.save()
+
+def migrate_vouchers():
+    vouchers = db.execute("SELECT * FROM Vouchers ORDER BY id").fetchall()
+    for voucher in vouchers:
+        obj1 = Customer(name=voucher["name"],
+                    firm=voucher['firm'],
+                    pan=voucher['pan'],
+                    gst=voucher['gst'],
+                    aadhar=voucher['aadhar'],
+                    contact=voucher['contact'],
+                    email=voucher['email'],
+                    address=voucher['address'],
+                    pincode=voucher['pincode'],
+                    city=voucher['city'],
+                    state=voucher['state'],
+                    country=voucher['country'])
+        obj1.save()
+        obj2 = Voucher(voucher_number=voucher["voucher_number"],
+                    type=voucher["type"],
+                    date=voucher["date"],
+                    gross_weight=voucher["gross_weight"],
+                    net_weight=voucher["net_weight"],
+                    pure_weight=voucher["pure_weight"],
+                    amount=voucher["amount"],
+                    customer=obj1)
+        obj2.save()
+
+    particulars = db.execute("SELECT * FROM Voucher_Particulars ORDER BY id").fetchall()
+    for particular in particulars:
+        obj = Particular(voucher=Voucher.objects.get(pk=particular["voucher_id"]),
+                        metal=Metal.objects.get(pk=particular["metal"]),
+                        purity=Purity.objects.get(pk=particular["purity"]),
+                        category=Category.objects.get(pk=particular["category"]),
+                        gross_weight=particular["gross_weight"],
+                        net_weight=particular["net_weight"],
+                        rate=particular["rate"],
+                        subtotal=particular['subtotal'],
+                        sgst=particular['sgst'],
+                        cgst=particular['cgst'],
+                        igst=particular['igst'],
+                        tcs=particular['tcs'],
+                        total=particular['total'])
+        obj.save()
+
 migrate_masters_gst()
 migrate_masters_product()
 migrate_masters_stud()
 migrate_stock()
+migrate_invoice()
+migrate_home_sale()
+migrate_advance()
+migrate_payment()
+migrate_vouchers()
