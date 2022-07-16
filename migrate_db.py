@@ -103,6 +103,7 @@ def migrate_stock():
                     studs_weight=product['studding'],
                     less_weight=product['less_weight'],
                     net_weight=product['net_weight'],
+                    rate=product['rate'],
                     calculation=product['calculation'],
                     making_charges= 0.0 if product['making_charges'] == "" else float(product['making_charges']),
                     wastage= 0.0 if product['wastage'] == "" else float(product['wastage']),

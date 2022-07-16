@@ -10,7 +10,7 @@ class Metal(models.Model):
     density = models.DecimalField(max_digits=16, decimal_places=2, blank=True, null=True)
 
     def __str__(self):
-        return metal
+        return self.metal
 
 class Purity(models.Model):
     purity = models.DecimalField(max_digits=16, decimal_places=2, unique=True)
@@ -18,7 +18,7 @@ class Purity(models.Model):
     display_name = models.CharField(max_length=32, blank=True)
 
     def __str__(self):
-        return purity
+        return self.purity
 
 class Type(models.Model):
     type = models.CharField(max_length=64, unique=True)
@@ -26,14 +26,14 @@ class Type(models.Model):
     abbreviation = models.CharField(max_length=16, blank=True)
 
     def __str__(self):
-        return type
+        return self.type
 
 class Category(models.Model):
     category = models.CharField(max_length=64, unique=True)
     abbreviation = models.CharField(max_length=16, blank=True)
 
     def __str__(self):
-        return category
+        return self.category
 
 class Stud_Type(models.Model):
     type = models.CharField(max_length=64, unique=True)
@@ -43,7 +43,7 @@ class Stud_Type(models.Model):
     abbreviation = models.CharField(max_length=16, blank=True)
 
     def __str__(self):
-        return type
+        return self.type
 
 class Unit(models.Model):
     unit = models.CharField(max_length=64, unique=True)
@@ -51,4 +51,4 @@ class Unit(models.Model):
     value_gram = models.DecimalField(max_digits=16, decimal_places=2)
 
     def __str__(self):
-        return unit
+        return self.unit

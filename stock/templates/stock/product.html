@@ -63,7 +63,7 @@
       </tr>
       <tr>
         <td style="padding-bottom: 8.33vh;">Description</td>
-        <td style="height: 5.56vh; padding-bottom: 5.56vh;">{{ product.description }}</td>
+        <td style="height: 5.56vh; padding-bottom: 5.56vh; vertical-align:top;">{{ product.description }}</td>
       </tr>
     </table>
     <div class="divider" id="divider-2">
@@ -85,7 +85,7 @@
       </tr>
       <tr>
         <td>Studding</td>
-        <td>{{ product.studding_weight }}</td>
+        <td>{{ product.studs_weight }}</td>
       </tr>
       <tr>
         <td>Less Weight</td>
@@ -148,11 +148,11 @@
           <tr>
             <td>{{ forloop.counter }}</td>
             <td>{{ stud.type }}</td>
-            <td>stud.less|yesno</td>
+            <td>{{ stud.less|yesno|title }}</td>
             <td>{{ stud.colour }}</td>
             <td>{{ stud.shape }}</td>
             <td>{{ stud.quantity }}</td>
-            <td>{{ stud.weight stud.unit.symbol</td>
+            <td>{{ stud.weight }} {{ stud.unit.symbol }}</td>
             <td>{{ stud.rate }}</td>
             <td>{{ stud.value }}</td>
           </tr>

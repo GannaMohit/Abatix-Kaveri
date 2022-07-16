@@ -26,6 +26,7 @@ class Product(models.Model):
     less_weight = models.DecimalField(max_digits=16, decimal_places=3)
     net_weight = models.DecimalField(max_digits=16, decimal_places=3)
 
+    rate = models.DecimalField(max_digits=16, decimal_places=2)
     calculation = models.CharField(max_length=32, choices=[
     ("Making_Charges", "Making_Charges"),
     ("Wastage", "Wastage"),
