@@ -5,7 +5,7 @@
 
 {% block link %}
   <link rel="stylesheet" href="{% static 'CSS/product.css' %}">
-  <script src="{% static 'CSS/product.js' %}" charset="utf-8"></script>
+  <script src="{% static 'JS/product.js' %}" charset="utf-8"></script>
 {% endblock %}
 
 {% block body %}
@@ -192,7 +192,7 @@
 
   <form action="{% url 'product_detail' pk=0 %}" method="post">
     {% csrf_token %}
-    <input id = "id" type="number" name="id" value="{{ product.id }}" min="1" max="<!-- TODO: Last product value -->" required oninput="validateID(this, '<!-- TODO: Add link to product ajax -->')" onclick="this.select()">
+    <input id = "id" type="number" name="id" value="{{ product.id }}" min="1" max="{{ last_id }}" required oninput="validateID(this, '{% url 'fetch_product' %}')" onclick="this.select()">
   </form>
   <span id = "slash">/</span>
   <form action="" method="get">
