@@ -145,13 +145,13 @@
       <table class="second-row-tables">
         {% for stud_formset in formset %}
         <tr>
-          <td onclick="changeValues(this)">forloop.counter</td>
-          <td><input type="text" value="" readonly>{{ stud_formset.type }}</td>
+          <td onclick="changeValues(this)">{{ forloop.counter }}</td>
+          <td><input type="text" value="{{ stud_formset.type.value }}" readonly>{{ stud_formset.type }}</td>
           <td>{{ stud_formset.less }}</td>
           <td>{{ stud_formset.colour }}</td>
           <td>{{ stud_formset.shape }}</td>
           <td>{{ stud_formset.quantity }}</td>
-          <td>{{ stud_formset.weight }}<input type="text" value="" readonly>{{ stud_formset.unit }}</td>
+          <td>{{ stud_formset.weight }}<input type="text" value="{{ stud_formset.unit.value }}" readonly>{{ stud_formset.unit }}</td>
           <td>{{ stud_formset.rate }}</td>
           <td>{{ stud_formset.value }}</td>
         </tr>

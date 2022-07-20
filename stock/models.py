@@ -1,6 +1,7 @@
 from django.db import models
 from masters.models import Metal, Purity, Type, Category, Stud_Type, Unit
 from sales.models import Invoice, Home_Sale
+from django.urls import reverse
 
 # Create your models here.
 class Vendor(models.Model):
@@ -49,6 +50,9 @@ class Product(models.Model):
 
     def __str__(self):
         return f"{purity.purity} {metal.metal} {category.category}"
+
+    def get_absolute_url(self):
+        return reverse('product_detail', kwargs={'pk' : self.pk})
 
 class Stud(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="studs")
