@@ -18,7 +18,7 @@ class Purity(models.Model):
     display_name = models.CharField(max_length=32, blank=True)
 
     def __str__(self):
-        return self.purity
+        return f"{self.purity}"
 
 class Type(models.Model):
     type = models.CharField(max_length=64, unique=True)
@@ -51,4 +51,4 @@ class Unit(models.Model):
     value_gram = models.DecimalField(max_digits=16, decimal_places=2)
 
     def __str__(self):
-        return self.unit
+        return self.symbol

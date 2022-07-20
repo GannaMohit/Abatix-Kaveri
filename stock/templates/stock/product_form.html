@@ -1,0 +1,195 @@
+{% extends "masters/layout.html" %}
+{% load static %}
+
+{% block title %} New Product {% endblock %}
+
+  {% block link %}
+  <link rel="stylesheet" href="{% static 'CSS/product_form.css' %}">
+  <script src="{% static 'JS/product_form.js' %}" charset="utf-8"></script>
+{% endblock %}
+
+{% block body %}
+  <form action="{% url 'product_create' %}" method="post" oninput="calculateLessWeight({{ units }})">
+    {% csrf_token %}
+    {{ formset.management_form }}
+    <span class="inner-text">1. Tag Details</span><!--
+    --><span class="inner-text">2. Metal Details</span><!--
+    --><span class="inner-text">3. Product Details</span><!--
+    --><span class="inner-text">4. Making Details</span>
+    <div class="inner-box" style="margin-left: 3.125vw;">
+      <table class="first-row-tables">
+        <tr>
+          <td>Product ID</td>
+          <td><input type="number" name="id" value="{{ last_id|add:'1' }}" readonly></td>
+        </tr>
+        <tr>
+          <td>Date</td>
+          <td>{{ form.purchase_date }}</td>
+        </tr>
+        <tr>
+          <td>Lot No.</td>
+          <td>{{ form.lot_number }}</td>
+        </tr>
+        <tr>
+          <td>Jilaba I.D.</td>
+          <td>{{ form.old_id }}</td>
+        </tr>
+        <tr>
+          <td>Register</td>
+          <td>{{ form.register_id }}</td>
+        </tr>
+        <tr>
+          <td>Design Code</td>
+          <td>{{ form.design_code }}</td>
+        </tr>
+      </table>
+    </div><!--
+    --><div class="inner-box">
+      <table class="first-row-tables">
+        <tr>
+          <td>Metal</td>
+          <td>{{ form.metal }}</td>
+        </tr>
+        <tr>
+          <td>Purity</td>
+          <td>{{ form.purity }}</td>
+        </tr>
+        <tr>
+          <td>Type</td>
+          <td>{{ form.type }}</td>
+        </tr>
+        <tr>
+          <td>Category</td>
+          <td>{{ form.category }}</td>
+        </tr>
+        <tr>
+          <td>Description</td>
+          <td>{{ form.description }}</td>
+        </tr>
+      </table>
+    </div><!--
+    --><div class="inner-box">
+      <table class="first-row-tables">
+        <tr>
+          <td>Vendor</td>
+          <td>{{ form.vendor }}</td>
+        </tr>
+        <tr>
+          <td>Pieces</td>
+          <td>{{ form.pieces }}</td>
+        </tr>
+        <tr>
+          <td>Gross Weight</td>
+          <td>{{ form.gross_weight }}</td>
+        </tr>
+        <tr>
+          <td>Studding</td>
+          <td>{{ form.studs_weight }}</td>
+        </tr>
+        <tr>
+          <td>Less Weight</td>
+          <td>{{ form.less_weight }}</td>
+        </tr>
+        <tr>
+          <td>Net Weight</td>
+          <td>{{ form.net_weight }}</td>
+        </tr>
+      </table>
+    </div><!--
+    --><div class="inner-box">
+      <table class="first-row-tables">
+        <tr>
+          <td>Rate</td>
+          <td>{{ form.rate }}</td>
+        </tr>
+        <tr>
+          <td>M.C.</td>
+          <td>{{ form.making_charges }}</td>
+        </tr>
+        <tr>
+          <td>Wastage</td>
+          <td>{{ form.wastage }}</td>
+        </tr>
+        <tr>
+          <td>M.R.P.</td>
+          <td>{{ form.mrp }}</td>
+        </tr>
+        <tr>
+          <td>Calculation</td>
+          <td>
+            <input type="radio" name="{{ form.calculation.html_name }}" checked value="Making Charges" id="mc" oninput="makeRequired(this)"><label for="mc">Making Charges</label><br>
+            <input type="radio" name="{{ form.calculation.html_name }}" value="Wastage" id = "w" oninput="makeRequired(this)"><label for="w">Wastage</label><br>
+            <input type="radio" name="{{ form.calculation.html_name }}" value="MRP" id="m" oninput="makeRequired(this)"><label for="m">MRP</label>
+        </td>
+        </tr>
+      </table>
+    </div>
+    <span class="inner-text">5. Studding Details</span>
+    <br>
+    <div class="second-row-boxes">
+      <table class="second-row-tables-thead">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Type</th>
+            <th>Less</th>
+            <th>Colour</th>
+            <th>Shape</th>
+            <th>Quantity</th>
+            <th>Weight</th>
+            <th>Rate</th>
+            <th>Value</th>
+          </tr>
+        </thead>
+      </table>
+      <table class="second-row-tables">
+        {% for stud_formset in formset %}
+        <tr>
+          <td onclick="changeValues(this)">forloop.counter</td>
+          <td><input type="text" value="" readonly>{{ stud_formset.type }}</td>
+          <td>{{ stud_formset.less }}</td>
+          <td>{{ stud_formset.colour }}</td>
+          <td>{{ stud_formset.shape }}</td>
+          <td>{{ stud_formset.quantity }}</td>
+          <td>{{ stud_formset.weight }}<input type="text" value="" readonly>{{ stud_formset.unit }}</td>
+          <td>{{ stud_formset.rate }}</td>
+          <td>{{ stud_formset.value }}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+          <td onclick="changeValues(this)">Add</td>
+          <td><input type="text" value="" readonly>{{ formset.empty_form.type }}</td>
+          <td>{{ formset.empty_form.less }}</td>
+          <td>{{ formset.empty_form.colour }}</td>
+          <td>{{ formset.empty_form.shape }}</td>
+          <td>{{ formset.empty_form.quantity }}</td>
+          <td>{{ formset.empty_form.weight }}<input type="text" value="" readonly>{{ formset.empty_form.unit }}</td>
+          <td>{{ formset.empty_form.rate }}</td>
+          <td>{{ formset.empty_form.value }}</td>
+        </tr>
+      </table>
+  </div>
+  <button id="save" type="submit" name="save">Save</button>
+  </form>
+  <div id="last-box">
+    <div id="form-hidden" hidden oninput="calculateLessWeight({{ units }})">
+      <ul>
+        <li><label class="last-box-labels" for="type">Type</label>{{ stud_form.type }}</li>
+        <li><label class="last-box-labels" for="less">Less</label>{{ stud_form.less }}</li>
+        <li><label class="last-box-labels" for="colour">Colour</label>{{ stud_form.colour }}</li>
+        <li><label class="last-box-labels" for="shape">Shape</label>{{ stud_form.shape }}</li>
+        <li><label class="last-box-labels" for="quantity">Quantity</label>{{ stud_form.quantity }}</li>
+        <li><label class="last-box-labels" for="weight">Weight</label>{{ stud_form.weight }}{{ stud_form.unit }}</li>
+        <li><label class="last-box-labels" for="rate">Rate</label>{{ stud_form.rate }}</li>
+        <li><label class="last-box-labels" for="value">Value</label>{{ stud_form.value }}</li>
+      </ul>
+    </div>
+  </div>
+  </div>
+  <form action="{% url 'product_detail' pk=1 %}" method="post">
+    {% csrf_token %}
+    <button id="cancel" type="submit" name="cancel">Cancel</button>
+  </form>
+  </form>
+
+{% endblock %}

@@ -12,7 +12,7 @@ class Vendor(models.Model):
     old_description = models.CharField(max_length=64, blank=True)
 
     def __str__(self):
-        return name
+        return self.name
 
 class Product(models.Model):
     register_id = models.IntegerField(blank=True, null=True)
@@ -28,7 +28,7 @@ class Product(models.Model):
 
     rate = models.DecimalField(max_digits=16, decimal_places=2)
     calculation = models.CharField(max_length=32, choices=[
-    ("Making_Charges", "Making_Charges"),
+    ("Making Charges", "Making Charges"),
     ("Wastage", "Wastage"),
     ("MRP", "MRP")
     ])
