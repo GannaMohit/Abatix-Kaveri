@@ -9,7 +9,7 @@
 {% endblock %}
 
 {% block body %}
-  <form action="{% url 'product_create' %}" method="post" oninput="calculateLessWeight({{ units }})">
+  <form action="{{ request.path }}" method="post" oninput="calculateLessWeight({{ units }})">
     {% csrf_token %}
     {{ formset.management_form }}
     <span class="inner-text">1. Tag Details</span><!--
@@ -20,7 +20,7 @@
       <table class="first-row-tables">
         <tr>
           <td>Product ID</td>
-          <td><input type="number" name="id" value="{{ last_id|add:'1' }}" readonly></td>
+          <td><input type="number" name="id" value="{{ id }}" readonly></td>
         </tr>
         <tr>
           <td>Date</td>
@@ -145,7 +145,7 @@
       <table class="second-row-tables">
         {% for stud_formset in formset %}
         <tr>
-          <td onclick="changeValues(this)">{{ forloop.counter }}</td>
+          <td onclick="changeValues(this)">{{ forloop.counter }}{{ stud_formset.id }}</td>
           <td><input type="text" value="{{ stud_formset.type.value }}" readonly>{{ stud_formset.type }}</td>
           <td>{{ stud_formset.less }}</td>
           <td>{{ stud_formset.colour }}</td>

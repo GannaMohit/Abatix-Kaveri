@@ -21,6 +21,7 @@ class StudForm(ModelForm):
             self.fields[field].widget.attrs["oninput"] = "updateTable(this)"
 
 widgets = {
+    'id': HiddenInput(attrs={'readonly':True}),
     'type': HiddenInput(attrs={'readonly':True}),
     'less': TextInput(attrs={'readonly':True}),
     'colour': TextInput(attrs={'readonly':True}),

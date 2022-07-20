@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, reverse
 from django.views import View
 from django.views.generic import DetailView, TemplateView
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, AccessMixin
 from .models import Product, Stud
 from masters.models import Unit
@@ -32,7 +32,7 @@ class ProductDetailView(ProductBaseView, DetailView):
 
     def post(self, request, *args, **kwargs):
         if not self.queryset.exists(): # If table empty or all products sold
-            return redirect("product_create")
+            return redirect("product_new")
         if kwargs["pk"] == 0: # The goto product implementation
             return redirect("product_detail", pk=request.POST["id"])
         try:
@@ -79,5 +79,31 @@ class ProductCreateView(ProductBaseView, CreateView):
         context["formset"] = StudFormSet()
         context["stud_form"] = StudForm()
         context["units"] = serializers.serialize("json", Unit.objects.all())
-        context["last_id"] = Product.objects.order_by("pk").last().id
+        context["last_id"] = Product.objects.order_by("pk").last().id + 1
+        return context
+
+class ProductUpdateView(ProductBaseView, UpdateView):
+    permission_required = "stock.change_product"
+    template_name = "stock/product_form.html"
+    form_class = ProductForm
+    queryset = Product.objects.filter(sold=False).order_by("pk")
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        product = form.save(commit=False)
+        context["formset"] = StudFormSet(self.request.POST, instance=product)
+        if context["formset"].is_valid():
+            product.save()
+            self.object = product
+            context["formset"].save()
+            return super().form_valid(form)
+        print(context["formset"].errors)
+        return self.render_to_response(context)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["formset"] = StudFormSet(instance=self.object)
+        context["stud_form"] = StudForm()
+        context["units"] = serializers.serialize("json", Unit.objects.all())
+        context["id"] = self.object.id
         return context

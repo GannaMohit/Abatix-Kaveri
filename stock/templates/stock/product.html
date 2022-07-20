@@ -162,13 +162,9 @@
   </div>
 </div>
 
-<form action="<!-- TODO: Add link to product new -->" method="post">
-  <button id="product-new" type="submit" name="product_new">New</button>
-</form>
+<a href="{% url 'product_new' %}"><button id="product-new" type="submit" name="product_new">New</button></a>
 
-<form action="<!-- TODO: Add link to product edit -->" method="post">
-  <button id="product-edit" type="submit" name="product_edit">Edit</button>
-</form>
+<a href="{% url 'product_edit' pk=product.id %}"><button id="product-edit" type="submit" name="product_edit">Edit</button></a>
 
 <form action="<!-- TODO: Add link to print tag -->" method="post">
   <button id="print-tag" type="submit" name="print_tag">Print Tag</button>
