@@ -10,6 +10,7 @@ from django.http import JsonResponse
 from .forms import ProductForm, StudFormSet, StudForm
 from django.core import serializers
 
+from .tag import PrintTag
 import json
 
 # Create your views here.
@@ -97,7 +98,6 @@ class ProductUpdateView(ProductBaseView, UpdateView):
             self.object = product
             context["formset"].save()
             return super().form_valid(form)
-        print(context["formset"].errors)
         return self.render_to_response(context)
 
     def get_context_data(self, **kwargs):

@@ -166,9 +166,7 @@
 
 <a href="{% url 'product_edit' pk=product.id %}"><button id="product-edit" type="submit" name="product_edit">Edit</button></a>
 
-<form action="<!-- TODO: Add link to print tag -->" method="post">
-  <button id="print-tag" type="submit" name="print_tag">Print Tag</button>
-</form>
+<a href="{% url 'print_tag' pk=product.id %}"><button id="print-tag" type="submit" name="print_tag">Print Tag</button></a>
 
 <div id="bottom-nav-bar">
   <span class="bottom-nav-background"></span>
