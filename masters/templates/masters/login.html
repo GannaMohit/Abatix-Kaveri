@@ -5,12 +5,12 @@
 <head>
   <title>Login</title>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="{% static 'CSS/login.css' %}">
-  <link rel="shortcut icon" href="{% static 'SVG/favicon.svg' %}">
+  <link rel="stylesheet" href="{% static 'masters/css/login.css' %}">
+  <link rel="shortcut icon" href="{% static 'masters/svg/favicon.svg' %}">
 </head>
 <body>
   <div id="logo">
-    <img id = "logo-text"  src = "{% static 'SVG/kaveri.svg' %}" alt="Kaveri Logo">
+    <img id = "logo-text"  src = "{% static 'masters/svg/kaveri.svg' %}" alt="Kaveri Logo">
   </div>
   <div id = "bg-box"></div>
   <form action="{% url 'login' %}" method="post">

@@ -5,25 +5,25 @@
   <head>
     <meta charset="utf-8">
     <title>{% block title %}{% endblock %}</title>
-    <link rel="stylesheet" href="{% static 'CSS/layout.css' %}">
-    <link rel="shortcut icon" href="{% static 'SVG/favicon.svg' %}">
+    <link rel="stylesheet" href="{% static 'masters/css/layout.css' %}">
+    <link rel="shortcut icon" href="{% static 'masters/svg/favicon.svg' %}">
     {% block link %}
     {% endblock %}
   </head>
   <body>
     <nav>
       <ul id = "nav-ul">
-        <li class="nav-li"><a href="{% url 'home' %}"><img src="{% static 'SVG/Home.svg' %}" title="Home"></a></li>
-        <li class="nav-li"><a href="<!-- TODO: Add link to dashboard -->"><img src="{% static 'SVG/Dashboard.svg' %}" title="Dashboard"></a></li>
-        <li class="nav-li"><a href="{% url 'product_detail' pk=1 %}"><img src="{% static 'SVG/Stock.svg' %}" title="Stock"></a></li>
-        <li class="nav-li"><a href="<!-- TODO: Add link to invoice -->"><img src="{% static 'SVG/Sales.svg' %}" title="Sales"></a></li>
-        <li class="nav-li"><a href="<!-- TODO: Add link to voucher -->"><img src="{% static 'SVG/Vouchers.svg' %}" title="Vouchers"></a></li>
-        <li class="nav-li"><a href="{% url 'admin:index' %}"><input type="image" src="{% static 'SVG/Settings.svg' %}" title="Settings"></a></li>
+        <li class="nav-li"><a href="{% url 'home' %}"><img src="{% static 'masters/svg/Home.svg' %}" title="Home"></a></li>
+        <li class="nav-li"><a href="<!-- TODO: Add link to dashboard -->"><img src="{% static 'masters/svg/Dashboard.svg' %}" title="Dashboard"></a></li>
+        <li class="nav-li"><a href="{% url 'product_detail' pk=1 %}"><img src="{% static 'masters/svg/Stock.svg' %}" title="Stock"></a></li>
+        <li class="nav-li"><a href="<!-- TODO: Add link to invoice -->"><img src="{% static 'masters/svg/Sales.svg' %}" title="Sales"></a></li>
+        <li class="nav-li"><a href="<!-- TODO: Add link to voucher -->"><img src="{% static 'masters/svg/Vouchers.svg' %}" title="Vouchers"></a></li>
+        <li class="nav-li"><a href="{% url 'admin:index' %}"><input type="image" src="{% static 'masters/svg/Settings.svg' %}" title="Settings"></a></li>
       </ul>
 
       <div id = "nav-line"></div>
-      <span id = "nav-avatar"><img src="{% static 'SVG/Avatar.svg' %}" title="Avatar"></span>
-      <span id = "nav-logout"><a href="<!-- TODO: Add link to logout -->"><img src="{% static 'SVG/Logout.svg' %}" title="Logout"></a></span>
+      <span id = "nav-avatar"><img src="{% static 'masters/svg/Avatar.svg' %}" title="Avatar"></span>
+      <span id = "nav-logout"><a href="<!-- TODO: Add link to logout -->"><img src="{% static 'masters/svg/Logout.svg' %}" title="Logout"></a></span>
       <div id="highlight"></div>
     </nav>
     <div id="outer-box">

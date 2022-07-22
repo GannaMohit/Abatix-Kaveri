@@ -18,6 +18,18 @@ class Invoice(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name="invoices")
     rates = models.JSONField()
 
+    @property
+    def gross_weight(self):
+        products_sum = self.products.aggregate(models.Sum('gross_weight', default=0, output_field=models.DecimalField()))["gross_weight__sum"]
+        untagged_sum = self.untagged.aggregate(models.Sum('gross_weight', default=0, output_field=models.DecimalField()))["gross_weight__sum"]
+        return round(products_sum + untagged_sum, 3)
+
+    @property
+    def net_weight(self):
+        products_sum = self.products.aggregate(models.Sum('net_weight', default=0, output_field=models.DecimalField()))["net_weight__sum"]
+        untagged_sum = self.untagged.aggregate(models.Sum('net_weight', default=0, output_field=models.DecimalField()))["net_weight__sum"]
+        return round(products_sum + untagged_sum, 3)
+        
     def __str__(self):
         return f"{customer.name} ({date})"
 

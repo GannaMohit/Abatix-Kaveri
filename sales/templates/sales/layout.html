@@ -1,0 +1,31 @@
+{% extends "masters/layout.html" %}
+{% load static %}
+
+{% block link %}
+  <link rel="stylesheet" href="{% static 'sales/css/layout.css' %}">
+  {% block link_extend %}
+  {% endblock %}
+{% endblock %}
+
+{% block body %}
+</div>
+  <span id="title">Sales</span>
+  <ul id="sales-nav-ul">
+    <li class="sales-nav-li"><a href="<!-- TODO: Add link to InvoiceListView -->">Invoices</a></li><!--
+  --><li class="sales-nav-li"><a href="<!-- TODO: Add link to HomeSaleListView -->">Home Sales</a></li><!--
+  --><li class="sales-nav-li"><a href="<!-- TODO: Add link to AdvanceListView -->">Advances</a></li>
+  </ul>
+    <div id="box">
+      <a href="{% block new_button_link %}{% endblock %}"><button type="submit" name="new" id="new">New</button></a>
+      <a href="{% block export_button_link %}{% endblock %}"><button type="submit" name="export" id="export">Export</button></a>
+      <form action="{{ request.path }}" method="post">
+        <input id="start_date" type="date" name="start_date" value="{{ start_date }}" oninput="this.parentElement.submit()">
+        <span id="TO">TO</span>
+        <input id="end_date" type="date" name="end_date" value="{{ end_date }}" oninput="this.parentElement.submit()">
+        <img src="{% static 'sales/svg/search_icon.svg' %}" id="search_icon">
+        <input id = "search" type="search" name="search" value="{{ search }}" placeholder="Search">
+      </form>
+      {% block table %}
+      {% endblock %}
+    </div>
+{% endblock %}

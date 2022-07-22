@@ -1,0 +1,51 @@
+{% extends "sales/layout.html" %}
+{% load static %}
+
+{% block link_extend %}
+  <link rel="stylesheet" href="{% static 'sales/css/invoices.css' %}">
+{% endblock %}
+
+{% block new_button_link %}<!-- TODO: Add link to InvoiceNew -->{% endblock %}
+{% block export_button_link %}<!-- TODO: Add link to InvoiceExport -->{% endblock %}
+
+{% block table %}
+<table id="table-thead">
+  <thead>
+    <tr>
+      <th>No.</th>
+      <th>Date</th>
+      <th>GST invoice No.</th>
+      <th>Name</th>
+      <th>Firm</th>
+      <th>Gross Wt.</th>
+      <th>Net Wt.</th>
+      <th>Subtotal</th>
+      <th>SGST</th>
+      <th>CGST</th>
+      <th>IGST</th>
+      <th>Amount</th>
+    </tr>
+  </thead>
+</table>
+
+<table id="table">
+  <tbody>
+    {% for invoice in invoices %}
+    <tr>
+      <td>{{ invoice.invoice_number }}</td><!-- TODO: Give way to print invoice -->
+      <td>{{ invoice.date }}</td>
+      <td>{{ invoice.gst_invoice }}</td>
+      <td>{{ invoice.customer.name }}</td>
+      <td>{{ invoice.customer.firm }}</td>
+      <td>{{ invoice.gross_weight }}</td>
+      <td>{{ invoice.net_weight }}</td>
+      <td>{{ invoice.subtotal }}</td>
+      <td>{{ invoice.sgst }}</td>
+      <td>{{ invoice.cgst }}</td>
+      <td>{{ invoice.igst }}</td>
+      <td>{{ invoice.total }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

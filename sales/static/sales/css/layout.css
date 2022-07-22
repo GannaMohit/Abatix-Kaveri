@@ -1,0 +1,173 @@
+#highlight {
+  position: absolute;
+  left: 0vw;
+  top: 41.667vh;
+  width: 6.25vw;
+  height: 8.33vh;
+  background: rgba(245, 248, 253, 0.4);
+}
+
+#outer-box {
+  display: none;
+}
+
+#box {
+  position: absolute;
+  width: 93.75vw;
+  height: 83.33vh;
+  left: 6.25vw;
+  top: 16.67vh;
+  background: #FFFFFF;
+}
+
+#title {
+  position: absolute;
+  width: 26.5625vw;
+  height: 8.33vh;
+  left: 9.375vw;
+  top: 2.778vh;
+  font-family: "Inter", sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 2.03125vw;
+  display: flex;
+  align-items: center;
+  color: #2D2D2D;
+}
+
+#sales-nav-ul {
+  position: absolute;
+  height: 5.56vh;
+  top: 11.11vh;
+  left: 9.375vw;
+  margin: 0;
+}
+
+.sales-nav-li {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 7.8125vw;
+  height: 5.56vh;
+  margin-right: 1.5625vw;
+  list-style: none;
+  font-family: "Inter", sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 0.859375vw;
+  color: #2D2D2D;
+  box-sizing: border-box;
+}
+
+.sales-nav-li a {
+  text-decoration: none;
+  color: #2D2D2D;
+}
+
+#new {
+  position: absolute;
+  width: 9.375vw;
+  height: 5.56vh;
+  left: 3.125vw;
+  top: 5.56vh;
+  background: #A44B85;
+  border-radius: 1.5625vw;
+  font-family: "Inter", sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 0.859375vw;
+  border: 0;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+#export {
+  position: absolute;
+  width: 9.375vw;
+  height: 5.56vh;
+  left: 15.625vw;
+  top: 5.56vh;
+  background: #2D2D2D;
+  border-radius: 1.5625vw;
+  font-family: "Inter", sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 0.859375vw;
+  color: #FFFFFF;
+  border: 0;
+  cursor: pointer;
+}
+
+#start_date {
+  width: 9.375vw;
+  height: 5.56vh;
+  position: absolute;
+  top: 5.56vh;
+  left: 43.75vw;
+  font-family: "Inter", sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 0.859375vw;
+  text-align: center;
+  color: #2D2D2D;
+  border: 0.078125vw solid #2D2D2D;
+  box-sizing: border-box;
+  border-radius: 0.390625vw;
+}
+
+#TO {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.125vw;
+  height: 5.56vh;
+  position: absolute;
+  top: 5.56vh;
+  left: 53.125vw;
+  font-family: "Inter", sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 11px;
+}
+
+#end_date {
+  width: 9.375vw;
+  height: 5.56vh;
+  position: absolute;
+  top: 5.56vh;
+  left: 56.25vw;
+  font-family: "Inter", sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 0.859375vw;
+  text-align: center;
+  color: #2D2D2D;
+  border: 0.078125vw solid #2D2D2D;
+  box-sizing: border-box;
+  border-radius: 0.390625vw;
+}
+
+#search_icon {
+  width: 1.5625vw;
+  height: 2.67vh;
+  position: absolute;
+  top: 6.944vh;
+  left: 69.53125vw;
+  z-index: 1000000;
+}
+
+#search {
+  width: 21.875vw;
+  height: 5.56vh;
+  position: absolute;
+  top: 5.56vh;
+  left: 68.75vw;
+  font-family: "Inter", sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 0.859375vw;
+  border: 0.078125vw solid #2D2D2D;
+  box-sizing: border-box;
+  border-radius: 0.390625vw;
+  padding-left: 3.125vw;
+}

@@ -80,5 +80,5 @@ def PrintTag(request, pk):
     tag_file.write(zpl)
     tag_file.close()
     os.system("lpr -P CL-E321Z -o raw '/home/kaveri/.var/www/Abatix/temp_tag.zpl'")
-    #os.remove("temp_tag.zpl")
+    os.remove("temp_tag.zpl")
     return redirect("product_detail", pk=pk)
