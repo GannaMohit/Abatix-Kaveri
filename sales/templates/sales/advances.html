@@ -1,0 +1,45 @@
+{% extends "sales/layout.html" %}
+{% load static %}
+
+{% block title %}Advances{% endblock %}
+
+{% block link_extend %}
+  <link rel="stylesheet" href="{% static 'sales/css/advances.css' %}">
+{% endblock %}
+
+{% block new_button_link %}<!-- TODO: Add link to AdvanceNew -->{% endblock %}
+{% block export_button_link %}<!-- TODO: Add link to AdvanceExport -->{% endblock %}
+
+{% block table %}
+<table id="table-thead">
+  <thead>
+    <tr>
+      <th>I.D.</th>
+      <th>Date</th>
+      <th>Name</th>
+      <th>Firm</th>
+      <th>GST</th>
+      <th>PAN</th>
+      <th>Contact</th>
+      <th>Amount</th>
+    </tr>
+  </thead>
+</table>
+
+<table id="table">
+  <tbody>
+    {% for advance in advances %}
+    <tr>
+      <td><a href="<!-- TODO: URL for advance edit -->">{{ advance.id }}</a></td>
+      <td><a href="<!-- TODO: URL for advance edit -->">{{ advance.date }}</a></td>
+      <td><a href="<!-- TODO: URL for advance edit -->">{{ advance.customer.name }}</a></td>
+      <td><a href="<!-- TODO: URL for advance edit -->">{{ advance.customer.firm }}</a></td>
+      <td><a href="<!-- TODO: URL for advance edit -->">{{ advance.customer.gst }}</a></td>
+      <td><a href="<!-- TODO: URL for advance edit -->">{{ advance.customer.pan }}</a></td>
+      <td><a href="<!-- TODO: URL for advance edit -->">{{ advance.customer.contact }}</a></td>
+      <td><a href="<!-- TODO: URL for advance edit -->">{{ advance.amount }}</a></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

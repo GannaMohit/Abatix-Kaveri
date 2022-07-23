@@ -11,9 +11,9 @@
 </div>
   <span id="title">Sales</span>
   <ul id="sales-nav-ul">
-    <li class="sales-nav-li"><a href="<!-- TODO: Add link to InvoiceListView -->">Invoices</a></li><!--
-  --><li class="sales-nav-li"><a href="<!-- TODO: Add link to HomeSaleListView -->">Home Sales</a></li><!--
-  --><li class="sales-nav-li"><a href="<!-- TODO: Add link to AdvanceListView -->">Advances</a></li>
+    <li class="sales-nav-li"><a href="{% url 'invoices' %}">Invoices</a></li><!--
+  --><li class="sales-nav-li"><a href="{% url 'home_sales' %}">Home Sales</a></li><!--
+  --><li class="sales-nav-li"><a href="{% url 'advances' %}">Advances</a></li>
   </ul>
     <div id="box">
       <a href="{% block new_button_link %}{% endblock %}"><button type="submit" name="new" id="new">New</button></a>
