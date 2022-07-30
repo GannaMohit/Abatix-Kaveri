@@ -54,10 +54,15 @@ class ProductFetchAjax(ProductBaseView, View):
     def post(self, request, *args, **kwargs):
         id = json.loads(request.body)["id"]
         try:
-            product =  Product.objects.get(pk=id)
+            product = Product.objects.get(pk=id)
+            product_dict = model_to_dict(product)
+            product_dict["metal"] = product.metal.metal
+            product_dict["purity"] = product.purity.purity
+            product_dict["type"] = product.type.type
+            product_dict["category"] = product.category.category
         except:
-            product = {}
-        return JsonResponse(model_to_dict(product))
+            product_dict = {}
+        return JsonResponse(product_dict)
 
 class ProductCreateView(ProductBaseView, CreateView):
     permission_required = "stock.add_product"

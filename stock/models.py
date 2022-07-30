@@ -45,7 +45,7 @@ class Product(models.Model):
     sold = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{purity.purity} {metal.metal} {category.category}"
+        return f"{self.purity.purity} {self.metal.metal} {self.category.category}"
 
     def get_absolute_url(self):
         return reverse('product_detail', kwargs={'pk' : self.pk})
@@ -63,4 +63,4 @@ class Stud(models.Model):
     value = models.DecimalField(max_digits=16, decimal_places=2)
 
     def __str__(self):
-        return f"{type.type}"
+        return f"{self.type.type}"

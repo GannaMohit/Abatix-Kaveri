@@ -11,5 +11,5 @@ class InvoiceBaseView(LoginRequiredMixin, PermissionRequiredMixin, AccessMixin):
 class InvoiceListView(InvoiceBaseView, ListView):
     permission_required = "sales.view_invoice"
     template_name = "sales/invoices.html"
-    queryset = Invoice.objects.order_by("-date")
+    queryset = Invoice.objects.order_by("-date", "-pk")
     context_object_name = "invoices"

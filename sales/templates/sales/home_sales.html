@@ -5,7 +5,7 @@
   <link rel="stylesheet" href="{% static 'sales/css/home_sales.css' %}">
 {% endblock %}
 
-{% block new_button_link %}<!-- TODO: Add link to HomeSaleNew -->{% endblock %}
+{% block new_button_link %}{% url 'home_sale_new' %}{% endblock %}
 {% block export_button_link %}<!-- TODO: Add link to HomeSaleExport -->{% endblock %}
 
 {% block table %}

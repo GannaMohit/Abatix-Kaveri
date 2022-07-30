@@ -1,0 +1,89 @@
+{% extends "masters/layout.html" %}
+{% load static %}
+
+{% block title %}Home Sale Form{% endblock %}
+
+{% block link %}
+  <link rel="stylesheet" href="{% static 'sales/css/home_sale_form.css' %}">
+  <script src="{% static 'sales/js/home_sale_form.js' %}" charset="utf-8"></script>
+{% endblock %}
+
+{% block body %}
+  <form action="{{ request.path }}" method="post">
+    {% csrf_token %}
+    {{ formset.management_form }}
+    <table id="table-thead">
+      <thead>
+        <tr>
+          <th>I.D.</th>
+          <th>Metal</th>
+          <th>Purity</th>
+          <th>Category</th>
+          <th>Description</th>
+          <th>Pcs</th>
+          <th>Gross Wt.</th>
+          <th>Less Wt.</th>
+          <th>Net Wt.</th>
+          <th>Reg.</th>
+        </tr>
+      </thead>
+    </table>
+
+    <table id="table">
+      <tbody>
+        {% for product_form in formset %}
+        <tr>
+          <td>{{ product_form.id }}</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteRow(this)"></td>
+        </tr>
+        {% endfor %}
+        <tr>
+          <td>{{ formset.empty_form.product }}</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteRow(this)" hidden></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <table id="table-tfoot">
+      <tfoot>
+        <tr>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td id="pcsTotal"></td>
+          <td id="gwTotal"></td>
+          <td id="lwTotal"></td>
+          <td id="nwTotal"></td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+    </div>
+    <label for="id" id="id_label">I.D.</label>
+    <input type="number" name="id" value="{{ last_id }}" id="id" readonly>
+    <label for="date" id="date_label">Date</label>
+    {{ form.date }}
+    <button type="submit" name="submit" id="submit">Submit</button>
+  </form>
+  <a href="{% url 'home_sales' %}"><button type="submit" name="cancel" id="cancel">Cancel</button></a>
+{% endblock %}
