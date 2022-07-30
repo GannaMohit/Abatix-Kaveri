@@ -1,6 +1,5 @@
 from django.db import models
 from masters.models import Metal, Purity, Type, Category, Stud_Type, Unit
-from sales.models import Invoice, Home_Sale
 from django.urls import reverse
 
 # Create your models here.
@@ -43,9 +42,6 @@ class Product(models.Model):
     lot_number = models.IntegerField(blank=True, null=True)
     design_code = models.CharField(max_length=32, blank=True)
     old_id = models.CharField(max_length=16, blank=True)
-
-    invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE, related_name="products", blank=True, null=True)
-    home_sale = models.ForeignKey(Home_Sale, on_delete=models.CASCADE, related_name="products", blank=True, null=True)
     sold = models.BooleanField(default=False)
 
     def __str__(self):
