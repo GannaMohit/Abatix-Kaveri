@@ -9,4 +9,4 @@ class Advance(models.Model):
     redeemed = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{customer.name} ({date})"
+        return f"{self.customer.name} ({self.date})"

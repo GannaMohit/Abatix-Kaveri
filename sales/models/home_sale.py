@@ -1,5 +1,6 @@
 from django.db import models
 from stock.models import Product
+from django.urls import reverse
 
 class Home_Sale(models.Model):
     date = models.DateField()
@@ -20,8 +21,15 @@ class Home_Sale(models.Model):
         return round(products_sum, 3)
 
     def __str__(self):
-        return f"{date}"
+        return f"{self.date}"
+
+    def get_absolute_url(self):
+        return reverse('home_sales')
 
 class Home_Sale_Product(models.Model):
     home_sale = models.ForeignKey(Home_Sale, on_delete=models.CASCADE, related_name="products")
     product = models.OneToOneField(Product, on_delete=models.CASCADE, related_name="home_sale")
+
+    def save(self, *args, **kwargs):
+        self.product.sold = True
+        super().save(*args, **kwargs)

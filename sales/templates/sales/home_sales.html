@@ -24,13 +24,13 @@
 <table id="table">
   <tbody>
     {% for home_sale in home_sales %}
-    <tr>
-      <td>{{ home_sale.id }}</td>
-      <td>{{ home_sale.date }}</td>
-      <td>{{ home_sale.gross_weight }}</td>
-      <td>{{ home_sale.less_weight }}</td>
-      <td>{{ home_sale.net_weight }}</td>
-    </tr>
+      <tr>
+        <td><a href="{% url 'home_sale_edit' pk=home_sale.id %}">{{ home_sale.id }}</a></td>
+        <td>{{ home_sale.date }}</td>
+        <td>{{ home_sale.gross_weight }}</td>
+        <td>{{ home_sale.less_weight }}</td>
+        <td>{{ home_sale.net_weight }}</td>
+      </tr>
     {% endfor %}
   </tbody>
 </table>

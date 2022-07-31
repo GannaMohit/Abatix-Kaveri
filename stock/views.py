@@ -85,7 +85,7 @@ class ProductCreateView(ProductBaseView, CreateView):
         context["formset"] = StudFormSet()
         context["stud_form"] = StudForm()
         context["units"] = serializers.serialize("json", Unit.objects.all())
-        context["last_id"] = Product.objects.order_by("pk").last().id + 1
+        context["id"] = Product.objects.order_by("pk").last().id + 1
         return context
 
 class ProductUpdateView(ProductBaseView, UpdateView):

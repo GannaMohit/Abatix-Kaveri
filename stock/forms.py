@@ -4,7 +4,7 @@ from .models import Product, Stud
 class ProductForm(ModelForm):
     class Meta:
         model = Product
-        exclude = ('invoice', 'home_sale', 'sold')
+        fields = "__all__"
         widgets = {
             'purchase_date': DateInput(attrs={'type':'date'})
         }
