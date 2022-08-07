@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="{% static 'sales/css/advances.css' %}">
 {% endblock %}
 
-{% block new_button_link %}<!-- TODO: Add link to AdvanceNew -->{% endblock %}
+{% block new_button_link %}{% url 'advance_new' %}{% endblock %}
 {% block export_button_link %}<!-- TODO: Add link to AdvanceExport -->{% endblock %}
 
 {% block table %}
