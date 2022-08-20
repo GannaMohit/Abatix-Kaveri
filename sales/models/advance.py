@@ -1,6 +1,7 @@
 from django.db import models
 from masters.models import Customer, GST_State
 from .invoice import Invoice
+from django.urls import reverse
 
 class Advance(models.Model):
     date = models.DateField()
@@ -10,3 +11,6 @@ class Advance(models.Model):
 
     def __str__(self):
         return f"{self.customer.name} ({self.date})"
+
+    def get_absolute_url(self):
+        return reverse("advances")

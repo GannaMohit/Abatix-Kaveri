@@ -5,7 +5,7 @@ from masters.models import Customer
 class AdvanceForm(forms.ModelForm):
     class Meta:
         model = Advance
-        fields = ('date','customer')
+        fields = ('date',)
         widgets = {
             'date': forms.DateInput(attrs={'type':'date'})
         }

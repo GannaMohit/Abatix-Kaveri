@@ -30,7 +30,7 @@
   <tbody>
     {% for advance in advances %}
     <tr>
-      <td><a href="<!-- TODO: URL for advance edit -->">{{ advance.id }}</a></td>
+      <td><a href="{% url 'advance_edit' pk=advance.id %}">{{ advance.id }}</a></td>
       <td><a href="<!-- TODO: URL for advance edit -->">{{ advance.date }}</a></td>
       <td><a href="<!-- TODO: URL for advance edit -->">{{ advance.customer.name }}</a></td>
       <td><a href="<!-- TODO: URL for advance edit -->">{{ advance.customer.firm }}</a></td>
