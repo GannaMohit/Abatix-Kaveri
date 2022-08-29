@@ -4,7 +4,7 @@ from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, AccessMixin
 from sales.models import Advance
 from masters.models import Customer
-from sales.forms import AdvanceForm, PaymentFormSet, PaymentForm, CustomerForm
+from sales.forms.advance import AdvanceForm, PaymentFormSet, PaymentForm, CustomerForm
 
 class AdvanceBaseView(LoginRequiredMixin, PermissionRequiredMixin, AccessMixin):
     permission_required = ("sales.view_advance", "sales.add_advance", "sales.change_advance", "sales.delete_advance")

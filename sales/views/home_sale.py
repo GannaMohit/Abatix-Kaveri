@@ -3,8 +3,8 @@ from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, AccessMixin
 from sales.models import Home_Sale
-from sales.forms import HomeSaleForm, ProductFormSet
-from stock.forms import Product
+from sales.forms.home_sale import HomeSaleForm, ProductFormSet
+from stock.models import Product
 
 class HomeSaleBaseView(LoginRequiredMixin, PermissionRequiredMixin, AccessMixin):
     permission_required = ("sales.view_home_sale", "sales.add_home_sale", "sales.change_home_sale", "sales.delete_home_sale")

@@ -6,14 +6,14 @@ class GST_State(models.Model):
     apha_code = models.CharField(max_length=64, blank=True)
 
     def __str__(self):
-        return state
+        return self.state
 
 class GST_Rate(models.Model):
     type = models.CharField(max_length=64, unique=True)
     percentage = models.DecimalField(max_digits=8, decimal_places=2)
 
     def __str__(self):
-        return f"{type}: {percentage}%"
+        return f"{self.type}: {self.percentage}%"
 
 class HSN(models.Model):
     code = models.IntegerField()
@@ -23,4 +23,4 @@ class HSN(models.Model):
     description = models.TextField(blank=True)
 
     def __str__(self):
-        return code
+        return self.code
