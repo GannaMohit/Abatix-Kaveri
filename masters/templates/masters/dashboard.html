@@ -9,25 +9,22 @@
 
 {% block body %}
 </div>
-  <span id="title">Sales</span>
-  <ul id="sales-nav-ul">
-    <li class="sales-nav-li"><a href="{% url 'invoices' %}">Invoices</a></li><!--
-  --><li class="sales-nav-li"><a href="{% url 'home_sales' %}">Home Sales</a></li><!--
-  --><li class="sales-nav-li"><a href="{% url 'advances' %}">Advances</a></li>
-  </ul>
+  <span id="title">Summary</span>
     <div id="box">
-      <a href="{% block new_button_link %}{% endblock %}"><button type="submit" name="new" id="new">New</button></a>
-      <a href="{% block export_button_link %}{% endblock %}"><button type="submit" name="export" id="export">Export</button></a>
-      <form action="{{ request.path }}" method="post">
-        <input id="start_date" type="date" name="start_date" value="{{ start_date }}" oninput="this.parentElement.submit()">
-        <span id="TO">TO</span>
-        <input id="end_date" type="date" name="end_date" value="{{ end_date }}" oninput="this.parentElement.submit()">
-        <img src="{% static 'sales/svg/search_icon.svg' %}" id="search_icon">
-        <input id = "search" type="search" name="search" value="{{ search }}" placeholder="Search">
-      </form>
+<!--      <a href="{% block new_button_link %}{% endblock %}"><button type="submit" name="new" id="new">New</button></a>-->
+<!--      <a href="{% block export_button_link %}{% endblock %}"><button type="submit" name="export" id="export">Export</button></a>-->
+<!--      <form action="{{ request.path }}" method="post">-->
+<!--        <input id="start_date" type="date" name="start_date" value="{{ start_date }}" oninput="this.parentElement.submit()">-->
+<!--        <span id="TO">TO</span>-->
+<!--        <input id="end_date" type="date" name="end_date" value="{{ end_date }}" oninput="this.parentElement.submit()">-->
+<!--        <img src="{% static 'sales/svg/search_icon.svg' %}" id="search_icon">-->
+<!--        <input id = "search" type="search" name="search" value="{{ search }}" placeholder="Search">-->
+<!--      </form>-->
+      <span id="titlebox">Stock</span>
       <table id="table-thead">
         <thead>
           <tr>
+            <th>#</th>
             <th>Metal</th>
             <th>Purity</th>
             <th>Type</th>
@@ -42,7 +39,8 @@
         <tbody>
           {% for stock in dashboard %}
           <tr>
-            <td>{{ stock.metal__metal }}
+            <td>{{ forloop.counter }}</td>
+            <td>{{ stock.metal__metal }} </td>
             <td>{{ stock.purity__purity }}</td>
             <td>{{ stock.type__type }}</td>
             <td>{{ stock.category__category }}</td>
@@ -52,6 +50,20 @@
           </tr>
           {% endfor %}
         </tbody>
+      </table>
+      <table id="table-tfoot">
+        <tfoot>
+          <tr>
+            <th>#</th>
+            <th>Metal</th>
+            <th>Purity</th>
+            <th>Type</th>
+            <th>Category</th>
+            <th>Gross Wt.</th>
+            <th>Studding</th>
+            <th>Net Wt.</th>
+          </tr>
+        </tfoot>
       </table>
     </div>
 {% endblock %}

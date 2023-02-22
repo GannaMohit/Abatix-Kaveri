@@ -13,6 +13,22 @@
   color: #2D2D2D;
 }
 
+#titlebox {
+  position: absolute;
+  width: 26.5625vw;
+  height: 8.33vh;
+  left: 3.375vw;
+  top: 2.778vh;
+  font-family: "Inter", sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 2.03125vw;
+  display: flex;
+  align-items: center;
+  color: #2D2D2D;
+}
+
+
 #outer-box {
   display: none;
 }
@@ -164,8 +180,15 @@
 }
 
 #table-thead {
-  height: 2.67vh;
+  height: 4vh;
   margin-top: 16.67vh;
+  margin-left: 3.125vw;
+  background: #2D2D2D;
+  border-collapse: collapse;
+}
+
+#table-tfoot {
+  height: 4vh;
   margin-left: 3.125vw;
   background: #2D2D2D;
   border-collapse: collapse;
@@ -176,7 +199,7 @@
   display: block;
   overflow: scroll;
   scrollbar-width: thin;
-  height: 55.56vh;
+  height: 64vh;
   border-collapse: collapse;
 }
 
@@ -188,8 +211,7 @@
   background: #E5E5E5;
 }
 
-#table-thead th {
-  height: 5.56vh;
+#table-thead th, #table-tfoot th {
   font-family: "Inter", sans-serif;
   font-style: normal;
   font-weight: bold;
@@ -199,7 +221,7 @@
 }
 
 #table td {
-  height: 5.56vh;
+  height: 4vh;
   font-family: "Inter", sans-serif;
   font-style: normal;
   font-weight: 500;
@@ -208,57 +230,57 @@
   padding-right: 1.5625vw;
 }
 
-#table td:nth-child(1), #table-thead th:nth-child(1) {
-  text-align: left;
-  width: 3.125vw;
+#table td:nth-child(1), #table-thead th:nth-child(1), #table-tfoot th:nth-child(1) {
+  text-align: center;
+  width: 1.5625vw;
   padding-left: 1.5625vw;
 }
 
-#table td:nth-child(2), #table-thead th:nth-child(2) {
+#table td:nth-child(2), #table-thead th:nth-child(2), #table-tfoot th:nth-child(2) {
   width: 3.125vw;
   text-align: left;
 }
 
-#table td:nth-child(3), #table-thead th:nth-child(3) {
-  width: 4vw;
+#table td:nth-child(3), #table-thead th:nth-child(3), #table-tfoot th:nth-child(3) {
+  width: 3.125vw;
   text-align: left;
 }
 
-#table td:nth-child(4), #table-thead th:nth-child(4) {
-    width: 5.5vw;
+#table td:nth-child(4), #table-thead th:nth-child(4), #table-tfoot th:nth-child(4) {
+    width: 4vw;
   text-align: left;
 }
 
-#table td:nth-child(5), #table-thead th:nth-child(5) {
+#table td:nth-child(5), #table-thead th:nth-child(5), #table-tfoot th:nth-child(5) {
+  width: 5.5vw;
+  text-align: left;
+}
+
+#table-thead th:nth-child(6), #table-thead th:nth-child(7), #table-tfoot th:nth-child(7), #table-tfoot th:nth-child(6) {
   width: 4.6875vw;
   text-align: right;
 }
 
-#table-thead th:nth-child(6), #table-thead th:nth-child(7) {
-  width: 4vw;
-  text-align: right;
-}
-
 #table td:nth-child(6), #table td:nth-child(7) {
-  width: 4vw;
+  width: 4.6875vw;
   text-align: right;
 }
 
-#table-thead th:nth-child(8), #table-thead th:nth-child(9){
-  width: 3.125vw;
-  text-align: left;
+#table-thead th:nth-child(8), #table-thead th:nth-child(9), #table-tfoot th:nth-child(8), #table-tfoot th:nth-child(9){
+  width: 4.6875vw;
+  text-align: right;
 }
 
 #table td:nth-child(8), #table td:nth-child(9){
-  width: 3.125vw;
-  text-align: left;
+  width: 4.6875vw;
+  text-align: right;
 }
 
 #box {
-  position: absolute;
-  width: 93.75vw;
-  height: 83.33vh;
-  left: 6.25vw;
-  top: 16.67vh;
-  background: #FFFFFF;
+    position: absolute;
+    width: 93.75vw;
+    height: 100vh;
+    left: 38.25vw;
+    top: 0;
+    background: #FFFFFF;
 }
