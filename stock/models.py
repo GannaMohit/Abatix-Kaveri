@@ -2,6 +2,7 @@ from django.db import models
 from masters.models import Metal, Purity, Type, Category, Stud_Type, Unit
 from django.urls import reverse
 
+
 # Create your models here.
 class Vendor(models.Model):
     name = models.CharField(max_length=64)
@@ -13,6 +14,7 @@ class Vendor(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Product(models.Model):
     register_id = models.IntegerField(blank=True, null=True)
@@ -28,9 +30,9 @@ class Product(models.Model):
 
     rate = models.DecimalField(max_digits=16, decimal_places=2)
     calculation = models.CharField(max_length=32, choices=[
-    ("Making Charges", "Making Charges"),
-    ("Wastage", "Wastage"),
-    ("MRP", "MRP")
+        ("Making Charges", "Making Charges"),
+        ("Wastage", "Wastage"),
+        ("MRP", "MRP")
     ])
     making_charges = models.DecimalField(max_digits=16, decimal_places=2, blank=True, null=True)
     wastage = models.DecimalField(max_digits=16, decimal_places=2, blank=True, null=True)
@@ -48,7 +50,8 @@ class Product(models.Model):
         return f"{self.purity.purity} {self.metal.metal} {self.category.category}"
 
     def get_absolute_url(self):
-        return reverse('product_detail', kwargs={'pk' : self.pk})
+        return reverse('product_detail', kwargs={'pk': self.pk})
+
 
 class Stud(models.Model):
     product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name="studs")

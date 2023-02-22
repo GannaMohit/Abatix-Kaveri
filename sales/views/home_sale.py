@@ -6,15 +6,19 @@ from sales.models import Home_Sale
 from sales.forms.home_sale import HomeSaleForm, ProductFormSet
 from stock.models import Product
 
+
 class HomeSaleBaseView(LoginRequiredMixin, PermissionRequiredMixin, AccessMixin):
-    permission_required = ("sales.view_home_sale", "sales.add_home_sale", "sales.change_home_sale", "sales.delete_home_sale")
+    permission_required = (
+        "sales.view_home_sale", "sales.add_home_sale", "sales.change_home_sale", "sales.delete_home_sale")
     raise_exception = True
     permission_denied_message = "You do not have permission to access Home Sale details."
+
 
 class HomeSaleListView(HomeSaleBaseView, ListView):
     template_name = "sales/home_sales.html"
     queryset = Home_Sale.objects.order_by("-date", "-pk")
     context_object_name = "home_sales"
+
 
 class HomeSaleCreateView(HomeSaleBaseView, CreateView):
     permission_required = "sales.add_home_sale"
@@ -38,6 +42,7 @@ class HomeSaleCreateView(HomeSaleBaseView, CreateView):
         context["formset"] = ProductFormSet(queryset=self.product_queryset)
         context["id"] = Home_Sale.objects.order_by("pk").last().id + 1
         return context
+
 
 class HomeSaleUpdateView(HomeSaleBaseView, UpdateView):
     permission_required = "sales.change_home_sale"

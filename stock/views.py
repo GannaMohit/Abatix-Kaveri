@@ -13,6 +13,7 @@ from django.core import serializers
 from .tag import PrintTag
 import json
 
+
 # Create your views here.
 class ProductBaseView(LoginRequiredMixin, PermissionRequiredMixin, AccessMixin):
     permission_required = ("stock.view_product", "stock.add_product", "stock.change_product", "stock.delete_product")
@@ -32,25 +33,27 @@ class ProductDetailView(ProductBaseView, DetailView):
         return context
 
     def post(self, request, *args, **kwargs):
-        if not self.queryset.exists(): # If table empty or all products sold
+        if not self.queryset.exists():  # If table empty or all products sold
             return redirect("product_new")
-        if kwargs["pk"] == 0: # The goto product implementation
+        if kwargs["pk"] == 0:  # The goto product implementation
             return redirect("product_detail", pk=request.POST["id"])
         try:
             return self.get(request, *args, **kwargs)
         except:
-            if "next" in request.POST: # The next button implementation
-                temp_qs = self.queryset.filter(id__gt = kwargs["pk"])
+            if "next" in request.POST:  # The next button implementation
+                temp_qs = self.queryset.filter(id__gt=kwargs["pk"])
                 if temp_qs.exists():
                     return redirect("product_detail", pk=temp_qs.first().id)
-            elif "prev" in request.POST: # The previous button implementation
-                temp_qs = self.queryset.filter(id__lt = kwargs["pk"])
+            elif "prev" in request.POST:  # The previous button implementation
+                temp_qs = self.queryset.filter(id__lt=kwargs["pk"])
                 if temp_qs.exists():
                     return redirect("product_detail", pk=temp_qs.last().id)
         return self.get(request, *args, **kwargs)
 
+
 class ProductFetchAjax(ProductBaseView, View):
     permission_required = "stock.view_product"
+
     def post(self, request, *args, **kwargs):
         id = json.loads(request.body)["id"]
         try:
@@ -63,6 +66,7 @@ class ProductFetchAjax(ProductBaseView, View):
         except:
             product_dict = {}
         return JsonResponse(product_dict)
+
 
 class ProductCreateView(ProductBaseView, CreateView):
     permission_required = "stock.add_product"
@@ -87,6 +91,7 @@ class ProductCreateView(ProductBaseView, CreateView):
         context["units"] = serializers.serialize("json", Unit.objects.all())
         context["id"] = Product.objects.order_by("pk").last().id + 1
         return context
+
 
 class ProductUpdateView(ProductBaseView, UpdateView):
     permission_required = "stock.change_product"
