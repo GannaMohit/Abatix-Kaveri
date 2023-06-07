@@ -1,5 +1,6 @@
 from django.db import models
 from masters.models import Customer, Metal, Purity, Category
+import datetime
 
 # Create your models here.
 
@@ -26,7 +27,7 @@ class Voucher(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name="vouchers")
 
     def __str__(self):
-        return f"{customer.name} {type} {date}"
+        return f"{self.customer.name} {type} {self.date}"
 
 class Particular(models.Model):
     voucher = models.ForeignKey(Voucher, on_delete=models.CASCADE, related_name="particulars")
@@ -45,4 +46,4 @@ class Particular(models.Model):
     total = models.DecimalField(max_digits=16, decimal_places=2)
 
     def __str__(self):
-        return f"{purity.purity} {metal.metal} {category.category}"
+        return f"{self.purity.purity} {self.metal.metal} {self.category.category}"

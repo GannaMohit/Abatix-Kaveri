@@ -37,13 +37,13 @@
       <td>{{ invoice.gst_invoice }}</td>
       <td>{{ invoice.customer.name }}</td>
       <td>{{ invoice.customer.firm }}</td>
-      <td>{{ invoice.gross_weight }}</td>
-      <td>{{ invoice.net_weight }}</td>
-      <td>{{ invoice.subtotal }}</td>
-      <td>{{ invoice.sgst }}</td>
-      <td>{{ invoice.cgst }}</td>
-      <td>{{ invoice.igst }}</td>
-      <td>{{ invoice.total }}</td>
+      <td>{{ invoice.gross_weight }} g</td>
+      <td>{{ invoice.net_weight }} g</td>
+      <td>₹{{ invoice.subtotal }}</td>
+      <td>₹{{ invoice.sgst }}</td>
+      <td>₹{{ invoice.cgst }}</td>
+      <td>₹{{ invoice.igst }}</td>
+      <td>₹{{ invoice.total }}</td>
     </tr>
     {% endfor %}
   </tbody>

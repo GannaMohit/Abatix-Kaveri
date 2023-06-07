@@ -1,0 +1,47 @@
+{% extends "masters/layout.html" %}
+{% load static %}
+
+{% block link_extend %}
+  <link rel="stylesheet" href="{% static 'sales/css/vouchers.css' %}">
+{% endblock %}
+
+{% block new_button_link %}<!-- TODO: Add link to VoucherNew -->{% endblock %}
+{% block export_button_link %}<!-- TODO: Add link to VoucherExport -->{% endblock %}
+
+{% block table %}
+<table id="table-thead">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Vch. No.</th>
+            <th>Type</th>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Firm</th>
+            <th>Gross Wt.</th>
+            <th>Net Wt.</th>
+            <th>Pure Wt.</th>
+            <th>Amount</th>
+        </tr>
+        </thead>
+</table>
+
+<table id="table">
+  <tbody>
+    {% for voucher in vouchers %}
+        <tr>
+          <td><a href="{% url 'voucher_edit' pk=voucher.id %}">{{ voucher.id }}</a></td>
+          <td>{{ voucher.voucher_number }}</a></td>
+          <td>{{ voucher.type }}</a></td>
+          <td>{{ voucher.date }}</a></td>
+          <td>{{ voucher.name }}</a></td>
+          <td>{{ voucher.firm }}</a></td>
+          <td>{{ voucher.gross_weight }} g</a></td>
+          <td>{{ voucher.net_weight }} g</a></td>
+          <td>{{ voucher.pure_weight }} g</a></td>
+          <td>₹{{ voucher.amount }}</a></td>
+        </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}
