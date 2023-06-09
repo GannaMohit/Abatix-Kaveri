@@ -17,7 +17,7 @@
         <li class="nav-li"><a href="<!-- TODO: Add link to dashboard -->"><img src="{% static 'masters/svg/Dashboard.svg' %}" title="Dashboard"></a></li>
         <li class="nav-li"><a href="{% url 'product_detail' pk=1 %}"><img src="{% static 'masters/svg/Stock.svg' %}" title="Stock"></a></li>
         <li class="nav-li"><a href="{% url 'invoices' %}"><img src="{% static 'masters/svg/Sales.svg' %}" title="Sales"></a></li>
-        <li class="nav-li"><a href="<!-- TODO: Add link to voucher -->"><img src="{% static 'masters/svg/Vouchers.svg' %}" title="Vouchers"></a></li>
+        <li class="nav-li"><a href="{% url 'vouchers' %}"><img src="{% static 'masters/svg/Vouchers.svg' %}" title="Vouchers"></a></li>
         <li class="nav-li"><a href="{% url 'admin:index' %}"><input type="image" src="{% static 'masters/svg/Settings.svg' %}" title="Settings"></a></li>
       </ul>
 
