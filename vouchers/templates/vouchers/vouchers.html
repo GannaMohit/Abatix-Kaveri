@@ -16,13 +16,11 @@
   <div id="box">
 
     <!-- TODO: New voucher URL -->
-    <form action="" method="post"> 
-      <button type="submit" name="new" id="new">New</button>
-    </form>
+    <a href="{% url 'vouchers_new' %}"><button type="submit" name="new" id="new">New</button></a>
+
     <!-- TODO: Export voucher URL -->
-    <form action="" method="post">
-      <button type="submit" name="export" id="export">Export</button>
-    </form>
+    <a href=""><button type="submit" name="export" id="export">Export</button></a>
+
     <!-- TODO: Filter vouchers URL -->
     <form action="" method="post">
       <select id="type" name="type" oninput="this.parentElement.submit()">

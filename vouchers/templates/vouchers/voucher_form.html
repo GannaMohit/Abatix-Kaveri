@@ -1,0 +1,89 @@
+{% extends "masters/layout.html" %}
+{% load static %}
+
+{% block title %}Vouchers{% endblock %}
+
+{% block link %}
+  <link rel="stylesheet" href="{% static 'vouchers/css/voucher_form.css' %}">
+{% endblock %}
+
+{% block body %}
+</div>
+<form action="{{ request.path }}" method="post"></form>
+  <div id="customer_form_box">
+    <label for="id_id_">ID</label>
+    <input type="number"  name="id" value="{{ id }}" required="" id="id_id" readonly>
+    {{ form.type.label_tag }}
+    {{ form.type }}
+    <label for="id_voucher_number">Vch No.</label>
+    {{ form.voucher_number }}
+    {{ form.date.label_tag }}
+    {{ form.date }}
+    {{ customer_form }}
+  </div>
+  <div id="particular_form_box">
+    <table id="particular_form_table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Metal</th>
+          <th>Category</th>
+          <th>Purity</th>
+          <th>Gross Wt.</th>
+          <th>Net Wt.</th>
+          <th>Rate</th>
+          <th>Subtotal</th>
+          <th>Tax</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        {% for particular_formset in formset %}
+        <tr>
+          <td onclick="changeValues(this)">{{ forloop.counter }}{{ stud_formset.id }}</td>
+          <td><input type="text" value="{{ particular_formset.metal.value }}" readonly>{{ particular_formset.metal }}</td>
+          <td><input type="text" value="{{ particular_formset.category.value }}" readonly>{{ particular_formset.category }}</td>
+          <td><input type="text" value="{{ particular_formset.purity.value }}" readonly>{{ particular_formset.purity }}</td>
+          <td>{{ particular_formset.gross_weight }}</td>
+          <td>{{ particular_formset.net_weight }}</td>
+          <td>{{ particular_formset.rate }}</td>
+          <td>{{ particular_formset.subtotal }}</td>
+          <td>
+            <input type="text"value="{{ particular_formset.sgst.value | add:particular_formset.cgst.value |add:particular_formset.igst.value |add:particular_formset.tcs.value }}" readonly>
+            {{ particular_formset.sgst }}
+            {{ particular_formset.cgst }}
+            {{ particular_formset.igst }}
+            {{ particular_formset.tcs }}
+          </td>
+          <td>{{ particular_formset.total }}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+          <td onclick="changeValues(this)">Add</td>
+          <td><input type="text" value="" readonly>{{ formset.empty_form.metal }}</td>
+          <td><input type="text" value="" readonly>{{ formset.empty_form.category }}</td>
+          <td><input type="text" value="" readonly>{{ formset.empty_form.purity }}</td>
+          <td>{{ formset.empty_form.gross_weight }}</td>
+          <td>{{ formset.empty_form.net_weight }}</td>
+          <td>{{ formset.empty_form.rate }}</td>
+          <td>{{ formset.empty_form.sgst }}</td>
+          <td>
+            <input type="text"value="" readonly>
+            {{ formset.empty_form.sgst }}
+            {{ formset.empty_form.cgst }}
+            {{ formset.empty_form.igst }}
+            {{ formset.empty_form.tcs }}
+          </td>
+          <td>{{ formset.empty_form.total }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div id="totals_box">
+    
+
+  </div>
+  </form>
+{% endblock %}

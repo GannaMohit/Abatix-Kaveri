@@ -4,12 +4,12 @@ import datetime
 
 # Create your models here.
 
-def get_voucher_number(self):
+def get_voucher_number():
     today = datetime.date.today()
     last_april_date = datetime.date(today.year, 4, 1)
     if last_april_date > today:
         last_april_date = last_april_date.replace(year=today.year - 1)
-    last_april_date_time = datetime.combine(last_april_date, datetime.time.min)
+    last_april_date_time = datetime.datetime.combine(last_april_date, datetime.time.min)
     return Voucher.objects.filter(date__gt = last_april_date_time).count() + 1
 
 class Voucher(models.Model):

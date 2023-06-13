@@ -1,0 +1,176 @@
+#highlight {
+    position: absolute;
+    left: 0vw;
+    top: 50vh;
+    width: 6.25vw;
+    height: 8.33vh;
+    background: rgba(245, 248, 253, 0.4);
+}
+
+#outer-box {
+    display: none;
+}
+
+#customer_form_box {
+    position: absolute;
+    width: 28.125vw;
+    height: 83.33vh;
+    left: 7.8125vw;
+    top: 2.78vh;
+
+    background: #FFFFFF;
+    border-radius: 1.39vh;
+}
+
+#customer_form_box label {
+    position:relative;
+    width: 6.25vw;
+    height: 2.78vh;
+    margin-bottom: 2.78vh;
+    margin-left: 3.125vw;
+    top: 2.78vh;
+
+    /* Body */
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.39vh;
+    line-height: 2.78vh;
+    display: inline-block;
+
+    color: #2D2D2D;
+    vertical-align: top;
+}
+
+#customer_form_box input, #customer_form_box select, #customer_form_box textarea {
+    position: relative;
+    width: 15.625vw;
+    height: 2.78vh;
+    margin-bottom: 2.78vh;
+    /* margin-left: 3.125vw; */
+    padding-left: 1.5625vw;
+    top: 2.78vh;
+    box-sizing: border-box;
+
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.39vh;
+    display: inline-block;
+
+    background: #FFFFFF;
+    border: 0.1389vh solid #2D2D2D;
+    border-radius: 0.278vh;
+}
+
+#customer_form_box textarea {
+    height: 5.56vh;
+}
+
+input#id_id {
+    background: #C4C4C4;
+}
+
+input#id_voucher_number {
+    background: #C4C4C4;
+}
+
+#particular_form_box {
+    position: absolute;
+    width: 60.9375vw;
+    height: 83.33vh;
+    left: 37.5vw;
+    top: 2.78vh;
+
+    background: #FFFFFF;
+    border-radius: 10px;
+}
+
+table#particular_form_table {
+    display: inline-block;
+    position: relative;
+    width: 57.8125vw;
+    height: 36.11vh;
+    left: 1.5625vw;
+    top: 5.56vh;
+    margin: 0px;
+    overflow-y: scroll;
+    border-collapse: collapse;
+}
+
+table#particular_form_table thead {
+    background: #2D2D2D;
+}
+
+table#particular_form_table thead tr th {
+    height: 2.78vh;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1.11vh;
+    color: #FFFFFF;
+    vertical-align: middle;
+    padding-right: 1.5625vw;
+}
+
+table#particular_form_table tr td {
+    height: 2.78vh;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.11vh;
+    vertical-align: middle;
+    text-align: center;
+
+    color: #2D2D2D;
+}
+
+
+table#particular_form_table tr {
+    display: inline-block;
+    height: 2.78vh;
+}
+
+table#particular_form_table tr td {
+    padding: 0px;
+    padding-right: 1.5625vw;
+}
+
+
+table#particular_form_table th, table#particular_form_table td {
+    width: 4.6875vw;
+    text-align: center;
+}
+
+table#particular_form_table th:nth-child(1), table#particular_form_table td:nth-child(1) {
+    width: 1.5625vw;
+    text-align: center;
+}
+
+table#particular_form_table th:nth-child(2), table#particular_form_table td:nth-child(2) {
+    width: 3.125vw;
+    text-align: left;
+}
+
+table#particular_form_table input {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.11vh;
+    display: inline-block;
+    align-items: center;
+    color: #2D2D2D;
+    width: 100%;
+    height: 100%;
+    border: 0px;
+}
+
+#totals_box {
+    position: absolute;
+    width: 93.75vw;
+    height: 11.11vh;
+    right: 0px;
+    bottom: 0px;
+
+    background: rgba(255, 255, 255, 0.8);
+}

@@ -203,7 +203,7 @@ def migrate_advance():
                     address=advance['address'],
                     pincode=advance['pincode'] or "",
                     city=advance['city'] or "",
-                    state=advance['state'] or "",
+                    state = GST_State.objects.get(state=advance["state"]) or "",
                     country="")
         obj1.save()
         obj2 = Advance(date=advance['date'], customer=obj1)
