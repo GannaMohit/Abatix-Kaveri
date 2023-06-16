@@ -10,9 +10,13 @@ class CustomerForm(ModelForm):
 class VoucherForm(ModelForm):
     class Meta:
         model = Voucher
-        fields = ('type', 'voucher_number', 'date')
+        exclude = ('customer',)
         widgets = {
-            'date': DateInput(attrs={'type':'date'})
+            'date': DateInput(attrs={'type':'date'}),
+            'gross_weight': NumberInput(attrs={'readonly':True}),
+            'net_weight': NumberInput(attrs={'readonly':True}),
+            'pure_weight': NumberInput(attrs={'readonly':True}),
+            'amount': NumberInput(attrs={'readonly':True})
         }
 
 class ParticularForm(ModelForm):
@@ -20,19 +24,27 @@ class ParticularForm(ModelForm):
         model = Particular
         exclude = ('voucher',)
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields:
+            self.fields[field].widget.attrs["oninput"] = "updateValues(false)"
+
+        self.fields["gross_weight"].label= "Gross Weight"
+        self.fields["net_weight"].label= "Net Weight"
+
 widgets = {
     'metal': HiddenInput(attrs={'readonly':True}),
     'category': HiddenInput(attrs={'readonly':True}),
     'purity': HiddenInput(attrs={'readonly':True}),
-    'gross_weight': TextInput(attrs={'readonly':True}),
-    'net_weight': TextInput(attrs={'readonly':True}),
-    'rate': TextInput(attrs={'readonly':True}),
-    'subtotal': TextInput(attrs={'readonly':True}),
+    'gross_weight': NumberInput(attrs={'readonly':True}),
+    'net_weight': NumberInput(attrs={'readonly':True}),
+    'rate': NumberInput(attrs={'readonly':True}),
+    'subtotal': NumberInput(attrs={'readonly':True}),
     'sgst': HiddenInput(attrs={'readonly':True}),
     'cgst': HiddenInput(attrs={'readonly':True}),
     'igst': HiddenInput(attrs={'readonly':True}),
     'tcs': HiddenInput(attrs={'readonly':True}),
-    'total': TextInput(attrs={'readonly':True})
+    'total': NumberInput(attrs={'readonly':True})
 }
 
 fields = ('metal', 'purity', 'category', 'gross_weight', 'net_weight', 'rate', 'subtotal', 'sgst', 'cgst', 'igst', 'tcs', 'total')

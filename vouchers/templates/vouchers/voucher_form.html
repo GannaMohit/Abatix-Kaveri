@@ -5,13 +5,16 @@
 
 {% block link %}
   <link rel="stylesheet" href="{% static 'vouchers/css/voucher_form.css' %}">
+  <script src="{% static 'vouchers/js/voucher_form.js' %}"></script>
 {% endblock %}
 
 {% block body %}
 </div>
-<form action="{{ request.path }}" method="post"></form>
+<form action="{{ request.path }}" method="post">
+  {% csrf_token %}
+  {{ formset.management_form }}
   <div id="customer_form_box">
-    <label for="id_id_">ID</label>
+    <label for="id_id">ID</label>
     <input type="number"  name="id" value="{{ id }}" required="" id="id_id" readonly>
     {{ form.type.label_tag }}
     {{ form.type }}
@@ -35,13 +38,14 @@
           <th>Subtotal</th>
           <th>Tax</th>
           <th>Total</th>
+          <th></th>
         </tr>
       </thead>
 
       <tbody>
         {% for particular_formset in formset %}
         <tr>
-          <td onclick="changeValues(this)">{{ forloop.counter }}{{ stud_formset.id }}</td>
+          <td onclick="updateValues(true)">{{ forloop.counter }}{{ stud_formset.id }}</td>
           <td><input type="text" value="{{ particular_formset.metal.value }}" readonly>{{ particular_formset.metal }}</td>
           <td><input type="text" value="{{ particular_formset.category.value }}" readonly>{{ particular_formset.category }}</td>
           <td><input type="text" value="{{ particular_formset.purity.value }}" readonly>{{ particular_formset.purity }}</td>
@@ -57,17 +61,18 @@
             {{ particular_formset.tcs }}
           </td>
           <td>{{ particular_formset.total }}</td>
+          <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteRow(this)"></td>
         </tr>
         {% endfor %}
         <tr>
-          <td onclick="changeValues(this)">Add</td>
+          <td onclick="addRow(this)" id="add">Add</td>
           <td><input type="text" value="" readonly>{{ formset.empty_form.metal }}</td>
           <td><input type="text" value="" readonly>{{ formset.empty_form.category }}</td>
-          <td><input type="text" value="" readonly>{{ formset.empty_form.purity }}</td>
+          <td><input type="number" value="" readonly>{{ formset.empty_form.purity }}</td>
           <td>{{ formset.empty_form.gross_weight }}</td>
           <td>{{ formset.empty_form.net_weight }}</td>
           <td>{{ formset.empty_form.rate }}</td>
-          <td>{{ formset.empty_form.sgst }}</td>
+          <td>{{ formset.empty_form.subtotal }}</td>
           <td>
             <input type="text"value="" readonly>
             {{ formset.empty_form.sgst }}
@@ -76,14 +81,40 @@
             {{ formset.empty_form.tcs }}
           </td>
           <td>{{ formset.empty_form.total }}</td>
+          <td><img class="cross" src="{% static 'masters/svg/cross.svg' %}" onclick="deleteRow(this)" style="display:none;"></td>
         </tr>
       </tbody>
     </table>
   </div>
 
   <div id="totals_box">
-    
 
+    <div>
+      {{ form.gross_weight.label_tag | title }}
+      {{ form.gross_weight }}
+    </div>
+
+    <div>
+      {{ form.net_weight.label_tag | title }}
+      {{ form.net_weight }}
+    </div>
+
+    <div>
+      {{ form.pure_weight.label_tag | title }}
+      {{ form.pure_weight }}
+    </div>
+    
+    <div>
+      {{ form.amount.label_tag | title }}
+      {{ form.amount }}
+    </div>
+    
+    <a href="{% url 'vouchers' %}"><button type="button" name="reset" id="id_cancel_button">Cancel</button></a>
+    <button type="submit" name="submit" id="id_submit_button">Submit</button>
+    
   </div>
   </form>
+  <div id="particular_subform" hidden>
+    {{ particular_form }}
+  </div>
 {% endblock %}

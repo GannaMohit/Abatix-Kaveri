@@ -3,6 +3,7 @@ from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, AccessMixin
 from vouchers.models import Voucher, Particular
+from masters.models import Customer
 from vouchers.forms import VoucherForm, ParticularForm, ParticularFormSet, CustomerForm
 
 class VoucherBaseView(LoginRequiredMixin, PermissionRequiredMixin, AccessMixin):
@@ -27,19 +28,25 @@ class VoucherCreateView(VoucherBaseView, CreateView):
 
     def form_valid(self, form):
         context = self.get_context_data()
-        voucher = form.save(commit=False)
-        context["formset"] = ParticularFormSet(self.request.POST, instance=voucher)
-        if context["formset"].is_valid():
-            voucher.save()
-            self.object = voucher
-            context["formset"].save()
-            return super().form_valid(form)
+        context["customer_form"] = CustomerForm(self.request.POST)
+        if context["customer_form"].is_valid():
+            context["formset"] = ParticularFormSet(self.request.POST)
+            if context["formset"].is_valid():
+                try:
+                    customer = Customer.objects.get(**context["customer_form"].cleaned_data)
+                except:
+                    customer = context["customer_form"].save()
+                form.instance.customer = customer
+                self.object = form.save()
+                context["formset"].instance = self.object
+                context["formset"].save()
+                return super().form_valid(form)
         return self.render_to_response(context)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["customer_form"] = CustomerForm(label_suffix="")
-        context["particular_form"] = ParticularForm()
+        context["particular_form"] = ParticularForm(label_suffix="")
         context["formset"] = ParticularFormSet()
         try:
             context["id"] = Voucher.objects.order_by("pk").last().id + 1

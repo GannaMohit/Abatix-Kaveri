@@ -111,6 +111,7 @@ table#particular_form_table thead tr th {
     color: #FFFFFF;
     vertical-align: middle;
     padding-right: 1.5625vw;
+    text-align: center;
 }
 
 table#particular_form_table tr td {
@@ -125,11 +126,32 @@ table#particular_form_table tr td {
     color: #2D2D2D;
 }
 
+table#particular_form_table input {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.11vh;
+    color: #2D2D2D;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: none;
+    display: inline;
+}
 
 table#particular_form_table tr {
     display: inline-block;
     height: 2.78vh;
 }
+
+table#particular_form_table tbody tr:nth-child(2n-1) {
+    background: #FFFFFF;
+}
+
+table#particular_form_table tbody tr:nth-child(2n) {
+    background: #E6E6E6;
+}
+
 
 table#particular_form_table tr td {
     padding: 0px;
@@ -137,32 +159,28 @@ table#particular_form_table tr td {
 }
 
 
-table#particular_form_table th, table#particular_form_table td {
+table#particular_form_table th, table#particular_form_table td, table#particular_form_table input {
     width: 4.6875vw;
     text-align: center;
 }
 
-table#particular_form_table th:nth-child(1), table#particular_form_table td:nth-child(1) {
+table#particular_form_table th:nth-child(1), table#particular_form_table td:nth-child(1), table#particular_form_table td:nth-child(1) input{
     width: 1.5625vw;
     text-align: center;
 }
 
-table#particular_form_table th:nth-child(2), table#particular_form_table td:nth-child(2) {
+table#particular_form_table th:nth-child(2), table#particular_form_table td:nth-child(2), table#particular_form_table td:nth-child(2) input {
     width: 3.125vw;
     text-align: left;
 }
 
-table#particular_form_table input {
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 500;
-    font-size: 1.11vh;
-    display: inline-block;
-    align-items: center;
-    color: #2D2D2D;
-    width: 100%;
-    height: 100%;
-    border: 0px;
+table#particular_form_table td:nth-last-child(2), table#particular_form_table th:nth-last-child(2) {
+    padding-right: 0;
+}
+
+table#particular_form_table td:last-child, table#particular_form_table th:last-child {
+    width: 1.5625vw;
+    padding-right: 0;
 }
 
 #totals_box {
@@ -171,6 +189,134 @@ table#particular_form_table input {
     height: 11.11vh;
     right: 0px;
     bottom: 0px;
-
     background: rgba(255, 255, 255, 0.8);
 }
+
+#totals_box div {
+    display: inline-block;
+    width: 9.375vw;
+    height: 5.56vh;
+    margin-left: 1.5625vw;
+    margin-right: 1.5625vw;
+    margin-bottom: 2.78vh;
+    margin-top: 2.78vh;
+}
+
+#totals_box label {
+    width: 9.375vw;
+    height: 2.78vh;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.429vh;
+    display: inline-block;
+    text-align: center;
+
+    color: #2D2D2D;
+}
+
+#totals_box input {
+    width: 9.375vw;
+    height: 2.78vh;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 2.5vh;
+    display: inline-block;
+    text-align: right;
+
+    color: #2D2D2D;
+    border: 0px;
+    background: none;
+}
+
+#id_cancel_button {
+    width: 9.375vw;
+    height: 5.56vh;
+    position: absolute;
+    bottom: 2.78vh;
+    right: 15.625vw;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.389vh;
+    text-align: center;
+
+    color: #FFFFFF;
+    background: #2D2D2D;
+    border: 0px;
+    border-radius: 2.78vh;
+    cursor:pointer;
+}
+
+#id_submit_button {
+    width: 9.375vw;
+    height: 5.56vh;
+    position: absolute;
+    bottom: 2.78vh;
+    right: 3.125vw;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 1.389vh;
+    text-align: center;
+
+    color: #FFFFFF;
+    background: #A44B85;
+    border: 0px;
+    border-radius: 2.78vh;
+    cursor:pointer;
+}
+
+div#particular_subform {
+    position: absolute;
+    width: 60.9375vw;
+    height: 38.89vh;
+    left: 37.5vw;
+    top: 47.22vh;
+
+    background: rgba(237, 237, 237, 0.4);
+    border-radius: 0px 0px 1.389vh 1.389vh;
+    columns: 2;
+}
+
+div#particular_subform label {
+    display: inline-block;
+    width: 6.25vw;
+    height: 2.78vh;
+    margin-left: 4.6875vw;
+    margin-top: 2.78vh;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 1.11vh;
+    text-align: left;
+    color: #2D2D2D;
+}
+
+div#particular_subform input, div#particular_subform select {
+    display: inline-block;
+    width: 15.625vw;
+    height: 2.78vh;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 1.11vh;
+
+    color: #2D2D2D;
+    box-sizing: border-box;
+
+    background: #FFFFFF;
+    border: 0.1389vh solid #2D2D2D;
+    border-radius: 0.278vh;
+
+}
+
+.cross {
+    cursor: pointer;
+}
+
+#selected  {
+    background-color: rgba(164, 75, 133, 0.3) !important;
+    box-sizing: border-box;
+  }
