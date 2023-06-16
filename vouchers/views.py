@@ -53,3 +53,39 @@ class VoucherCreateView(VoucherBaseView, CreateView):
         except:
             context["id"] = 1
         return context
+
+class VoucherUpdateView(VoucherBaseView, UpdateView):
+    permission_required = "vouchers.change_voucher"
+    template_name = "vouchers/voucher_form.html"
+    form_class = VoucherForm
+    model = Voucher
+
+    def get_form_kwargs(self, **kwargs):
+        form_kwargs = super(VoucherCreateView, self).get_form_kwargs(**kwargs)
+        form_kwargs["label_suffix"] = ""
+        return form_kwargs
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        context["customer_form"] = CustomerForm(self.request.POST)
+        if context["customer_form"].is_valid():
+            context["formset"] = ParticularFormSet(self.request.POST)
+            if context["formset"].is_valid():
+                try:
+                    customer = Customer.objects.get(**context["customer_form"].cleaned_data)
+                except:
+                    customer = context["customer_form"].save()
+                form.instance.customer = customer
+                self.object = form.save()
+                context["formset"].instance = self.object
+                context["formset"].save()
+                return super().form_valid(form)
+        return self.render_to_response(context)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["customer_form"] = CustomerForm(label_suffix="", instance=self.object.customer)
+        context["particular_form"] = ParticularForm(label_suffix="")
+        context["formset"] = ParticularFormSet(instance=self.object)
+        context["id"] = self.object.id
+        return context

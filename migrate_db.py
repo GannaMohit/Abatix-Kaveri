@@ -270,7 +270,7 @@ def migrate_vouchers():
                     address=voucher['address'],
                     pincode=voucher['pincode'],
                     city=voucher['city'],
-                    state=voucher['state'],
+                    state=GST_State.objects.get(state=voucher["state"]) or "",
                     country=voucher['country'])
         obj1.save()
         obj2 = Voucher(voucher_number=voucher["voucher_number"],
