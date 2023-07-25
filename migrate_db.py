@@ -103,7 +103,7 @@ def migrate_stock():
                     studs_weight=product['studding'],
                     less_weight=product['less_weight'],
                     net_weight=product['net_weight'],
-                    rate=product['rate'],
+                    rate=0.0 if product['rate'] == "" else float(product['rate']), #TODO: Take care of blank entries of rate (maybe using date?)
                     calculation=product['calculation'],
                     making_charges= 0.0 if product['making_charges'] == "" else float(product['making_charges']),
                     wastage= 0.0 if product['wastage'] == "" else float(product['wastage']),
@@ -131,46 +131,46 @@ def migrate_stock():
         obj.save()
 
 def migrate_invoice():
-    # invoices = db.execute("SELECT * FROM Bills ORDER BY id").fetchall()
-    # for invoice in invoices:
-    #     obj1 = Customer(name=invoice["name"],
-    #                 firm=invoice['firm'],
-    #                 pan=invoice['pan'],
-    #                 gst=invoice['gst'],
-    #                 aadhar="",
-    #                 contact=invoice['contact'],
-    #                 email=invoice['email'],
-    #                 address=invoice['address'],
-    #                 pincode=invoice['pincode'],
-    #                 city=invoice['city'],
-    #                 state=invoice['state'],
-    #                 country="India")
-    #     obj1.save()
-    #     obj2 = Invoice(invoice_number=invoice["bill_number"],
-    #                 date=invoice['date'],
-    #                 gst_invoice=invoice['gst_bill'],
-    #                 gst_state=GST_State.objects.get(pk=invoice['gst_state']),
-    #                 subtotal=invoice['subtotal'],
-    #                 sgst=invoice['sgst'],
-    #                 cgst=invoice['cgst'],
-    #                 igst=invoice['igst'],
-    #                 tcs=invoice['tcs'],
-    #                 total=invoice['total'],
-    #                 customer=obj1,
-    #                 rates=invoice['rates'])
-    #     obj2.save()
-    #
-    # invoice_untagged = db.execute("SELECT * FROM Bill_Untagged ORDER BY id").fetchall()
-    # for product in invoice_untagged:
-    #     obj = Untagged(invoice=Invoice.objects.get(pk=product["bill_id"]),
-    #                 metal=Metal.objects.get(pk=product['metal']),
-    #                 purity_id=product['purity'],
-    #                 type_id=2,
-    #                 category=Category.objects.get(pk=product['category']),
-    #                 gross_weight=0.0 if product['gross_weight']=="" else product["gross_weight"],
-    #                 less_weight=0.0 if product['less_weight']=="" else product["less_weight"],
-    #                 net_weight=0.0 if product['net_weight']=="" else product["net_weight"])
-    #     obj.save()
+    invoices = db.execute("SELECT * FROM Bills ORDER BY id").fetchall()
+    for invoice in invoices:
+        obj1 = Customer(name=invoice["name"],
+                    firm=invoice['firm'],
+                    pan=invoice['pan'],
+                    gst=invoice['gst'],
+                    aadhar="",
+                    contact=invoice['contact'],
+                    email=invoice['email'],
+                    address=invoice['address'],
+                    pincode=invoice['pincode'],
+                    city=invoice['city'],
+                    state=GST_State.objects.get(state=invoice["state"]) if invoice["state"] != "" else GST_State.objects.get(pk=invoice["gst_state"]),
+                    country="India")
+        obj1.save()
+        obj2 = Invoice(invoice_number=invoice["bill_number"],
+                    date=invoice['date'],
+                    gst_invoice=invoice['gst_bill'],
+                    gst_state=GST_State.objects.get(pk=invoice['gst_state']),
+                    subtotal=invoice['subtotal'],
+                    sgst=invoice['sgst'],
+                    cgst=invoice['cgst'],
+                    igst=invoice['igst'],
+                    tcs=invoice['tcs'],
+                    total=invoice['total'],
+                    customer=obj1,
+                    rates=invoice['rates'])
+        obj2.save()
+    
+    invoice_untagged = db.execute("SELECT * FROM Bill_Untagged ORDER BY id").fetchall()
+    for product in invoice_untagged:
+        obj = Untagged(invoice=Invoice.objects.get(pk=product["bill_id"]),
+                    metal=Metal.objects.get(pk=product['metal']),
+                    purity_id=product['purity'],
+                    type_id=2,
+                    category=Category.objects.get(pk=product['category']),
+                    gross_weight=0.0 if product['gross_weight']=="" else product["gross_weight"],
+                    less_weight=0.0 if product['less_weight']=="" else product["less_weight"],
+                    net_weight=0.0 if product['net_weight']=="" else product["net_weight"])
+        obj.save()
 
     invoice_products = db.execute("SELECT * FROM Bill_Products ORDER BY id").fetchall()
     for invoice_product in invoice_products:
@@ -203,8 +203,8 @@ def migrate_advance():
                     address=advance['address'],
                     pincode=advance['pincode'] or "",
                     city=advance['city'] or "",
-                    state = GST_State.objects.get(state=advance["state"]) or "",
-                    country="")
+                    state = GST_State.objects.get(state=invoice["state"]) if invoice["state"] != "" else "",
+                    country="India")
         obj1.save()
         obj2 = Advance(date=advance['date'], customer=obj1)
         obj2.save()
@@ -270,7 +270,7 @@ def migrate_vouchers():
                     address=voucher['address'],
                     pincode=voucher['pincode'],
                     city=voucher['city'],
-                    state=GST_State.objects.get(state=voucher["state"]) or "",
+                    state=GST_State.objects.get(state=invoice["state"]) if invoice["state"] != "" else "",
                     country=voucher['country'])
         obj1.save()
         obj2 = Voucher(voucher_number=voucher["voucher_number"],
@@ -300,12 +300,12 @@ def migrate_vouchers():
                         total=particular['total'])
         obj.save()
 
-# migrate_masters_gst()
-# migrate_masters_product()
-# migrate_masters_stud()
-# migrate_stock()
-# migrate_invoice()
-# migrate_home_sale()
-# migrate_advance()
+migrate_masters_gst()
+migrate_masters_product()
+migrate_masters_stud()
+migrate_stock()
+migrate_invoice()
+migrate_home_sale()
+migrate_advance()
 migrate_payment()
 migrate_vouchers()

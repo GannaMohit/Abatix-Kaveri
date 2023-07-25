@@ -13,5 +13,5 @@ urlpatterns = [
     path("home_sales/<int:pk>/edit", HomeSaleUpdateView.as_view(), name="home_sale_edit"),
     path("advances/new", AdvanceCreateView.as_view(), name="advance_new"),
     path("advances/<int:pk>/edit", AdvanceUpdateView.as_view(), name="advance_edit"),
-    path("invoices/new/1", InvoiceCreateView.Page1.as_view(), name="invoice_new_1")
+    path("invoices/new", InvoiceCreateView.as_view(), name="invoice_new")
 ]

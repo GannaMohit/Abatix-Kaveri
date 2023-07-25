@@ -61,7 +61,7 @@ class VoucherUpdateView(VoucherBaseView, UpdateView):
     model = Voucher
 
     def get_form_kwargs(self, **kwargs):
-        form_kwargs = super(VoucherCreateView, self).get_form_kwargs(**kwargs)
+        form_kwargs = super(VoucherUpdateView, self).get_form_kwargs(**kwargs)
         form_kwargs["label_suffix"] = ""
         return form_kwargs
 

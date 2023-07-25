@@ -1,5 +1,5 @@
 from django.db import models
-from masters.models import Customer, Metal, Purity, Category
+from masters.models import Customer, Metal, Type, Purity, Category
 import datetime
 
 # Create your models here.
@@ -32,6 +32,7 @@ class Voucher(models.Model):
 class Particular(models.Model):
     voucher = models.ForeignKey(Voucher, on_delete=models.CASCADE, related_name="particulars")
     metal = models.ForeignKey(Metal, on_delete=models.CASCADE, related_name="particulars")
+    type = models.ForeignKey(Type, on_delete=models.CASCADE, related_name="particulars")
     purity = models.ForeignKey(Purity, on_delete=models.CASCADE, related_name="particulars")
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="particulars")
     gross_weight = models.DecimalField(max_digits=16, decimal_places=3)

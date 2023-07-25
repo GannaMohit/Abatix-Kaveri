@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="{% static 'sales/css/invoices.css' %}">
 {% endblock %}
 
-{% block new_button_link %}<!-- TODO: Add link to InvoiceNew -->{% endblock %}
+{% block new_button_link %}{% url 'invoice_new' %}{% endblock %}
 {% block export_button_link %}<!-- TODO: Add link to InvoiceExport -->{% endblock %}
 
 {% block table %}

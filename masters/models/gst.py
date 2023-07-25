@@ -6,7 +6,7 @@ class GST_State(models.Model):
     apha_code = models.CharField(max_length=64, blank=True)
 
     def __str__(self):
-        return self.state
+        return f"{self.code} - {self.state}"
 
 class GST_Rate(models.Model):
     type = models.CharField(max_length=64, unique=True)

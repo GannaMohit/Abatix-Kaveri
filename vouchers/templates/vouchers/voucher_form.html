@@ -54,7 +54,7 @@
           <td>{{ particular_formset.rate }}</td>
           <td>{{ particular_formset.subtotal }}</td>
           <td>
-            <input type="text"value="{{ particular_formset.sgst.value | add:particular_formset.cgst.value |add:particular_formset.igst.value |add:particular_formset.tcs.value }}" readonly>
+            <input type="text" value="{{ particular_formset.sgst.value | add:particular_formset.cgst.value |add:particular_formset.igst.value |add:particular_formset.tcs.value }}" readonly>
             {{ particular_formset.sgst }}
             {{ particular_formset.cgst }}
             {{ particular_formset.igst }}
