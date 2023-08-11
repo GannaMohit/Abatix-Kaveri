@@ -27,14 +27,31 @@ class InvoiceCreateView(InvoiceBaseView, CreateView):
     def form_valid(self, form):
         context = self.get_context_data()
         context["customer_form"] = CustomerForm(self.request.POST)
-        if context["customer_form"].is_valid():
+        context["product_formset"] = ProductFormSet(self.request.POST)
+        context["untagged_formset"] = UntaggedFormSet(self.request.POST)
+        context["advance_formset"] = AdvanceFormSet(self.request.POST)
+        context["payment_formset"] = PaymentFormSet(self.request.POST)
+        
+        if (context["customer_form"].is_valid() and 
+        context["product_formset"].is_valid() and
+        context["untagged_formset"].is_valid() and
+        context["advance_formset"].is_valid() and
+        context["payment_formset"].is_valid()):
             try:
                 customer = Customer.objects.get(**context["customer_form"].cleaned_data)
             except:
-                customer = context["customer_form"].save(commit=False)
+                customer = context["customer_form"].save()
+            
             form.instance.customer = customer
-            context["invoice_form"] = form
-            context["invoice"] = form.save(commit=False)
+            self.object = form.save()
+            context["product_formset"].instance = self.object
+            context["product_formset"].save()
+            context["untagged_formset"].instance = self.object
+            context["untagged_formset"].save()
+            context["advance_formset"].instance = self.object
+            context["advance_formset"].save()
+            context["payment_formset"].instance = self.object
+            context["payment_formset"].save()
             return super().form_valid(form)
         return self.render_to_response(context)
 

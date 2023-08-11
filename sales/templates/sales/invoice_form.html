@@ -13,6 +13,19 @@
 
 <form action="{{request.path }}" method="post">
   {% csrf_token %}
+
+  <div id="invoice_box">
+    <div>
+      <label for="id_id">I.D.</label>
+      <input type="text" value="{{ id }}" readonly>
+    </div>
+    {{ form.as_div }}
+  </div>
+
+  <div id="customer_box">
+    {{ customer_form.as_div }}
+  </div>
+
   <div id="products_box">
     {{ product_formset.management_form }}
     {{ untagged_formset.management_form }}
@@ -34,36 +47,28 @@
       <tbody>
         {% for product in product_formset %}
           <tr>
-            <td>{{ product.instance.product.metal }} {{ product.product.category }}</td>
-            <td>{{ product.instance.product.gross_weight }}</td>
-            <td>{{ product.instance.product.net_weight }}</td>
-            <td>{{ product.subtotal }}</td>
+            <td><p id="id_metal_table">{{ product.instance.product.metal }}</p> <p id="id_category_table">{{ product.instance.product.category }}</p></td>
+            <td id="id_gross_weight_table">{{ product.instance.product.gross_weight }}</td>
+            <td id="id_net_weight_table">{{ product.instance.product.net_weight }}</td>
+            <td id="id_subtotal_table">{{ product.subtotal.value }}</td>
             <td>{{ product.sgst.value | add:product.cgst.value |add:product.igst.value |add:product.tcs.value }}></td>
-            <td>{{ product.total }}</td>
+            <td id="id_total_table">{{ product.total.value }}</td>
             <td hidden>
-              {{ product.rate.as_hidden }}
-              {{ product.sgst.as_hidden }}
-              {{ product.cgst.as_hidden }}
-              {{ product.igst.as_hidden }}
-              {{ product.tcs.as_hidden }}
+              {{ product.as_div }}
             </td>
             <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteRow(this)"></td>
           </tr>
         {% endfor %}
 
         <tr>
+          <td><p id="id_metal_table"><p> <p id="id_category_table"></p></td>
+          <td id="id_gross_weight_table"></td>
+          <td id="id_net_weight_table"></td>
+          <td id="id_subtotal_table"></td>
           <td></td>
-          <td></td>
-          <td></td>
-          <td>{{ product_formset.empty_form.subtotal }}</td>
-          <td></td>
-          <td>{{ product_formset.empty_form.total }}</td>
+          <td id="id_total_table"></td>
           <td hidden>
-            {{ product_formset.empty_form.rate.as_hidden }}
-            {{ product_formset.empty_form.sgst.as_hidden }}
-            {{ product_formset.empty_form.cgst.as_hidden }}
-            {{ product_formset.empty_form.igst.as_hidden }}
-            {{ product_formset.empty_form.tcs.as_hidden }}
+            {{ product_formset.empty_form.as_div }}
           </td>
           <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteRow(this)" style="display: none;"></td>
         </tr>
@@ -87,67 +92,33 @@
       <tbody>
         {% for product in untagged_formset %}
           <tr>
-            <td><input type="text" readonly></td>
-            <td>{{ product.gross_weight }}</td>
-            <td>{{ product.net_weight }}</td>
-            <td>{{ product.subtotal }}</td>
+            <td><p id="id_metal_table">{{ product.metal.value }}</p> <p id="id_category_table">{{ product.category.value }}</p></td>
+            <td id="id_gross_weight_table">{{ product.gross_weight.value }}</td>
+            <td id="id_net_weight_table">{{ product.net_weight.value }}</td>
+            <td id="id_subtotal_table">{{ product.subtotal.value }}</td>
             <td>{{ product.sgst.value | add:product.cgst.value |add:product.igst.value |add:product.tcs.value }}></td>
-            <td>{{ product.total }}</td>
+            <td id="id_total_table">{{ product.total.value }}</td>
             <td hidden>
-              {{ product.metal.as_hidden }}
-              {{ product.type.as_hidden }}
-              {{ product.category.as_hidden }}
-              {{ product.pieces.as_hidden }}
-              {{ product.less_weight.as_hidden }}
-              {{ product.studs_weight.as_hidden }}
-              {{ product.net_weight.as_hidden }}
-              {{ product.rate.as_hidden }}
-              {{ product.sgst.as_hidden }}
-              {{ product.cgst.as_hidden }}
-              {{ product.igst.as_hidden }}
-              {{ product.tcs.as_hidden }}
+              {{ product.as_div }}
             </td>
             <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteRow(this)"></td>
           </tr>
         {% endfor %}
 
         <tr>
-          <td><input type="text" readonly></td>
-          <td>{{ untagged_formset.empty_form.gross_weight }}</td>
-          <td>{{ untagged_formset.empty_form.net_weight }}</td>
-          <td>{{ untagged_formset.empty_form.subtotal }}</td>
+          <td><p id="id_metal_table"></p> <p id="id_category_table"></p></td>
+          <td id="id_gross_weight_table"></td>
+          <td id="id_net_weight_table"></td>
+          <td id="id_subtotal_table"></td>
           <td></td>
-          <td>{{ untagged_formset.empty_form.total }}</td>
+          <td id="id_total_table"></td>
           <td hidden>
-            {{ untagged_formset.empty_form.metal.as_hidden }}
-            {{ untagged_formset.empty_form.type.as_hidden }}
-            {{ untagged_formset.empty_form.category.as_hidden }}
-            {{ untagged_formset.empty_form.pieces.as_hidden }}
-            {{ untagged_formset.empty_form.less_weight.as_hidden }}
-            {{ untagged_formset.empty_form.studs_weight.as_hidden }}
-            {{ untagged_formset.empty_form.net_weight.as_hidden }}
-            {{ untagged_formset.empty_form.rate.as_hidden }}
-            {{ untagged_formset.empty_form.sgst.as_hidden }}
-            {{ untagged_formset.empty_form.cgst.as_hidden }}
-            {{ untagged_formset.empty_form.igst.as_hidden }}
-            {{ untagged_formset.empty_form.tcs.as_hidden }}
+            {{ untagged_formset.empty_form.as_div }}
           </td>
           <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteRow(this)" style="display: none;"></td>
         </tr>
       </tbody>
     </table>
-  </div>
-
-  <div id="invoice_box">
-    <div>
-      <label for="id_id">I.D.</label>
-      <input type="text" value="{{ id }}" readonly>
-    </div>
-    {{ form.as_div }}
-  </div>
-
-  <div id="customer_box">
-    {{ customer_form.as_div }}
   </div>
 
   <div id="advances_box">
@@ -167,19 +138,21 @@
       <tbody>
         {% for advance in advance_formset %}
           <tr>
-            <td>{{ advance.advance }}</td>
-            <td>{{ advance.instance.advance.date }}</td>
-            <td>{{ advance.instance.advance.name }}</td>
-            <td>{{ advance.instance.advance.amount }}</td>
+            <td id="id_advance_table">{{ advance.advance.value }}</td>
+            <td id="id_date_table">{{ advance.instance.advance.date }}</td>
+            <td id="id_name_table">{{ advance.instance.advance.name }}</td>
+            <td id="id_amount_table">{{ advance.instance.advance.amount }}</td>
             <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteRow(this)"></td>
+            <td hidden>{{ advance.as_div }}</td>
           </tr>
         {% endfor %}
         <tr>
-          <td>{{ advance_formset.empty_form.advance }}</td>
-          <td></td>
-          <td></td>
-          <td></td>
+          <td id="id_advance_table"></td>
+          <td id="id_date_table"></td>
+          <td id="id_name_table"></td>
+          <td id="id_amount_table"></td>
           <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteRow(this)" style="display:none;"></td>
+          <td hidden>{{ advance_formset.empty_form.as_div }}</td>
         </tr>
       </tbody>
     </table>
@@ -204,18 +177,24 @@
         {% for payment in payment_formset %}
           <tr>
             <td>{{ forloop.counter }}</td>
-            <td>{{ payment.method }}</td>
-            <td>{{ payment.date }}</td>
-            <td>{{ payment.amount }}</td>
+            <td id="id_method_table">{{ payment.method.value }}</td>
+            <td id="id_date_table">{{ payment.date.value }}</td>
+            <td id="id_amount_table">{{ payment.amount.value }}</td>
             <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteRow(this)"></td>
+            <td hidden>
+              {{ payment.as_div }}
+            </td>
           </tr>
         {% endfor %}
         <tr>
           <td></td>
-          <td>{{ payment_formset.empty_form.method }}</td>
-          <td>{{ payment_formset.empty_form.date }}</td>
-          <td>{{ payment_formset.empty_form.amount }}</td>
-          <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteRow(this)" style="display:none;"></td>
+          <td id="id_method_table"></td>
+          <td id="id_date_table"></td>
+          <td id="id_amount_table"></td>
+          <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteRow(this)" style="display: none;"></td>
+          <td hidden>
+            {{ payment_formset.empty_form.as_div }}
+          </td>
         </tr>
       </tbody>
 
@@ -248,17 +227,17 @@
 
 <div id="product_subform">
   <button type="button" class="new_button" id="product_new" onclick="newRow(this, 'products')">New</button>
-  <form action="" hidden id="products_subform">
+  <form action="javascript:submitRow(this, 'products')" hidden id="products_subform">
     <div>
-      <input type="radio" name="radio_type" id="id_tagged" value="tagged" oninput="switchProductFields(this)">
+      <input type="radio" name="radio_type" id="id_tagged" value="tagged" oninput="switchProductFields(this)" required>
       <label for="id_tagged">Tagged</label>
       <input type="radio" name="radio_type" id="id_untagged" value="untagged" oninput="switchProductFields(this)">
       <label for="id_untagged">Untagged</label>
     </div>
 
     <div>
-      <label for="id_id">ID</label>
-      <input type="number" id="id_id">
+      <label for="id_product">ID</label>
+      <input type="number" id="id_product" name="product" oninput="validateProductID(this, '/stock/_fetch_product')">
     </div>
     
     {{ untagged_form.as_div }}
@@ -271,17 +250,20 @@
 
 <div id="advance_subform">
   <button type="button" class="new_button" id="advance_new" onclick="newRow(this, 'advances')">New</button>
-  <form action="" hidden id="advances_subform">
+  <form action="javascript:submitRow(this, 'advances')" hidden id="advances_subform" onchange="validateAdvanceID(this, '/sales/_fetch_advance')">
     {{ invoice_advance_form.advance }}
+    <input type="text" name="date" id="id_date" hidden>
+    <input type="text" name="name" id="id_name" hidden>
+    <input type="text" name="amount" id="id_amount" hidden>
     <button type="submit" class="submit_button" id="advance_submit">Submit</button>
   </form>
 </div>
 
 <div id="payment_subform">
-  <button type="button" class="new_button" id="payment_new" onclick="newRow(this, 'payments')">New</button>
-  <form action="" hidden id="payments_subform">
+  <button type="button" class="new_button" id="payment_new" onclick="newRow(this, 'payments'); displayFields();">New</button>
+  <form action="javascript:submitRow(this, 'payments')" hidden id="payments_subform">
     <div id="payment_subform_div">
-      {{ payment_form.as_div.as_hidden }}
+      {{ payment_form.as_div }}
     </div>
     <button type="reset" class="clear_button" id="payment_clear">Clear</button>
     <button type="submit" class="submit_button" id="payment_submit">Submit</button>

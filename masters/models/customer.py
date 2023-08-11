@@ -13,7 +13,7 @@ class Customer(models.Model):
     address = models.TextField(blank=True, null=True)
     pincode = models.CharField(max_length=16, blank=True)
     city = models.CharField(max_length=64, blank=True)
-    state = models.ForeignKey(GST_State, on_delete=models.CASCADE, related_name='gst_state')
+    state = models.CharField(max_length=64, blank=True)
     country = models.CharField(max_length=64, blank=True)
 
     def __str__(self):
