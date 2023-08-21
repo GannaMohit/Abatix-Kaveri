@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import (
-    InvoiceListView, InvoiceCreateView,
+    InvoiceListView, InvoiceCreateView, InvoiceUpdateView,
     HomeSaleListView, HomeSaleCreateView, HomeSaleUpdateView,
     AdvanceListView, AdvanceCreateView, AdvanceUpdateView, AdvanceFetchAjax
 )
@@ -14,5 +14,6 @@ urlpatterns = [
     path("home_sales/<int:pk>/edit", HomeSaleUpdateView.as_view(), name="home_sale_edit"),
     path("advances/new", AdvanceCreateView.as_view(), name="advance_new"),
     path("advances/<int:pk>/edit", AdvanceUpdateView.as_view(), name="advance_edit"),
-    path("invoices/new", InvoiceCreateView.as_view(), name="invoice_new")
+    path("invoices/new", InvoiceCreateView.as_view(), name="invoice_new"),
+    path("invoices/<int:pk>/edit", InvoiceUpdateView.as_view(), name="invoice_edit")
 ]

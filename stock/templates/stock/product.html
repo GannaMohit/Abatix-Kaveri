@@ -9,6 +9,7 @@
 {% endblock %}
 
 {% block body %}
+<div id="outer-box">
   <span class="inner-text">1. Tag Details</span><!--
   --><span class="inner-text">2. Metal Details</span><!--
   --><span class="inner-text">3. Product Details</span><!--
@@ -161,6 +162,8 @@
     </table>
   </div>
 </div>
+</div>
+  
 
 <a href="{% url 'product_new' %}"><button id="product-new" type="submit" name="product_new">New</button></a>
 

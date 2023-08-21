@@ -9,6 +9,7 @@
 {% endblock %}
 
 {% block body %}
+<div id="outer-box">
   <form action="{{ request.path }}" method="post">
     {% csrf_token %}
     {{ formset.management_form }}
@@ -85,5 +86,7 @@
     {{ form.date }}
     <button type="submit" name="submit" id="submit">Submit</button>
   </form>
+</div>
+  
   <a href="{% url 'home_sales' %}"><button type="submit" name="cancel" id="cancel">Cancel</button></a>
 {% endblock %}

@@ -36,7 +36,10 @@ class HomeSaleCreateView(HomeSaleBaseView, CreateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["formset"] = ProductFormSet(queryset=self.product_queryset)
-        context["id"] = Home_Sale.objects.order_by("pk").last().id + 1
+        try:
+            context["id"] = Home_Sale.objects.order_by("pk").last().id + 1
+        except:
+            context["id"] = 1
         return context
 
 class HomeSaleUpdateView(HomeSaleBaseView, UpdateView):
