@@ -15,33 +15,33 @@ class Vendor(models.Model):
         return self.name
 
 class Product(models.Model):
-    register_id = models.IntegerField(blank=True, null=True)
+    register_id = models.IntegerField(blank=True, null=True, verbose_name='Register')
     metal = models.ForeignKey(Metal, on_delete=models.CASCADE, related_name="products")
     purity = models.ForeignKey(Purity, on_delete=models.CASCADE, related_name="products")
     type = models.ForeignKey(Type, on_delete=models.CASCADE, related_name="products")
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="products")
     pieces = models.IntegerField(default=1)
-    gross_weight = models.DecimalField(max_digits=16, decimal_places=3)
-    studs_weight = models.DecimalField(max_digits=16, decimal_places=3)
-    less_weight = models.DecimalField(max_digits=16, decimal_places=3)
-    net_weight = models.DecimalField(max_digits=16, decimal_places=3)
+    gross_weight = models.DecimalField(max_digits=16, decimal_places=3, verbose_name="Gross Wt.")
+    studs_weight = models.DecimalField(max_digits=16, decimal_places=3, verbose_name="Studs Wt.")
+    less_weight = models.DecimalField(max_digits=16, decimal_places=3, verbose_name="Less Wt.")
+    net_weight = models.DecimalField(max_digits=16, decimal_places=3, verbose_name="Net Wt.")
 
     rate = models.DecimalField(max_digits=16, decimal_places=2)
-    calculation = models.CharField(max_length=32, choices=[
+    calculation = models.CharField(max_length=32, blank=False, default="Making Charges", choices=[
     ("Making Charges", "Making Charges"),
     ("Wastage", "Wastage"),
     ("MRP", "MRP")
     ])
-    making_charges = models.DecimalField(max_digits=16, decimal_places=2, blank=True, null=True)
+    making_charges = models.DecimalField(max_digits=16, decimal_places=2, blank=True, null=True, verbose_name='Making')
     wastage = models.DecimalField(max_digits=16, decimal_places=2, blank=True, null=True)
-    mrp = models.DecimalField(max_digits=16, decimal_places=2, blank=True, null=True)
+    mrp = models.DecimalField(max_digits=16, decimal_places=2, blank=True, null=True, verbose_name="MRP")
 
     description = models.TextField(blank=True)
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE, related_name="products", blank=True, null=True)
-    purchase_date = models.DateField(blank=True)
-    lot_number = models.IntegerField(blank=True, null=True)
-    design_code = models.CharField(max_length=32, blank=True)
-    old_id = models.CharField(max_length=16, blank=True)
+    purchase_date = models.DateField(blank=True, verbose_name="Date")
+    lot_number = models.IntegerField(blank=True, null=True, verbose_name="Lot Number")
+    design_code = models.CharField(max_length=32, blank=True, verbose_name='Design Code')
+    old_id = models.CharField(max_length=16, blank=True, verbose_name='Jilaba ID')
     sold = models.BooleanField(default=False)
 
     def __str__(self):

@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <title>{% block title %}{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'masters/css/layout.css' %}">
+    <script src="{% static 'masters/js/layout.js' %}"></script>
     <link rel="shortcut icon" href="{% static 'masters/svg/favicon.svg' %}">
     {% block link %}
     {% endblock %}
@@ -26,8 +27,7 @@
       <span id = "nav-logout"><a href="<!-- TODO: Add link to logout -->"><img src="{% static 'masters/svg/Logout.svg' %}" title="Logout"></a></span>
       <div id="highlight"></div>
     </nav>
-    <div id="outer-box">
-      {% block body %}
-      {% endblock %}
+    {% block body %}
+    {% endblock %}
   </body>
 </html>

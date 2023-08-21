@@ -1,84 +1,63 @@
-function changeValues(element) {
-  let selected = document.getElementById('selected');
-  if (selected !== null) {
-    selected.id = "";
-  }
-  if (element.innerHTML === "Add") {
-    let tbody = element.parentElement.parentElement;
-    let clone = element.parentElement.cloneNode(true);
-    tbody.appendChild(clone);
-    let changePrefixInputs = element.parentElement.querySelectorAll("input[name^='studs-__prefix__']");
-    changePrefixInputs.forEach( (input) => {
-      let text = input.name;
-      let result = text.replace("__prefix__", element.parentElement.rowIndex);
-      input.setAttribute("name", result);
-    });
-    let total_forms = document.getElementById("id_studs-TOTAL_FORMS");
-    total_forms.value = parseInt(total_forms.value) + 1;
-
-  }
-  element.parentElement.id = "selected";
-  let form = document.getElementById('form-hidden');
-  if (form.hidden) {
-    form.hidden = false;
-  }
-  let tds = element.parentElement.children;
-  tds[0].innerHTML = element.parentElement.rowIndex + 1;
-  let inputs = document.getElementsByClassName('last-box-inputs');
-
-  inputs[0].value = tds[1].children[1].value;
-  inputs[1].checked = tds[2].children[0].value === "True" ? true: false;
-  inputs[2].value = tds[3].children[0].value;
-  inputs[3].value = tds[4].children[0].value;
-  inputs[4].value = tds[5].children[0].value;
-  inputs[5].value = tds[6].children[0].value;
-  inputs[6].value = tds[6].children[2].value;
-  inputs[7].value = tds[7].children[0].value;
-  inputs[8].value = tds[8].children[0].value;
+function newStudRow(element) {
+  let subform_name = 'studs';
+  newRow(element, subform_name);
 }
 
-function updateTable(element) {
-  let selected = document.getElementById('selected');
-  let tds = selected.children;
-  let inputs = document.getElementsByClassName('last-box-inputs');
-  tds[1].children[0].value = inputs[0].options.selectedIndex === -1 ? "": inputs[0].selectedOptions[0].text;
-  tds[1].children[1].value = inputs[0].value;
-  tds[2].children[0].value = inputs[1].checked ? "True": "False";
-  tds[3].children[0].value = inputs[2].value;
-  tds[4].children[0].value = inputs[3].value;
-  tds[5].children[0].value = inputs[4].value;
-  tds[6].children[0].value = inputs[5].value;
-  tds[6].children[1].value = inputs[6].options.selectedIndex === -1 ? "": inputs[6].selectedOptions[0].text;
-  tds[6].children[2].value = inputs[6].value;
-  tds[7].children[0].value = inputs[7].value;
-  tds[8].children[0].value = inputs[8].value;
+function submitStudRow(element) {
+  let table_name = "studs";
+  submitRow(element, table_name);
+  calculateLessWeight();
 }
 
-function calculateLessWeight(units) {
-  let trs = document.getElementsByClassName('second-row-tables')[0].children[0].children;
-  let less = 0;
-  let studding = 0;
-  let value = 0;
-  for (let i = 0; i < trs.length; ++i) {
-    let tds = trs[i].children;
-    if (tds !== undefined) {
-      if (tds[6].children[1].value !== "") {
-        value = units.find(unit => unit["fields"]["symbol"] === tds[6].children[1].value)["fields"]["value_gram"] * tds[6].children[0].value;
-        if (tds[2].children[0].value === "True") {
-          less += value;
-        }
-        studding += value;
-      }
+function deleteStudRow(element) {
+  deleteRow(element);
+  calculateLessWeight();
+}
+
+function calculateLessWeight() {
+  let url = '/masters/_fetch_units'
+  let csrf_token = document.querySelector("[name='csrfmiddlewaretoken']").value;
+  let headers = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': csrf_token
     }
   }
-  let gw = document.getElementById('id_gross_weight');
-  let s = document.getElementById('id_studs_weight');
-  let lw = document.getElementById('id_less_weight');
-  let nw = document.getElementById('id_net_weight');
-  //gw.value = Number(gw.value).toFixed(2);
-  s.value = studding.toFixed(2);
-  lw.value = less.toFixed(2);
-  nw.value = (gw.value - less).toFixed(2);
+  let units = null;
+
+  fetch(url, headers)
+  .then(response => response.json())
+  .then(function(units_ajax) {
+    units = units_ajax.units;
+    let weight_inputs = document.querySelectorAll(`#studs_table [name$='-weight']`);
+    let unit_inputs = document.querySelectorAll(`#studs_table [name$='-unit']`);
+    let less_inputs = document.querySelectorAll(`#studs_table [name$='-less']`);
+    let delete_inputs = document.querySelectorAll(`#studs_table [name$='-DELETE']`);
+
+    let less = 0;
+    let studding = 0;
+    let value = 0;
+    for (let i = 0; i < weight_inputs.length; ++i) {
+      if (weight_inputs[i].value != '') {
+        if (Boolean(delete_inputs[i].checked) == false) {
+          value = units.find(unit => unit["pk"] == unit_inputs[i].value)["fields"]["value_gram"] * weight_inputs[i].value;
+          if (Boolean(less_inputs[i].value) == true) {
+            less += value;
+          }
+          studding += value;
+        }
+      }
+    }
+
+    let gw = document.getElementById('id_gross_weight');
+    let s = document.getElementById('id_studs_weight');
+    let lw = document.getElementById('id_less_weight');
+    let nw = document.getElementById('id_net_weight');
+    s.value = studding.toFixed(2);
+    lw.value = less.toFixed(2);
+    nw.value = (gw.value - less).toFixed(2);
+  });
 }
 
 function makeRequired(element) {
@@ -99,9 +78,7 @@ function makeRequired(element) {
   }
 }
 
-document.addEventListener("keydown", function(event) {
-  if (event.key === "Enter") {
-    event.preventDefault();
-    document.dispatchEvent( new KeyboardEvent( 'keydown', { 'key': "Tab" } ) );
-  }
-});
+window.onload = () => {
+  let gross_weight = document.querySelector("#id_gross_weight");
+  gross_weight.oninput = calculateLessWeight;
+}

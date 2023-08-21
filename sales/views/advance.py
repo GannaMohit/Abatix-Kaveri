@@ -49,7 +49,10 @@ class AdvanceCreateView(AdvanceBaseView, CreateView):
         context["formset"] = PaymentFormSet()
         context["payment_form"] = PaymentForm()
         context["customer_form"] = CustomerForm()
-        context["id"] = Advance.objects.order_by("pk").last().id + 1
+        try:
+            context["id"] = Advance.objects.order_by("pk").last().id + 1
+        except:
+            context["id"] = 1
         return context
 
 class AdvanceUpdateView(AdvanceBaseView, UpdateView):

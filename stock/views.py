@@ -7,7 +7,7 @@ from .models import Product, Stud
 from masters.models import Unit
 from django.forms.models import model_to_dict
 from django.http import JsonResponse
-from .forms import ProductForm, StudFormSet, StudForm
+from .forms import ProductForm, StudFormSet, StudForm, TagDetailsForm, MetalDetailsForm, ProductDetailsForm, MakingDetailsForm
 from django.core import serializers
 
 from .tag import PrintTag
@@ -78,8 +78,12 @@ class ProductCreateView(ProductBaseView, CreateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["tag_details_form"] = TagDetailsForm(label_suffix="")
+        context["metal_details_form"] = MetalDetailsForm(label_suffix="")
+        context["product_details_form"] = ProductDetailsForm(label_suffix="")
+        context["making_details_form"] = MakingDetailsForm(label_suffix="")
         context["formset"] = StudFormSet()
-        context["stud_form"] = StudForm()
+        context["stud_form"] = StudForm(label_suffix="")
         context["units"] = serializers.serialize("json", Unit.objects.all())
         context["id"] = Product.objects.order_by("pk").last().id + 1
         return context
@@ -103,6 +107,10 @@ class ProductUpdateView(ProductBaseView, UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["tag_details_form"] = TagDetailsForm(label_suffix="", instance=self.object)
+        context["metal_details_form"] = MetalDetailsForm(label_suffix="", instance=self.object)
+        context["product_details_form"] = ProductDetailsForm(label_suffix="", instance=self.object)
+        context["making_details_form"] = MakingDetailsForm(label_suffix="", instance=self.object)
         context["formset"] = StudFormSet(instance=self.object)
         context["stud_form"] = StudForm()
         context["units"] = serializers.serialize("json", Unit.objects.all())

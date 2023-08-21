@@ -171,9 +171,10 @@ function validateFunction(element, url, string, field) {
   element.setCustomValidity("");
   element.reportValidity();
   let inputs = document.querySelectorAll(`#${subform_name}_table [name$='-product']`);
+  let deletes = document.querySelectorAll(`#${subform_name}_table [name$='-DELETE']`);
   let count = 0;
   for (let i = 0; i < inputs.length; i++) {
-    if (inputs[i].value == element.value && inputs[i].parentElement.parentElement.parentElement.style.display != "none") {
+    if (inputs[i].value == element.value && Boolean(deletes[i].value) == false) {
       element.setCustomValidity(`The ${string} is already selected above.`);
       element.reportValidity();
       return;
