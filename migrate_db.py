@@ -111,7 +111,7 @@ def migrate_stock():
                     description=product['description'],
                     vendor_id=product['vendor_id'],
                     purchase_date=product['purchase_date'],
-                    lot_number=product['lot_number'],
+                    lot_number=0 if product['lot_number'] == '' else product['lot_number'],
                     design_code=product['design_code'],
                     old_id=product['old_id'],
                     sold=int(product['sold']) == 1)
@@ -300,12 +300,12 @@ def migrate_vouchers():
                         total=particular['total'])
         obj.save()
 
-migrate_masters_gst()
-migrate_masters_product()
-migrate_masters_stud()
-migrate_stock()
-migrate_invoice()
-migrate_home_sale()
-migrate_advance()
-migrate_payment()
-migrate_vouchers()
+# migrate_masters_gst()
+# migrate_masters_product()
+# migrate_masters_stud()
+# migrate_stock()
+# migrate_invoice()
+# migrate_home_sale()
+# migrate_advance()
+# migrate_payment()
+# migrate_vouchers()

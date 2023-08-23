@@ -6,41 +6,32 @@ function newRow(element, subform_name) {
     }
 }
 
-function submitRow(element, table_name) {
-    if (table_name == "products") {
-      radioField = document.querySelector("#product_subform input[name='radio_type']:checked").value;
-      table_name = radioField == "tagged" ? "products" : "untagged";
-      subform_name = "products";
-    }
-    else {
-      subform_name = table_name;
-    }
-  
-    let tbody = document.querySelector(`#${table_name}_table tbody`);
-    let tr = document.querySelector(`#${table_name}_table tbody tr:last-child`);
-    let clone = tr.cloneNode(true);
-  
-    let changePrefixInputs = tr.querySelectorAll(`input[name^='${table_name}-__prefix__'], select[name^='${table_name}-__prefix__']`);
-    changePrefixInputs.forEach( (input) => {
-      let text = input.name;
-      let result = text.replace("__prefix__", tr.rowIndex);
-      input.setAttribute("name", result);
-    });
-    let total_forms = document.getElementById(`id_${table_name}-TOTAL_FORMS`);
-    total_forms.value = parseInt(total_forms.value) + 1;
-  
-    tbody.appendChild(clone);
-    tr.id = "selected";
-    tr.querySelector(".cross").style.display = "inline";
-  
-  
-    updateValues(table_name, subform_name);
-    let form = document.getElementById(`${subform_name}_subform`);
-  
-    form.reset();
-  
-    selected = document.querySelector(`#${table_name}_table #selected`);
-    selected.id = "";
+function submitRow(element, table_name, subform_name) {
+  let tbody = document.querySelector(`#${table_name}_table tbody`);
+  let tr = document.querySelector(`#${table_name}_table tbody tr:last-child`);
+  let clone = tr.cloneNode(true);
+
+  let changePrefixInputs = tr.querySelectorAll(`input[name^='${table_name}-__prefix__'], select[name^='${table_name}-__prefix__']`);
+  changePrefixInputs.forEach( (input) => {
+    let text = input.name;
+    let result = text.replace("__prefix__", tr.rowIndex);
+    input.setAttribute("name", result);
+  });
+  let total_forms = document.getElementById(`id_${table_name}-TOTAL_FORMS`);
+  total_forms.value = parseInt(total_forms.value) + 1;
+
+  tbody.appendChild(clone);
+  tr.id = "selected";
+  tr.querySelector(".cross").style.display = "inline";
+
+
+  updateValues(table_name, subform_name);
+  let form = document.getElementById(`${subform_name}_subform`);
+
+  form.reset();
+
+  selected = document.querySelector(`#${table_name}_table #selected`);
+  selected.id = "";
 }
 
 function updateValues(table_name, subform_name) {

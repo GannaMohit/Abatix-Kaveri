@@ -80,6 +80,35 @@ nav {
   border-radius: 1.389vh;
 }
 
+.new_button, .clear_button, .submit_button {
+  position: absolute;
+  bottom: 2.78vh;
+  height: 20px;
+
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.5278vh;
+
+  background: #2D2D2D;
+  border: 0px;
+  border-radius: 0.2778vh;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+.new_button {
+    color: #FFFFFF;
+}
+
+.clear_button {
+    background: #FF0000;
+}
+
+.submit_button {
+    background: #4164DF;
+}
+
 input[type=number] {
   -moz-appearance: textfield;
 }
@@ -94,6 +123,6 @@ input[type=number]::-webkit-outer-spin-button {
   cursor: pointer;
 }
 
-input:read-only, input:disabled {
+input:read-only, input:disabled, select:disabled {
   background: #C4C4C4 !important; 
 }
