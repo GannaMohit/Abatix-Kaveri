@@ -111,7 +111,7 @@ def migrate_stock():
                     description=product['description'],
                     vendor_id=product['vendor_id'],
                     purchase_date=product['purchase_date'],
-                    lot_number=0 if product['lot_number'] == '' else product['lot_number'],
+                    lot_number= None if product['lot_number'] == '' else product['lot_number'],
                     design_code=product['design_code'],
                     old_id=product['old_id'],
                     sold=int(product['sold']) == 1)

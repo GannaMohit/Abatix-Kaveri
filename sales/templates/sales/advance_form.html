@@ -9,98 +9,90 @@
 {% endblock %}
 
 {% block body %}
-  <span id="label-2">Payments</span>
+<form action="{{request.path }}" method="post">
+  {% csrf_token %}
 
-  <div id="box-1">
-    <span id="label-3">Payment Details</span>
-    <div id="form-hidden" hidden>
-      <form>
-        {{ payment_form.method }}
-        <label for="id_date" class="box_1_labels">Date</label>
-        {{ payment_form.date }}
-        <label for="id_name" class="box_1_labels">Name</label>
-        {{ payment_form.name }}
-        <label for="id_amount" class="box_1_labels">Amount</label>
-        {{ payment_form.amount }}
-
-        <label for="id_card_bank" class="box_1_labels">Bank</label>
-        {{ payment_form.card_bank }}
-        <label for="id_card_number" class="box_1_labels">Card No.</label>
-        {{ payment_form.card_number }}
-
-        <label for="id_cheque_number" class="box_1_labels">Cheque No.</label>
-        {{ payment_form.cheque_number }}
-        <label for="id_cheque_branch" class="box_1_labels">Bank</label>
-        {{ payment_form.cheque_branch }}
-        <label for="id_cheque_account_number" class="box_1_labels">Account No.</label>
-        {{ payment_form.cheque_account_number }}
-        <label for="id_cheque_ifsc" class="box_1_labels">IFSC</label>
-        {{ payment_form.cheque_ifsc }}
-
-        <label for="id_upi_vpa" class="box_1_labels">VPA</label>
-        {{ payment_form.upi_vpa }}
-        <label for="id_upi_mobile" class="box_1_labels">Mobile</label>
-        {{ payment_form.upi_mobile }}
-
-        <label for="id_wire_account_number" class="box_1_labels">Account No.</label>
-        {{ payment_form.wire_account_number }}
-        <label for="id_wire_utr" class="box_1_labels">UTR</label>
-        {{ payment_form.wire_utr }}
-        <label for="id_wire_bank" class="box_1_labels">Bank</label>
-        {{ payment_form.wire_bank }}
-      </form>
-    </div>
+  <div id="advance_box">
+    <div>
+      <label for="id_id">I.D.</label>
+      <input type="text" value="{{ id }}" readonly>
+    </div><!-- 
+    -->{{ form.as_div }}
   </div>
 
-  <form action="{{ request.path }}" method="post">
-    {% csrf_token %}
-    {{ formset.management_form }}
-    <table id="table">
-      <tbody>
-        {% for payment_formset in formset %}
+  <div id="customer_box">
+    {{ customer_form.as_div }}
+  </div>
+
+  <div id="payments_box">
+    {{ payment_formset.management_form }}
+    <h1>Payments</h1>
+    <table id="payments_table">
+      <thead>
         <tr>
-          <td onclick="addRow(this)">{{ forloop.counter }}</td>
-          <td>{{ payment_formset.method }}</td>
-          <td>{{ payment_formset.date }}</td>
-          <td>{{ payment_formset.name }}</td>
-          <td>{{ payment_formset.amount }}</td>
-          <td hidden>
-            {% for field in payment_formset.hidden_fields %}
-              {{ field }}
-            {% endfor %}
-          </td>
-          <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteRow(this)"></td>
+          <th>#</th>
+          <th>Date</th>
+          <th>Method</th>
+          <th>Name</th>
+          <th>Amount</th>
+          <th hidden></th>
+          <th></th>
         </tr>
+      </thead>
+  
+      <tbody>
+        {% for payment in payment_formset %}
+          <tr>
+            <td id="id_#_table">{{ forloop.counter }}</td>
+            <td id="id_date_table">{{ payment.date }}</td>
+            <td id="id_method_table">{{ payment.method }}</td>
+            <td id="id_name_table">{{ payment.name }}</td>
+            <td id="id_amount_table">{{ payment.amount }}</td>
+            <td hidden>
+              {{ payment.as_div }}
+            </td>
+            <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteRow(this)"></td>
+          </tr>
         {% endfor %}
+
         <tr>
-          <td id="add" onclick="addRow(this)">Add</td>
-          <td>{{ formset.empty_form.method }}</td>
-          <td>{{ formset.empty_form.date }}</td>
-          <td>{{ formset.empty_form.name }}</td>
-          <td>{{ formset.empty_form.amount }}</td>
+          <td id="id_#_table"></td>
+            <td id="id_date_table"></td>
+            <td id="id_method_table"></td>
+            <td id="id_name_table"></td>
+            <td id="id_amount_table"></td>
           <td hidden>
-            {% for field in formset.empty_form.hidden_fields %}
-              {{ field }}
-            {% endfor %}
+            {{ payment_formset.empty_form.as_div }}
           </td>
-          <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteRow(this)" style="display:none;"></td>
+          <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteRow(this)" style="display: none;"></td>
         </tr>
       </tbody>
     </table>
-</div>
 
-  <span id="label-1">Details</span>
-  <ul id="input-ul">
-    <li><label for="id_id">I.D.</label><input type="number" name="id" value="{{ id }}" readonly required id="id_id"></li><!--
-    --><li><label for="id_payent_date">Date</label>{{ form.date }}</li><!--
-    --><li><label for="id_payment_name">Name</label>{{ customer_form.name }}</li><!--
-    --><li><label for="id_firm">Firm</label>{{ customer_form.firm }}</li><!--
-    --><li><label for="id_gst">GST</label>{{ customer_form.gst }}</li><!--
-    --><li><label for="id_pan">PAN</label>{{ customer_form.pan }}</li><!--
-    --><li><label for="id_contact">Contact</label>{{ customer_form.contact }}</li>
-  </ul>
+  </div>
 
-  <button type="submit" name="submit" id="submit">Submit</button>
+  <div id="totals_box">
+    <div>
+      <p>Amount</p>
+      <span>25.620</span>
+    </div>
+  </div>
+
+  <a href="{% url 'advances' %}"><button type="button" class="new_button" id="advance_cancel">Cancel</button></a>
+  <button type="reset" class="clear_button" id="advance_clear">Reset</button>
+  <button type="submit" class="submit_button" id="advance_submit">Submit</button>
+</form>
+
+<div id="payment_subform">
+  <button type="button" class="new_button" id="payment_new" onclick="newPaymentRow(this)">New</button>
+  <form action="javascript:submitPaymentRow(this)" id="payments_subform" hidden>
+    <div id="payment_subform_div">
+      {{ payment_form.as_div }}
+    </div>
+
+    <button type="reset" class="clear_button" id="payment_clear">Clear</button>
+    <button type="submit" class="submit_button" id="payment_submit">Submit</button>
   </form>
-  <a href="{% url 'advances' %}"><button type="button" name="cancel" id="cancel">Cancel</button></a>
+</div>
+  
 {% endblock %}

@@ -1,3 +1,4 @@
+from typing import Any, Dict
 from django.shortcuts import render
 from django.views import View
 from django.views.generic import ListView
@@ -31,29 +32,34 @@ class AdvanceCreateView(AdvanceBaseView, CreateView):
         context = self.get_context_data()
         context["customer_form"] = CustomerForm(self.request.POST)
         if context["customer_form"].is_valid():
-            context["formset"] = PaymentFormSet(self.request.POST)
-            if context["formset"].is_valid():
+            context["payment_formset"] = PaymentFormSet(self.request.POST)
+            if context["payment_formset"].is_valid():
                 try:
                     customer = Customer.objects.get(**context["customer_form"].cleaned_data)
                 except:
                     customer = context["customer_form"].save()
                 form.instance.customer = customer
                 self.object = form.save()
-                context["formset"].instance = self.object
-                context["formset"].save()
+                context["payment_formset"].instance = self.object
+                context["payment_formset"].save()
                 return super().form_valid(form)
         return self.render_to_response(context)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["formset"] = PaymentFormSet()
-        context["payment_form"] = PaymentForm()
-        context["customer_form"] = CustomerForm()
+        context["payment_formset"] = PaymentFormSet()
+        context["payment_form"] = PaymentForm(label_suffix="")
+        context["customer_form"] = CustomerForm(label_suffix="")
         try:
             context["id"] = Advance.objects.order_by("pk").last().id + 1
         except:
             context["id"] = 1
         return context
+    
+    def get_form_kwargs(self, **kwargs):
+        form_kwargs = super(AdvanceCreateView, self).get_form_kwargs(**kwargs)
+        form_kwargs["label_suffix"] = ""
+        return form_kwargs
 
 class AdvanceUpdateView(AdvanceBaseView, UpdateView):
     permission_required = "sales.change_advance"
@@ -64,22 +70,22 @@ class AdvanceUpdateView(AdvanceBaseView, UpdateView):
     def form_valid(self, form):
         context = self.get_context_data()
         context["customer_form"] = CustomerForm(self.request.POST)
-        context["formset"] = PaymentFormSet(self.request.POST)
-        if context["customer_form"].is_valid() and context["formset"].is_valid():
+        context["payment_formset"] = PaymentFormSet(self.request.POST)
+        if context["customer_form"].is_valid() and context["payment_formset"].is_valid():
             try:
                 customer = Customer.objects.get(**context["customer_form"].cleaned_data)
             except:
                 customer = context["customer_form"].save()
             form.instance.customer = customer
             self.object = form.save()
-            context["formset"].instance = self.object
-            context["formset"].save()
+            context["payment_formset"].instance = self.object
+            context["payment_formset"].save()
             return super().form_valid(form)
         return self.render_to_response(context)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["formset"] = PaymentFormSet(instance=self.object)
+        context["payment_formset"] = PaymentFormSet(instance=self.object)
         context["payment_form"] = PaymentForm()
         context["customer_form"] = CustomerForm(instance=self.object.customer)
         context["id"] = self.object.id
