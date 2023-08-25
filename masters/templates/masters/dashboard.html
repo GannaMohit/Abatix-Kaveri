@@ -1,0 +1,76 @@
+{% extends "masters/layout.html" %}
+{% load static %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block link %}
+<link rel="stylesheet" href="{% static 'masters/css/dashboard.css' %}">
+<script src="{% static 'masters/js/dashboard.js' %}" charset="utf-8"></script>
+{% endblock %}
+
+{% block body %}
+<div id="outer-box">
+  <span id="title-stock">Stock</span>
+<table id="table-thead">
+  <thead>
+    <th>#</th>
+    <th>Metal</th>
+    <th>Purity</th>
+    <th>Type</th>
+    <th>Category</th>
+    <th>Qty</th>
+    <th>Gross Wt.</th>
+    <th>Studding</th>
+    <th>Net Wt.</th>
+  </thead>
+</table>
+
+<table id="table">
+  <tbody>
+    {% for group in stock %}
+    <tr>
+      <td>{{ forloop.counter }}</td>
+      <td>{{ group.metal__metal }}</td>
+      <td>{{ group.purity__purity }}</td>
+      <td>{{ group.type__type }}</td>
+      <td>{{ group.category__category }}</td>
+      <td>{{ group.pk__count }}</td>
+      <td>{{ group.gross_weight__sum | floatformat:3 }}</td>
+      <td>{{ group.studs_weight__sum | floatformat:3 }}</td>
+      <td>{{ group.net_weight__sum | floatformat:3 }}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<form action="TODO: URL for dashboard export" method="post">
+  <button type="submit" id="export" name="export">Export</button>
+</form>
+</div>
+
+</div>
+<div id="left-box">
+<span id="title-summary">Summary</span>
+<form action="{{ request.path }}" method="get">
+  <div id="filters">
+    <input type="date" name="start_date" value="{{ start_date }}" oninput="this.parentElement.parentElement.submit()">
+    <span>TO</span>
+    <input type="date" name="end_date" value="{{ end_date }}" oninput="this.parentElement.parentElement.submit()">
+  </div>
+</form>
+<span id="subheading-metal">Metal</span>
+<ul class="ul">
+  <li><span>Opening</span><span>{{ metal_opening |floatformat:3 }}</span></li>
+  <li><span>Purchase</span><span>{{ metal_purchase |floatformat:3 }}</span></li>
+  <li><span>Sale</span><span>{{ metal_sale |floatformat:3 }}</span></li>
+  <li><span>In Hand</span><span>{{ metal_inhand |floatformat:3 }}</span></li>
+</ul>
+<span id="subheading-jewellery">Jewellery</span>
+<ul class="ul">
+  <li><span>Opening</span><span>{{ jewellery_opening |floatformat:3 }}</span></li>
+  <li><span>Purchase</span><span>{{ jewellery_purchase |floatformat:3 }}</span></li>
+  <li><span>Sale</span><span>{{ jewellery_sale |floatformat:3 }}</span></li>
+  <li><span>In Hand</span><span>{{ jewellery_inhand |floatformat:3 }}</span></li>
+</ul>
+</div>
+{% endblock %}
