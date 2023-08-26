@@ -477,7 +477,7 @@ table#payments_table th:nth-child(1), table#advancepayments_tables_table td:nth-
 
 table#payments_table th:nth-child(2), table#payments_table td:nth-child(2), table#payments_table td:nth-child(2) input {
   width: 6.25vw;
-  text-align: center;
+  text-align: left;
 }
 
 table#payments_table th:nth-child(3), table#payments_table td:nth-child(3), table#payments_table td:nth-child(3) input {

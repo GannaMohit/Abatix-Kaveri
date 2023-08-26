@@ -56,7 +56,7 @@
             <td hidden>
               {{ product.as_div }}
             </td>
-            <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteRow(this)"></td>
+            <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteProductRow(this)"></td>
           </tr>
         {% endfor %}
 
@@ -70,7 +70,7 @@
           <td hidden>
             {{ product_formset.empty_form.as_div }}
           </td>
-          <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteRow(this)" style="display: none;"></td>
+          <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteProductRow(this)" style="display: none;"></td>
         </tr>
       </tbody>
     </table>
@@ -101,7 +101,7 @@
             <td hidden>
               {{ product.as_div }}
             </td>
-            <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteRow(this)"></td>
+            <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteProductRow(this)"></td>
           </tr>
         {% endfor %}
 
@@ -115,7 +115,7 @@
           <td hidden>
             {{ untagged_formset.empty_form.as_div }}
           </td>
-          <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteRow(this)" style="display: none;"></td>
+          <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteProductRow(this)" style="display: none;"></td>
         </tr>
       </tbody>
     </table>
@@ -176,7 +176,7 @@
       <tbody>
         {% for payment in payment_formset %}
           <tr>
-            <td>{{ forloop.counter }}</td>
+            <td id="id_serial_number_table">{{ forloop.counter }}</td>
             <td id="id_method_table">{{ payment.method.value }}</td>
             <td id="id_date_table">{{ payment.date.value }}</td>
             <td id="id_amount_table">{{ payment.amount.value }}</td>
@@ -187,7 +187,7 @@
           </tr>
         {% endfor %}
         <tr>
-          <td></td>
+          <td id="id_serial_number_table"></td>
           <td id="id_method_table"></td>
           <td id="id_date_table"></td>
           <td id="id_amount_table"></td>
@@ -204,19 +204,19 @@
   <div id="totals_box">
     <div>
       <p>Weight</p>
-      25.620
+      <span id="id_net_weight_total"></span>
     </div>
     <div>
       <p>Subtotal</p>
-      25.620
+      <span id="id_subtotal_total"></span>
     </div>
     <div>
       <p>Tax</p>
-      25.620
+      <span id="id_tax_total"></span>
     </div>
     <div>
       <p>Total</p>
-      25.620
+      <span id="id_total_total"></span>
     </div>
   </div>
 
@@ -226,8 +226,8 @@
 </form>
 
 <div id="product_subform">
-  <button type="button" class="new_button" id="product_new" onclick="newRow(this, 'products')">New</button>
-  <form action="javascript:submitRow(this, 'products')" hidden id="products_subform">
+  <button type="button" class="new_button" id="product_new" onclick="newProductRow(this)">New</button>
+  <form action="javascript:submitProductRow(this)" hidden id="products_subform">
     <div>
       <input type="radio" name="radio_type" id="id_tagged" value="tagged" oninput="switchProductFields(this)" required>
       <label for="id_tagged">Tagged</label>
@@ -237,7 +237,7 @@
 
     <div>
       <label for="id_product">ID</label>
-      <input type="number" id="id_product" name="product" oninput="validateProductID(this, '/stock/_fetch_product')">
+      <input type="number" id="id_product" name="product" oninput="validateProductID(this)">
     </div>
     
     {{ untagged_form.as_div }}
@@ -249,8 +249,8 @@
 </div>
 
 <div id="advance_subform">
-  <button type="button" class="new_button" id="advance_new" onclick="newRow(this, 'advances')">New</button>
-  <form action="javascript:submitRow(this, 'advances')" hidden id="advances_subform" onchange="validateAdvanceID(this, '/sales/_fetch_advance')">
+  <button type="button" class="new_button" id="advance_new" onclick="newAdvanceRow(this)">New</button>
+  <form action="javascript:submitAdvanceRow(this)" hidden id="advances_subform" onchange="validateAdvanceID(this)">
     {{ invoice_advance_form.advance }}
     <input type="text" name="date" id="id_date" hidden>
     <input type="text" name="name" id="id_name" hidden>
@@ -260,8 +260,8 @@
 </div>
 
 <div id="payment_subform">
-  <button type="button" class="new_button" id="payment_new" onclick="newRow(this, 'payments'); displayFields();">New</button>
-  <form action="javascript:submitRow(this, 'payments')" hidden id="payments_subform">
+  <button type="button" class="new_button" id="payment_new" onclick="newPaymentRow(this)">New</button>
+  <form action="javascript:submitPaymentRow(this)" hidden id="payments_subform">
     <div id="payment_subform_div">
       {{ payment_form.as_div }}
     </div>

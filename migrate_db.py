@@ -300,9 +300,9 @@ def migrate_vouchers():
                         total=particular['total'])
         obj.save()
 
-# migrate_masters_gst()
-# migrate_masters_product()
-# migrate_masters_stud()
+migrate_masters_gst()
+migrate_masters_product()
+migrate_masters_stud()
 # migrate_stock()
 # migrate_invoice()
 # migrate_home_sale()

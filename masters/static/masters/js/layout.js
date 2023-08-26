@@ -126,6 +126,18 @@ function validateFunction(element, url, string, field) {
     });
 }
 
+function calulateTotal(inputs, deletes) {
+  let val = 0;
+  for (let i = 0; i < inputs.length; ++i) {
+    if (inputs[i].value != '') {
+      if (Boolean(deletes[i].checked) == false) {
+        val += inputs[i].value;
+      }
+    }
+  }
+  return val;
+}
+
 // document.addEventListener("keydown", function(event) {
 //   if (event.key === "Enter") {
 //     event.preventDefault();

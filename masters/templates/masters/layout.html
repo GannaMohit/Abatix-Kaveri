@@ -15,7 +15,7 @@
     <nav>
       <ul id = "nav-ul">
         <li class="nav-li"><a href="{% url 'home' %}"><img src="{% static 'masters/svg/Home.svg' %}" title="Home"></a></li>
-        <li class="nav-li"><a href="<!-- TODO: Add link to dashboard -->"><img src="{% static 'masters/svg/Dashboard.svg' %}" title="Dashboard"></a></li>
+        <li class="nav-li"><a href="{% url 'dashboard' %}"><img src="{% static 'masters/svg/Dashboard.svg' %}" title="Dashboard"></a></li>
         <li class="nav-li"><a href="{% url 'product_detail' pk=1 %}"><img src="{% static 'masters/svg/Stock.svg' %}" title="Stock"></a></li>
         <li class="nav-li"><a href="{% url 'invoices' %}"><img src="{% static 'masters/svg/Sales.svg' %}" title="Sales"></a></li>
         <li class="nav-li"><a href="{% url 'vouchers' %}"><img src="{% static 'masters/svg/Vouchers.svg' %}" title="Vouchers"></a></li>

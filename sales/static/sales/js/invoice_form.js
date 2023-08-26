@@ -1,87 +1,50 @@
-function newRow(element, subform_name) {
-  let form = document.getElementById(`${subform_name}_subform`);
-
-  if (form.hidden) {
-    form.hidden = false;
-  }
+function newProductRow(element) {
+  newRow(element, 'products');
 }
 
-function submitRow(element, table_name) {
-  if (table_name == "products") {
-    radioField = document.querySelector("#product_subform input[name='radio_type']:checked").value;
-    table_name = radioField == "tagged" ? "products" : "untagged";
-    subform_name = "products";
-  }
-  else {
-    subform_name = table_name;
-  }
-
-  let tbody = document.querySelector(`#${table_name}_table tbody`);
-  let tr = document.querySelector(`#${table_name}_table tbody tr:last-child`);
-  let clone = tr.cloneNode(true);
-
-  let changePrefixInputs = tr.querySelectorAll(`input[name^='${table_name}-__prefix__'], select[name^='${table_name}-__prefix__']`);
-  changePrefixInputs.forEach( (input) => {
-    let text = input.name;
-    let result = text.replace("__prefix__", tr.rowIndex);
-    input.setAttribute("name", result);
-  });
-  let total_forms = document.getElementById(`id_${table_name}-TOTAL_FORMS`);
-  total_forms.value = parseInt(total_forms.value) + 1;
-
-  tbody.appendChild(clone);
-  tr.id = "selected";
-  tr.querySelector(".cross").style.display = "inline";
-
-
-  updateValues(table_name, subform_name);
-  let form = document.getElementById(`${subform_name}_subform`);
-
-  form.reset();
-
-  selected = document.querySelector(`#${table_name}_table #selected`);
-  selected.id = "";
+function newAdvanceRow(element) {
+  newRow(element, 'advances');
 }
 
-
-function updateValues(table_name, subform_name) {
-  let source = document.querySelectorAll(`#${subform_name}_subform input, #${subform_name}_subform select`);
-  source_split_func = (element) => [element.name];
-  dest_split_func = (element) => element.name.split("-");
-
-
-  for (let i = 0; i < source.length; i++) {
-    let source_names = source_split_func(source[i]);
-    let source_name = source_names[source_names.length - 1];
-    let dest = document.querySelector(`#${table_name}_table #selected [name$=-${source_name}]`);
-    let cell_value = document.querySelector(`#${table_name}_table #selected #id_${source_name}_table`);
-  
-    if (dest != null) {
-      dest.value = source[i].value;
-    }
-
-    if (cell_value != null) {
-      if (source[i].tagName == "SELECT") {
-        cell_value.innerText = source[i].selectedOptions[0].text;
-      }
-      else {
-        cell_value.innerText = source[i].value;
-      }
-    }
-  }
-  // calculateTotals();
+function newPaymentRow(element) {
+  newRow(element, 'payments');
+  displayFields()
 }
 
-function deleteRow(element) {
-  let tr = element.parentElement.parentElement;
-  // TODO: Add logic to add Form-#-Delete to POST data
-  let delete_field = tr.querySelector("input[name$='-DELETE']");
-  delete_field.checked = true;
-  tr.style.display = "none";
+function submitProductRow(element) {
+  radioField = document.querySelector("#product_subform input[name='radio_type']:checked").value;
+  table_name = radioField == "tagged" ? "products" : "untagged";
+  subform_name = "products";
+
+  submitRow(element, table_name, subform_name);
+  calulateTotals();
+}
+
+function submitAdvanceRow(element) {
+  submitRow(element, 'advances', 'advances');
+}
+
+function submitPaymentRow(element) {
+  submitRow(element, 'payments', 'payments');
+  setSerialNumber('payments');
+}
+
+function deleteProductRow(element) {
+  deleteRow(element);
+  calulateTotals();
+}
+
+function setSerialNumber(table_name) {
+  let trs = document.querySelectorAll(`#${table_name}_table tbody tr`);
+  for (let i = 0; i < trs.length -1; i++) {
+    const tr = trs[i];
+    let serial_number = tr.querySelector("#id_serial_number_table");
+    serial_number.innerText = i+1;
+  }
 }
 
 function switchProductFields(element) {
-  fields = ['metal', 'type', 'purity', 'category', 'pieces', 'gross_weight', 'less_weight', 'studs_weight', 'net_weight'];
+  fields = ['metal', 'type', 'purity', 'category', 'pieces', 'gross_weight', 'less_weight', 'studs_weight'];
 
   fieldHandler = (field, boolean) => {field.disabled = boolean; field.value = "";}
 
@@ -161,77 +124,49 @@ function displayFields() {
   }
 }
 
+function validateProductID(element) {
+  validateFunction(element, '/stock/_fetch_product', "product", 'sold');
+}
+
+function validateAdvanceID(form) {
+  let element = form.querySelector("#id_advance");
+
+  validateFunction(element, '/sales/_fetch_advance', "advance", 'redeemed');
+}
+
+function calulateTotals() {
+  let net_weight_inputs = document.querySelectorAll(`.products_table [name$='-net_weight']`);
+  let subtotal_inputs = document.querySelectorAll(`.products_table [name$='-subtotal']`);
+  let total_inputs = document.querySelectorAll(`.products_table [name$='-total']`);
+  let delete_inputs = document.querySelectorAll(`.products_table [name$='-DELETE']`);
+
+  let nw = document.getElementById('id_net_weight_total');
+  let sub = document.getElementById('id_subtotal_total');
+  let tot = document.getElementById('id_total_total');
+  nw.innerText = `${Number(calulateTotal(net_weight_inputs, document.querySelectorAll(`#untagged_table [name$='-DELETE']`))).toFixed(3)} g`;
+  sub.innerText = `₹${Number(calulateTotal(subtotal_inputs, delete_inputs)).toFixed(2)}`;
+  tot.innerText = `₹${Number(calulateTotal(total_inputs, delete_inputs)).toFixed(2)}`;
+}
+
+function calculateNetWeight() {
+  let gw = document.getElementById('id_gross_weight');
+  let lw = document.getElementById('id_less_weight');
+  let nw = document.getElementById('id_net_weight');
+
+  nw.value = Number(gw.value - lw.value).toFixed(3)
+  
+}
+
 window.onload = () => {
   let method = document.querySelector("#payment_subform_div #id_method");
+  let gw = document.getElementById('id_gross_weight');
+  let lw = document.getElementById('id_less_weight');
+
+  gw.oninput = calculateNetWeight;
+  lw.oninput = calculateNetWeight;
   method.oninput = displayFields;
 }
 
-function validateFunction(element, url, string, field) {
-  let subform_name = `${string}s`;
-  element.setCustomValidity("");
-  element.reportValidity();
-  let inputs = document.querySelectorAll(`#${subform_name}_table [name$='-product']`);
-  let deletes = document.querySelectorAll(`#${subform_name}_table [name$='-DELETE']`);
-  let count = 0;
-  for (let i = 0; i < inputs.length; i++) {
-    if (inputs[i].value == element.value && Boolean(deletes[i].value) == false) {
-      element.setCustomValidity(`The ${string} is already selected above.`);
-      element.reportValidity();
-      return;
-    }
-  }
-
-  let csrf_token = document.querySelector("[name='csrfmiddlewaretoken']").value;
-  let data = { "id": element.value.toString() };
-  let headers = {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-CSRFToken': csrf_token
-    },
-    body: JSON.stringify(data)
-  }
-  fetch(url, headers)
-  .then(response => response.json())
-  .then(function(product) {
-    if (Object.keys(product).length === 0) {
-      element.setCustomValidity(`This ${string} does not exist.`);
-      element.reportValidity();
-    }
-    else if (product[field]) {
-      element.setCustomValidity(`The ${string} is already used.`)
-      element.reportValidity();
-      return;
-    }
-    else {
-      element.setCustomValidity("");
-      let source = product;
-      dest = document.querySelectorAll(`#${subform_name}_subform input, #${subform_name}_subform select`);
-      for (const source_name in source) {
-        for (let j = 0; j < dest.length; j++) {
-          let dest_name = dest[j].name;
-          if (source_name == dest_name) {
-            dest[j].value = source[source_name];
-            break;
-          }
-        }
-      }
-    }
-  });
-}
-
-function validateProductID(element, url) {
-  validateFunction(element, url, "product", 'sold');
-}
-
-function validateAdvanceID(form, url) {
-  let element = form.querySelector("#id_advance");
-
-  validateFunction(element, url, "advance", 'redeemed');
-}
-
-
 // TODO: calculateTax()
-// TODO: calculateTotals()
 
 

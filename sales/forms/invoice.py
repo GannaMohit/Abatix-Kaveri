@@ -20,6 +20,9 @@ class UntaggedForm(forms.ModelForm):
     class Meta:
         model = Untagged
         exclude = ('invoice',)
+        widgets = {
+            'net_weight': forms.NumberInput(attrs={'readonly':True})
+        }
 
 class PaymentForm(forms.ModelForm):
     class Meta:
