@@ -108,7 +108,3 @@ window.onload = () => {
   lw.oninput = calculateNetWeight;
   type.oninput = changeVoucherNumber;
 }
-
-// TODO: Tax calculation function
-// TODO: Total calculation function
-// TODO: # calculation function
