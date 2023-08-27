@@ -4,7 +4,7 @@ from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms.models import model_to_dict
 from django.http import JsonResponse
-from .models import Unit
+from .models import Unit, GST_Rate
 from django.core import serializers
 
 from stock.models import Product
@@ -22,6 +22,12 @@ class UnitsFetchAjax(LoginRequiredMixin, View):
         units = serializers.serialize("json", Unit.objects.all())
         units_dict = {"units": json.loads(units)}
         return JsonResponse(units_dict)
+    
+class TaxesFetchAjax(LoginRequiredMixin, View):
+    def post(self, request, *args, **kwargs):
+        taxes = serializers.serialize("json", GST_Rate.objects.all())
+        taxes_dict = {"tax": json.loads(taxes)}
+        return JsonResponse(taxes_dict)
 
 class DashboardView(LoginRequiredMixin, TemplateView):
     template_name = "masters/dashboard.html"

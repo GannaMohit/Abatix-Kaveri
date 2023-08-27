@@ -17,6 +17,7 @@ function submitProductRow(element) {
   subform_name = "products";
 
   submitRow(element, table_name, subform_name);
+  calculateTaxTable();
   calulateTotals();
 }
 
@@ -124,6 +125,21 @@ function displayFields() {
   }
 }
 
+function calculateTaxTable() {
+  let tax_tables = document.querySelectorAll('.products_table #id_tax_table');
+  let tax_inputs = document.querySelectorAll(`.products_table [name$='-tax']`);
+  let sgst_inputs = document.querySelectorAll(`.products_table [name$='-sgst']`);
+  let cgst_inputs = document.querySelectorAll(`.products_table [name$='-cgst']`);
+  let igst_inputs = document.querySelectorAll(`.products_table [name$='-igst']`);
+
+  for (let i = 0; i < tax_inputs.length - 1; i++) {
+    if (sgst_inputs[i].value != '') {
+      tax_tables[i].innerText = Number(Number(sgst_inputs[i].value)+Number(cgst_inputs[i].value)+Number(igst_inputs[i].value)).toFixed(0);
+      tax_inputs[i].value = Number(Number(sgst_inputs[i].value)+Number(cgst_inputs[i].value)+Number(igst_inputs[i].value)).toFixed(0);
+    }
+  }
+}
+
 function validateProductID(element) {
   validateFunction(element, '/stock/_fetch_product', "product", 'sold');
 }
@@ -137,31 +153,27 @@ function validateAdvanceID(form) {
 function calulateTotals() {
   let net_weight_inputs = document.querySelectorAll(`.products_table [name$='-net_weight']`);
   let subtotal_inputs = document.querySelectorAll(`.products_table [name$='-subtotal']`);
+  let tax_inputs = document.querySelectorAll(`.products_table [name$='-tax']`);
   let total_inputs = document.querySelectorAll(`.products_table [name$='-total']`);
   let delete_inputs = document.querySelectorAll(`.products_table [name$='-DELETE']`);
 
   let nw = document.getElementById('id_net_weight_total');
   let sub = document.getElementById('id_subtotal_total');
+  let tax = document.getElementById('id_tax_total');
   let tot = document.getElementById('id_total_total');
   nw.innerText = `${Number(calulateTotal(net_weight_inputs, document.querySelectorAll(`#untagged_table [name$='-DELETE']`))).toFixed(3)} g`;
   sub.innerText = `₹${Number(calulateTotal(subtotal_inputs, delete_inputs)).toFixed(2)}`;
+  tax.innerText = `₹${Number(calulateTotal(tax_inputs, delete_inputs)).toFixed(2)}`;
   tot.innerText = `₹${Number(calulateTotal(total_inputs, delete_inputs)).toFixed(2)}`;
-}
-
-function calculateNetWeight() {
-  let gw = document.getElementById('id_gross_weight');
-  let lw = document.getElementById('id_less_weight');
-  let nw = document.getElementById('id_net_weight');
-
-  nw.value = Number(gw.value - lw.value).toFixed(3)
-  
 }
 
 window.onload = () => {
   let method = document.querySelector("#payment_subform_div #id_method");
   let gw = document.getElementById('id_gross_weight');
   let lw = document.getElementById('id_less_weight');
+  let subtotal = document.querySelector(`#id_subtotal`);
 
+  subtotal.oninput = calculateTax;
   gw.oninput = calculateNetWeight;
   lw.oninput = calculateNetWeight;
   method.oninput = displayFields;

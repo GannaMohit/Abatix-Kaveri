@@ -5,7 +5,7 @@ from masters.models import Customer
 class InvoiceForm(forms.ModelForm):
     class Meta:
         model = Invoice
-        fields = ('date', 'invoice_number', 'gst_state')
+        fields = ('date', 'invoice_number', 'state')
         widgets = {
             'date': forms.DateInput(attrs={'type':'date'}),
             'invoice_number': forms.NumberInput(attrs={'readonly':True})

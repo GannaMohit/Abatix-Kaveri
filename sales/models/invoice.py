@@ -25,7 +25,7 @@ class Invoice(models.Model):
     invoice_number = models.IntegerField(default=get_invoice_number, verbose_name='Inv. No.')
     date = models.DateField(default=datetime.date.today)
     gst_invoice = models.CharField(max_length=64, unique=True, default=get_gst_invoice)
-    gst_state = models.ForeignKey(GST_State, on_delete=models.CASCADE, related_name="invoices", default=get_gst_state, verbose_name='state')
+    state = models.ForeignKey(GST_State, on_delete=models.CASCADE, related_name="invoices", default=get_gst_state, verbose_name='state')
 
     subtotal = models.DecimalField(max_digits=16, decimal_places=2)
     sgst = models.DecimalField(max_digits=16, decimal_places=2)

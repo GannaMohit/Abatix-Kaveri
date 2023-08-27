@@ -642,6 +642,8 @@ div#totals_box div p {
   font-style: normal;
   font-weight: 500;
   text-align: left;
+  line-height: 2.78vh;
+  padding-left: 0.15625vw;
   top: 2.78vh;
 }
 

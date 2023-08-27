@@ -77,7 +77,7 @@ function validateFunction(element, url, string, field) {
     let subform_name = `${string}s`;
     element.setCustomValidity("");
     element.reportValidity();
-    let inputs = document.querySelectorAll(`#${subform_name}_table [name$='-product']`);
+    let inputs = document.querySelectorAll(`#${subform_name}_table [name$='-${string}']`);
     let count = 0;
     for (let i = 0; i < inputs.length; i++) {
       if (inputs[i].value == element.value && inputs[i].parentElement.parentElement.parentElement.style.display != "none") {
@@ -105,7 +105,7 @@ function validateFunction(element, url, string, field) {
         element.reportValidity();
       }
       else if (product[field]) {
-        element.setCustomValidity(`The ${string} is already used.`)
+        element.setCustomValidity(`The ${string} is already sold.`)
         element.reportValidity();
         return;
       }
@@ -136,6 +136,51 @@ function calulateTotal(inputs, deletes) {
     }
   }
   return val;
+}
+
+function calculateNetWeight() {
+  let gw = document.getElementById('id_gross_weight');
+  let lw = document.getElementById('id_less_weight');
+  let nw = document.getElementById('id_net_weight');
+
+  nw.value = Number(gw.value - lw.value).toFixed(3) 
+}
+
+function calculateTax() {
+  let subtotal = document.querySelector(`#id_subtotal`);
+  let sgst = document.querySelector(`#id_sgst`);
+  let cgst = document.querySelector(`#id_cgst`);
+  let igst = document.querySelector(`#id_igst`);
+  let tcs = document.querySelector(`#id_tcs`);
+  let total = document.querySelector(`#id_total`);
+  let state = document.querySelector('#id_state');
+
+  let csrf_token = document.querySelector("[name='csrfmiddlewaretoken']").value;
+  let headers = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': csrf_token
+    }
+  }
+  fetch('/masters/_fetch_taxes', headers)
+  .then(response => response.json())
+  .then(function(tax_ajax) {
+    tax = tax_ajax.tax;
+    if (state.value == 27) {
+      sgst.value = Number(tax.find(t => t['fields']["type"] == 'sgst')["fields"]["percentage"] * subtotal.value / 100).toFixed(0);
+      cgst.value = Number(tax.find(t => t['fields']["type"] == 'cgst')["fields"]["percentage"] * subtotal.value / 100).toFixed(0);
+      igst.value = 0;
+      tcs.value = 0;
+    }
+    else {
+      sgst.value = 0;
+      cgst.value = 0;
+      igst.value = Number(tax.find(t => t['fields']["type"] == 'igst')["fields"]["percentage"] * subtotal.value / 100).toFixed(0);
+      tcs.value = 0;
+    }
+    total.value = Number(Number(subtotal.value) + Number(cgst.value) + Number(sgst.value) + Number(igst.value)).toFixed(0);
+  });
 }
 
 // document.addEventListener("keydown", function(event) {
