@@ -54,7 +54,7 @@
       <tbody>
         {% for product in product_formset %}
           <tr>
-            <td id="id_#_table">{{ forloop.counter }}</td>
+            <td id="id_serial_number_table">{{ forloop.counter }}</td>
             <td><p id="id_metal_table">{{ product.instance.product.metal }}</p> <p id="id_category_table">{{ product.instance.product.category }}</p></td>
             <td id="id_purity_table">{{ product.instance.purity }}</td>
             <td id="id_pieces_table">{{ product.instance.product.pieces }}</td>
@@ -67,12 +67,12 @@
             <td hidden>
               {{ product.as_div }}
             </td>
-            <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteRow(this)"></td>
+            <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteParticularRow(this)"></td>
           </tr>
         {% endfor %}
 
         <tr>
-          <td id="id_#_table"></td>
+          <td id="id_serial_number_table"></td>
           <td><p id="id_metal_table"><p> <p id="id_category_table"></p></td>
           <td id="id_purity_table"></td>
           <td id="id_pieces_table"></td>
@@ -85,12 +85,12 @@
           <td hidden>
             {{ product_formset.empty_form.as_div }}
           </td>
-          <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteRow(this)" style="display: none;"></td>
+          <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteParticularRow(this)" style="display: none;"></td>
         </tr>
       </tbody>
     </table>
 
-    <table class="products_table" id="particular_table">
+    <table class="products_table" id="particulars_table">
       <thead>
         <tr>
           <th>#</th>
@@ -111,7 +111,7 @@
       <tbody>
         {% for product in particular_formset %}
           <tr>
-            <td id="id_#_table">{{ forloop.counter }}</td>
+            <td id="id_serial_number_table">{{ forloop.counter }}</td>
             <td><p id="id_metal_table">{{ product.instance.product.metal }}</p> <p id="id_category_table">{{ product.instance.product.category }}</p></td>
             <td id="id_purity_table">{{ product.instance.purity }}</td>
             <td id="id_pieces_table">{{ product.instance.product.pieces }}</td>
@@ -124,12 +124,12 @@
             <td hidden>
               {{ product.as_div }}
             </td>
-            <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteRow(this)"></td>
+            <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteParticularRow(this)"></td>
           </tr>
         {% endfor %}
 
         <tr>
-          <td id="id_#_table"></td>
+          <td id="id_serial_number_table"></td>
           <td><p id="id_metal_table"><p> <p id="id_category_table"></p></td>
           <td id="id_purity_table"></td>
           <td id="id_pieces_table"></td>
@@ -142,7 +142,7 @@
           <td hidden>
             {{ particular_formset.empty_form.as_div }}
           </td>
-          <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteRow(this)" style="display: none;"></td>
+          <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteParticularRow(this)" style="display: none;"></td>
         </tr>
       </tbody>
     </table>
@@ -152,19 +152,19 @@
   <div id="totals_box">
     <div>
       <p>Gross</p>
-      <span>25.620</span>
+      <span id="id_gross_weight_total"></span>
     </div>
     <div>
       <p>Net</p>
-      <span>25.620</span>
+      <span id="id_net_weight_total"></span>
     </div>
     <div>
-      <p>Fine</p>
-      <span>25.620</span>
+      <p>Pure</p>
+      <span id="id_pure_weight_total"></span>
     </div>
     <div>
-      <p>Amount</p>
-      <span>25.620</span>
+      <p>Total</p>
+      <span id="id_total_total"></span>
     </div>
   </div>
 

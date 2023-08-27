@@ -35,15 +35,6 @@ function deleteProductRow(element) {
   calulateTotals();
 }
 
-function setSerialNumber(table_name) {
-  let trs = document.querySelectorAll(`#${table_name}_table tbody tr`);
-  for (let i = 0; i < trs.length -1; i++) {
-    const tr = trs[i];
-    let serial_number = tr.querySelector("#id_serial_number_table");
-    serial_number.innerText = i+1;
-  }
-}
-
 function switchProductFields(element) {
   fields = ['metal', 'type', 'purity', 'category', 'pieces', 'gross_weight', 'less_weight', 'studs_weight'];
 
@@ -151,17 +142,17 @@ function validateAdvanceID(form) {
 }
 
 function calulateTotals() {
-  let net_weight_inputs = document.querySelectorAll(`.products_table [name$='-net_weight']`);
-  let subtotal_inputs = document.querySelectorAll(`.products_table [name$='-subtotal']`);
-  let tax_inputs = document.querySelectorAll(`.products_table [name$='-tax']`);
-  let total_inputs = document.querySelectorAll(`.products_table [name$='-total']`);
+  let net_weight_inputs = document.querySelectorAll(`.products_table #id_net_weight_table`);
+  let subtotal_inputs = document.querySelectorAll(`.products_table #id_subtotal_table`);
+  let tax_inputs = document.querySelectorAll(`.products_table #id_tax_table`);
+  let total_inputs = document.querySelectorAll(`.products_table #id_total_table`);
   let delete_inputs = document.querySelectorAll(`.products_table [name$='-DELETE']`);
 
   let nw = document.getElementById('id_net_weight_total');
   let sub = document.getElementById('id_subtotal_total');
   let tax = document.getElementById('id_tax_total');
   let tot = document.getElementById('id_total_total');
-  nw.innerText = `${Number(calulateTotal(net_weight_inputs, document.querySelectorAll(`#untagged_table [name$='-DELETE']`))).toFixed(3)} g`;
+  nw.innerText = `${Number(calulateTotal(net_weight_inputs, delete_inputs)).toFixed(3)} g`;
   sub.innerText = `₹${Number(calulateTotal(subtotal_inputs, delete_inputs)).toFixed(2)}`;
   tax.innerText = `₹${Number(calulateTotal(tax_inputs, delete_inputs)).toFixed(2)}`;
   tot.innerText = `₹${Number(calulateTotal(total_inputs, delete_inputs)).toFixed(2)}`;

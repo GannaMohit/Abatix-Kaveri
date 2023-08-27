@@ -129,13 +129,22 @@ function validateFunction(element, url, string, field) {
 function calulateTotal(inputs, deletes) {
   let val = 0;
   for (let i = 0; i < inputs.length; ++i) {
-    if (inputs[i].value != '') {
+    if (inputs[i].innerText != '') {
       if (Boolean(deletes[i].checked) == false) {
-        val += inputs[i].value;
+        val += Number(inputs[i].innerText);
       }
     }
   }
   return val;
+}
+
+function setSerialNumber(table_name) {
+  let trs = document.querySelectorAll(`#${table_name}_table tbody tr`);
+  for (let i = 0; i < trs.length -1; i++) {
+    const tr = trs[i];
+    let serial_number = tr.querySelector("#id_serial_number_table");
+    serial_number.innerText = i+1;
+  }
 }
 
 function calculateNetWeight() {

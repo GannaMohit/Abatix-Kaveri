@@ -20,6 +20,9 @@ class ParticularForm(ModelForm):
     class Meta:
         model = Particular
         exclude = ('voucher',)
+        widgets = {
+            'net_weight': NumberInput(attrs={'readonly':True})
+        }
 
 ProductFormSet = inlineformset_factory(Voucher, Voucher_Product, exclude=('voucher',), extra=0, can_delete=True)
 
