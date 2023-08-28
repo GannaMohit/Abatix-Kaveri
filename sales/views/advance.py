@@ -1,5 +1,4 @@
-from typing import Any, Dict
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView
@@ -24,6 +23,7 @@ class AdvanceListView(AdvanceBaseView, ListView):
     context_object_name = "advances"
 
 class AdvanceCreateView(AdvanceBaseView, CreateView):
+    model = Advance
     permission_required = "sales.add_advance"
     template_name = "sales/advance_form.html"
     form_class = AdvanceForm
@@ -31,18 +31,17 @@ class AdvanceCreateView(AdvanceBaseView, CreateView):
     def form_valid(self, form):
         context = self.get_context_data()
         context["customer_form"] = CustomerForm(self.request.POST)
-        if context["customer_form"].is_valid():
-            context["payment_formset"] = PaymentFormSet(self.request.POST)
-            if context["payment_formset"].is_valid():
-                try:
-                    customer = Customer.objects.get(**context["customer_form"].cleaned_data)
-                except:
-                    customer = context["customer_form"].save()
-                form.instance.customer = customer
-                self.object = form.save()
-                context["payment_formset"].instance = self.object
-                context["payment_formset"].save()
-                return super().form_valid(form)
+        context["payment_formset"] = PaymentFormSet(self.request.POST)
+        if context["customer_form"].is_valid() and context["payment_formset"].is_valid():
+            try:
+                customer = Customer.objects.get(**context["customer_form"].cleaned_data)
+            except:
+                customer = context["customer_form"].save()
+            form.instance.customer = customer
+            self.object = form.save()
+            context["payment_formset"].instance = self.object
+            context["payment_formset"].save()
+            return redirect(self.get_success_url())
         return self.render_to_response(context)
 
     def get_context_data(self, **kwargs):
@@ -62,15 +61,15 @@ class AdvanceCreateView(AdvanceBaseView, CreateView):
         return form_kwargs
 
 class AdvanceUpdateView(AdvanceBaseView, UpdateView):
+    model = Advance
     permission_required = "sales.change_advance"
     template_name = "sales/advance_form.html"
     form_class = AdvanceForm
-    model = Advance
 
     def form_valid(self, form):
         context = self.get_context_data()
-        context["customer_form"] = CustomerForm(self.request.POST)
-        context["payment_formset"] = PaymentFormSet(self.request.POST)
+        context["customer_form"] = CustomerForm(self.request.POST, instance=self.object)
+        context["payment_formset"] = PaymentFormSet(self.request.POST, instance=self.object)
         if context["customer_form"].is_valid() and context["payment_formset"].is_valid():
             try:
                 customer = Customer.objects.get(**context["customer_form"].cleaned_data)
@@ -78,9 +77,8 @@ class AdvanceUpdateView(AdvanceBaseView, UpdateView):
                 customer = context["customer_form"].save()
             form.instance.customer = customer
             self.object = form.save()
-            context["payment_formset"].instance = self.object
             context["payment_formset"].save()
-            return super().form_valid(form)
+            return redirect(self.get_success_url())
         return self.render_to_response(context)
 
     def get_context_data(self, **kwargs):

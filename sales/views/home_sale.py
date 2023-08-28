@@ -17,6 +17,7 @@ class HomeSaleListView(HomeSaleBaseView, ListView):
     context_object_name = "home_sales"
 
 class HomeSaleCreateView(HomeSaleBaseView, CreateView):
+    model = Home_Sale
     permission_required = "sales.add_home_sale"
     template_name = "sales/home_sale_form.html"
     form_class = HomeSaleForm
@@ -24,11 +25,10 @@ class HomeSaleCreateView(HomeSaleBaseView, CreateView):
 
     def form_valid(self, form):
         context = self.get_context_data()
-        home_sale = form.save(commit=False)
-        context["formset"] = ProductFormSet(self.request.POST, instance=home_sale, queryset=self.product_queryset)
+        context["formset"] = ProductFormSet(self.request.POST)
         if context["formset"].is_valid():
-            home_sale.save()
-            self.object = home_sale
+            self.object = form.save()
+            context["formste"].instance = self.object
             context["formset"].save()
             return super().form_valid(form)
         return self.render_to_response(context)
@@ -43,19 +43,17 @@ class HomeSaleCreateView(HomeSaleBaseView, CreateView):
         return context
 
 class HomeSaleUpdateView(HomeSaleBaseView, UpdateView):
+    model = Home_Sale
     permission_required = "sales.change_home_sale"
     template_name = "sales/home_sale_form.html"
     form_class = HomeSaleForm
-    model = Home_Sale
     product_queryset = Product.objects.filter(sold=False)
 
     def form_valid(self, form):
         context = self.get_context_data()
-        home_sale = form.save(commit=False)
-        context["formset"] = ProductFormSet(self.request.POST, instance=home_sale)
+        context["formset"] = ProductFormSet(self.request.POST, instance=self.object)
         if context["formset"].is_valid():
-            home_sale.save()
-            self.object = home_sale
+            self.object = form.save()
             context["formset"].save()
             return super().form_valid(form)
         return self.render_to_response(context)

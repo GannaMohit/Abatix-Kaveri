@@ -61,17 +61,17 @@ class ProductFetchAjax(ProductBaseView, View):
         return JsonResponse(product_dict)
 
 class ProductCreateView(ProductBaseView, CreateView):
+    model = Product
     permission_required = "stock.add_product"
     template_name = "stock/product_form.html"
     form_class = ProductForm
 
     def form_valid(self, form):
         context = self.get_context_data()
-        product = form.save(commit=False)
-        context["formset"] = StudFormSet(self.request.POST, instance=product)
+        context["formset"] = StudFormSet(self.request.POST)
         if context["formset"].is_valid():
-            product.save()
-            self.object = product
+            self.object = form.save()
+            context["formste"].instance = self.object
             context["formset"].save()
             return super().form_valid(form)
         return self.render_to_response(context)
@@ -89,6 +89,7 @@ class ProductCreateView(ProductBaseView, CreateView):
         return context
 
 class ProductUpdateView(ProductBaseView, UpdateView):
+    model = Product
     permission_required = "stock.change_product"
     template_name = "stock/product_form.html"
     form_class = ProductForm
@@ -96,11 +97,9 @@ class ProductUpdateView(ProductBaseView, UpdateView):
 
     def form_valid(self, form):
         context = self.get_context_data()
-        product = form.save(commit=False)
-        context["formset"] = StudFormSet(self.request.POST, instance=product)
+        context["formset"] = StudFormSet(self.request.POST, instance=self.object)
         if context["formset"].is_valid():
-            product.save()
-            self.object = product
+            self.object = form.save()
             context["formset"].save()
             return super().form_valid(form)
         return self.render_to_response(context)

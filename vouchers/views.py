@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, AccessMixin
@@ -17,6 +17,7 @@ class VoucherListView(VoucherBaseView, ListView):
     context_object_name = "vouchers"
 
 class VoucherCreateView(VoucherBaseView, CreateView):
+    model = Voucher
     permission_required = "vouchers.add_voucher"
     template_name = "vouchers/voucher_form.html"
     form_class = VoucherForm
@@ -29,21 +30,20 @@ class VoucherCreateView(VoucherBaseView, CreateView):
     def form_valid(self, form):
         context = self.get_context_data()
         context["customer_form"] = CustomerForm(self.request.POST)
-        if context["customer_form"].is_valid():
-            context["particular_formset"] = ParticularFormSet(self.request.POST)
-            context["product_formset"] = ProductFormSet(self.request.POST)
-            if context["particular_formset"].is_valid() and context["product_formset"].is_valid():
-                try:
-                    customer = Customer.objects.get(**context["customer_form"].cleaned_data)
-                except:
-                    customer = context["customer_form"].save()
-                form.instance.customer = customer
-                self.object = form.save()
-                context["particular_formset"].instance = self.object
-                context["product_formset"].instance = self.object
-                context["particular_formset"].save()
-                context["product_formset"].save()
-                return super().form_valid(form)
+        context["particular_formset"] = ParticularFormSet(self.request.POST)
+        context["product_formset"] = ProductFormSet(self.request.POST)
+        if context["customer_form"].is_valid() and context["particular_formset"].is_valid() and context["product_formset"].is_valid():
+            try:
+                customer = Customer.objects.get(**context["customer_form"].cleaned_data)
+            except:
+                customer = context["customer_form"].save()
+            form.instance.customer = customer
+            self.object = form.save()
+            context["particular_formset"].instance = self.object
+            context["particular_formset"].save()
+            context["product_formset"].instance = self.object
+            context["product_formset"].save()
+            return redirect(self.get_success_url())
         return self.render_to_response(context)
 
     def get_context_data(self, **kwargs):
@@ -62,10 +62,10 @@ class VoucherCreateView(VoucherBaseView, CreateView):
         return context
 
 class VoucherUpdateView(VoucherBaseView, UpdateView):
+    model = Voucher
     permission_required = "vouchers.change_voucher"
     template_name = "vouchers/voucher_form.html"
     form_class = VoucherForm
-    model = Voucher
 
     def get_form_kwargs(self, **kwargs):
         form_kwargs = super(VoucherUpdateView, self).get_form_kwargs(**kwargs)
@@ -74,19 +74,19 @@ class VoucherUpdateView(VoucherBaseView, UpdateView):
 
     def form_valid(self, form):
         context = self.get_context_data()
-        context["customer_form"] = CustomerForm(self.request.POST)
-        if context["customer_form"].is_valid():
-            context["formset"] = ParticularFormSet(self.request.POST)
-            if context["formset"].is_valid():
-                try:
-                    customer = Customer.objects.get(**context["customer_form"].cleaned_data)
-                except:
-                    customer = context["customer_form"].save()
-                form.instance.customer = customer
-                self.object = form.save()
-                context["formset"].instance = self.object
-                context["formset"].save()
-                return super().form_valid(form)
+        context["customer_form"] = CustomerForm(self.request.POST, instance=self.object)
+        context["particular_formset"] = ParticularFormSet(self.request.POST, instance=self.object)
+        context["product_formset"] = ProductFormSet(self.request.POST, instance=self.object)
+        if context["customer_form"].is_valid() and context["particular_formset"].is_valid() and context["product_formset"].is_valid():
+            try:
+                customer = Customer.objects.get(**context["customer_form"].cleaned_data)
+            except:
+                customer = context["customer_form"].save()
+            form.instance.customer = customer
+            self.object = form.save()
+            context["particular_formset"].save()
+            context["product_formset"].save()
+            return redirect(self.get_success_url())
         return self.render_to_response(context)
 
     def get_context_data(self, **kwargs):

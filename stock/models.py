@@ -12,7 +12,7 @@ class Vendor(models.Model):
     old_description = models.CharField(max_length=64, blank=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.name} {self.firm} ({self.old_id})"
 
 class Product(models.Model):
     register_id = models.IntegerField(blank=True, null=True, verbose_name='Register')

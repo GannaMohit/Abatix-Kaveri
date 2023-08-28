@@ -36,7 +36,6 @@ class InvoiceCreateView(InvoiceBaseView, CreateView):
     model = Invoice
     permission_required = "sales.add_invoice"
     template_name = "sales/invoice_form.html"
-    success_url = 'invoices'
     form_class = InvoiceForm
 
     def form_valid(self, form):
@@ -95,7 +94,6 @@ class InvoiceUpdateView(InvoiceBaseView, UpdateView):
     model = Invoice
     permission_required = "sales.change_invoice"
     template_name = "sales/invoice_form.html"
-    success_url = 'invoices'
     form_class = InvoiceForm
 
     def form_valid(self, form):

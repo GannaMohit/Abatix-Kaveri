@@ -1,6 +1,8 @@
 from django.db import models
 from masters.models import Customer, Metal, Type, Purity, Category, GST_State
 from stock.models import Product
+from django.urls import reverse
+
 import datetime
 
 # Create your models here.
@@ -54,6 +56,8 @@ class Voucher(models.Model):
     def __str__(self):
         return f"{self.customer.name} {type} {self.date}"
     
+    def get_absolute_url(self):
+        return reverse('vouchers')
 
 class Particular(models.Model):
     voucher = models.ForeignKey(Voucher, on_delete=models.CASCADE, related_name="particulars")

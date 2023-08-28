@@ -1,7 +1,7 @@
-from typing import Iterable, Optional
 from django.db import models
 from masters.models import Customer, GST_State, Metal, Purity, Type, Category
 from stock.models import Product
+from django.urls import reverse
 import datetime
 
 def get_invoice_number():
@@ -80,6 +80,9 @@ class Invoice(models.Model):
 
     def __str__(self):
         return f"{self.invoice_number} {self.customer.name} {self.date}"
+    
+    def get_absolute_url(self):
+        return reverse('invoices')
 
 class Untagged(models.Model):
     invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE, related_name="untagged")
