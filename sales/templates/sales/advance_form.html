@@ -51,7 +51,7 @@
             <td hidden>
               {{ payment.as_div }}
             </td>
-            <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteRow(this)"></td>
+            <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deletePaymentRow(this)"></td>
           </tr>
         {% endfor %}
 
@@ -64,7 +64,7 @@
           <td hidden>
             {{ payment_formset.empty_form.as_div }}
           </td>
-          <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteRow(this)" style="display: none;"></td>
+          <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deletePaymentRow(this)" style="display: none;"></td>
         </tr>
       </tbody>
     </table>
@@ -74,7 +74,7 @@
   <div id="totals_box">
     <div>
       <p>Amount</p>
-      <span>25.620</span>
+      <span id="id_amount_total"></span>
     </div>
   </div>
 

@@ -5,6 +5,12 @@ function newPaymentRow(element) {
 
 function submitPaymentRow(element) {
   submitRow(element, 'payments', 'payments');
+  calculateTotals();
+}
+
+function deletePaymentRow(element) {
+  deleteRow(element);
+  calculateTotals();
 }
 
 function displayFields() {
@@ -71,9 +77,15 @@ function displayFields() {
   }
 }
 
+function calculateTotals() {
+  let amount_inputs = document.querySelectorAll(`#payments_table #id_amount_table`);
+  let delete_inputs = document.querySelectorAll(`#payments_table [name$='-DELETE']`);
+
+  let amount = document.getElementById('id_amount_total');
+  amount.innerText = `₹${Number(calulateTotal(amount_inputs, delete_inputs)).toFixed(2)}`;
+}
+
 window.onload = () => {
   let method = document.querySelector("#payment_subform #id_method");
   method.oninput = displayFields;
 }
-
-// TODO: calculateTotals()
