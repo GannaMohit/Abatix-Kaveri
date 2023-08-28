@@ -84,3 +84,7 @@ class Voucher_Product(models.Model):
     igst = models.DecimalField(max_digits=16, decimal_places=2)
     tcs = models.DecimalField(max_digits=16, decimal_places=2)
     total = models.DecimalField(max_digits=16, decimal_places=2)
+
+    def save(self, *args, **kwargs):
+        self.product.sold = True
+        super().save(*args, **kwargs)

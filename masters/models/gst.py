@@ -23,4 +23,4 @@ class HSN(models.Model):
     description = models.TextField(blank=True)
 
     def __str__(self):
-        return self.code
+        return f"{self.code}"

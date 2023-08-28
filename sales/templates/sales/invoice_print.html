@@ -1,0 +1,172 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Invoice Print</title>
+    <link rel="stylesheet" href="{% static 'sales/css/invoice_print.css' %}">
+
+  </head>
+  <body>
+    <div id="main"class="container">
+      <div id="title">
+        <span>TAX INVOICE</span>
+      </div>
+
+      <div id="bill-details">
+        <div id="bill-no">
+          <span>Invoice No. :&nbsp;&nbsp;</span><span class="value">{{ invoice.invoice_number }}</span>
+        </div>
+        <div id="gst-bill-no">
+          <span>GST Bill No. :&nbsp;&nbsp;</span><span class="value">{{ invoice.gst_invoice }}</span>
+        </div>
+        <div id="date">
+          <span>Date: &nbsp;&nbsp;</span><span class="value">{{ invoice.date }}</span>
+        </div>
+      </div>
+
+      <div id="customer">
+        <span class="label">Customer Details</span>
+        <ul>
+          <li>{{ invoice.customer.name }} {{ invoice.customer.firm }}</li>
+          <li>{{ invoice.customer.contact }}</li>
+          <li>{{ invoice.customer.pan }}</li>
+          <li>{{ invoice.customer.gst }}</li>
+          <li>{{ invoice.customer.address }}</li>
+          <li>{{ invoice.customer.city }} {{ invoice.customer.pincode }}</li>
+        </ul>
+      </div>
+
+      <div id="product-table">
+        <table id="subform">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>Particulars</th>
+            <th>HSN</th>
+            <th>Purity</th>
+            <th>Gross Wt.</th>
+            <th>Net Wt.</th>
+            <th>Rate</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for product in invoice.products.all %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ product.product.metal }} {{ product.product.category }}</td>
+            <td>{{ product.product.type.hsn }}</td>
+            <td>{{ product.product.purity }}</td>
+            <td>{{ product.product.gross_weight }} g</td>
+            <td>{{ product.product.net_weight }} g</td>
+            <td>{{ product.rate }}+MC</td>
+            <td>₹{{ product.total }}</td>
+          </tr>
+          {% endfor %}
+          {% for product in invoice.untagged.all %}
+          <tr>
+            <td>{{ invoice.products.all.count |add:forloop.counter }}</td>
+            <td>{{ product.metal }} {{ product.category }}</td>
+            <td>{{ product.type.hsn }}</td>
+            <td>{{ product.purity }}</td>
+            <td>{{ product.gross_weight }} g</td>
+            <td>{{ product.net_weight }} g</td>
+            <td>{{ product.rate }}+MC</td>
+            <td>₹{{ product.total }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4">Subtotal</td>
+            <td class="value">{{ invoice.gross_weight }} g</td>
+            <td class="value">{{ invoice.net_weight }} g</td>
+            <td></td>
+            <td class="value">₹ {{ invoice.subtotal }}</td>
+          </tr>
+          <tfoot>
+        </table>
+      </div>
+
+      <div id="totals">
+        <div id="payment-details">
+          <span class="label">Payment Details</span><br>
+          <ul>
+            {% for payment in invoice.payments.all %}
+            <li><span>{{ payment.amount }}</span><span>&nbsp;&nbsp;</span><span>{{ payment.method }}</span></li>
+            {% endfor %}
+          </ul>
+        </div>
+        <div id="tax-details">
+          <table>
+            <tr>
+              <td>SGST @ 1.5%&nbsp;&nbsp;</td>
+              <td>₹ </td>
+              <td>{{ invoice.sgst }}</td>
+            </tr>
+            <tr>
+              <td>CGST @ 1.5%&nbsp;&nbsp;</td>
+              <td>₹ </td>
+              <td>{{ invoice.cgst }}</td>
+            </tr>
+            <tr>
+              <td>IGST @ 3.0%&nbsp;&nbsp;</td>
+              <td>₹ </td>
+              <td>{{ invoice.igst }}</td>
+            </tr>
+            <tr>
+              <td>TCS @ 0.1%&nbsp;&nbsp;</td>
+              <td>₹ </td>
+              <td>{{ invoice.tcs }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div id="invoice-total">
+        <span>Invoice Value (in figures)</span>
+        <span class="invoice-value">₹&nbsp;{{ invoice.amount }}</span>
+      </div>
+
+      <div id="invoice-value-words">
+        <span>Invoice Value (in words)</span>
+        <span class="invoice-value">Rs.&nbsp;{{ amount_words }}</span>
+      </div>
+
+      <div id="gst-details">
+        <div id="pan">
+          <span>PAN :&nbsp;&nbsp;</span><span class="value">AAACK9151B</span>
+        </div>
+        <div id="gst">
+          <span>GST :&nbsp;&nbsp;</span><span class="value">27AAACK9151B1ZS</span>
+        </div>
+        <div id="state">
+          <span>State :&nbsp;&nbsp;</span><span class="value">{{ invoice.state }}</span>
+        </div>
+      </div>
+
+      <div id="bank-details">
+        <span class="label">Bank Details</span><br>
+        <span>Name: Kaveri Jewellers Pvt. Ltd. | A/C No. : 157500100501930 | Bank : Saraswat Co-operative Bank<br>IFSC Code : SRCB0000157 | Branch : Santacruz West</span>
+      </div>
+
+      <div id="signature">
+        <div id="terms">
+          <span class="label">Terms and Conditions</span>
+          <p>Money will be refunded anytime against our cash memo for the articles of gold bought from us at the market rate, after deducting making charges, duties,
+            taxes & refining charges as applicable. If ornaments bought in exchange, then full credit will be given for weight of gold after deducting the making charges. The weight of Stones, Kundan, Pearls and Mina will also be deducted and will not be refundable. Amout over Rs. 2500/- will be paid by cheque to the rightful owner.<br>
+            In case of non-payment, interest @18% p.a. would be charged from the date of invoice.</p>
+          <span>SUBJECT TO MUMBAI JURISDICTION</span>
+        </div>
+        <div id="customer-signature">
+          <span>Customer's signature</span>
+        </div>
+        <div id="kaveri-signature">
+          <span>For Kaveri Jewellers Pvt. Ltd.</span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

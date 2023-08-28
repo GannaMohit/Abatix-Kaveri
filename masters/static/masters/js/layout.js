@@ -14,7 +14,7 @@ function submitRow(element, table_name, subform_name) {
   let changePrefixInputs = tr.querySelectorAll(`input[name^='${table_name}-__prefix__'], select[name^='${table_name}-__prefix__']`);
   changePrefixInputs.forEach( (input) => {
     let text = input.name;
-    let result = text.replace("__prefix__", tr.rowIndex);
+    let result = text.replace("__prefix__", tr.rowIndex - 1);
     input.setAttribute("name", result);
   });
   let total_forms = document.getElementById(`id_${table_name}-TOTAL_FORMS`);

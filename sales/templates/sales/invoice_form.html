@@ -94,11 +94,11 @@
       <tbody>
         {% for product in untagged_formset %}
           <tr>
-            <td><p id="id_metal_table">{{ product.metal.value }}</p> <p id="id_category_table">{{ product.category.value }}</p></td>
+            <td><p id="id_metal_table">{{ product.instance.metal }}</p> <p id="id_category_table">{{ product.instance.category }}</p></td>
             <td id="id_gross_weight_table">{{ product.gross_weight.value }}</td>
             <td id="id_net_weight_table">{{ product.net_weight.value }}</td>
             <td id="id_subtotal_table">{{ product.subtotal.value }}</td>
-            <td id="id_tax_table">{{ product.sgst.value | add:product.cgst.value |add:product.igst.value |add:product.tcs.value }}></td>
+            <td id="id_tax_table">{{ product.sgst.value | add:product.cgst.value |add:product.igst.value |add:product.tcs.value }}</td>
             <td id="id_total_table">{{ product.total.value }}</td>
             <td hidden>
               {{ product.as_div }}
@@ -182,7 +182,7 @@
           <tr>
             <td id="id_serial_number_table">{{ forloop.counter }}</td>
             <td id="id_method_table">{{ payment.method.value }}</td>
-            <td id="id_date_table">{{ payment.date.value }}</td>
+            <td id="id_date_table">{{ payment.date.value |date:"Y-m-d" }}</td>
             <td id="id_amount_table">{{ payment.amount.value }}</td>
             <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteRow(this)"></td>
             <td hidden>

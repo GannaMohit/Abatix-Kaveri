@@ -1,3 +1,4 @@
+from typing import Iterable, Optional
 from django.db import models
 from masters.models import Customer, GST_State, Metal, Purity, Type, Category
 from stock.models import Product
@@ -27,14 +28,43 @@ class Invoice(models.Model):
     gst_invoice = models.CharField(max_length=64, unique=True, default=get_gst_invoice)
     state = models.ForeignKey(GST_State, on_delete=models.CASCADE, related_name="invoices", default=get_gst_state, verbose_name='state')
 
-    subtotal = models.DecimalField(max_digits=16, decimal_places=2)
-    sgst = models.DecimalField(max_digits=16, decimal_places=2)
-    cgst = models.DecimalField(max_digits=16, decimal_places=2)
-    igst = models.DecimalField(max_digits=16, decimal_places=2)
-    tcs = models.DecimalField(max_digits=16, decimal_places=2)
-    total = models.DecimalField(max_digits=16, decimal_places=2)
-
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name="invoices")
+
+    @property
+    def subtotal(self):
+        products_sum = self.products.aggregate(models.Sum('subtotal', default=0, output_field=models.DecimalField()))["subtotal__sum"]
+        untagged_sum = self.untagged.aggregate(models.Sum('subtotal', default=0, output_field=models.DecimalField()))["subtotal__sum"]
+        return round(products_sum + untagged_sum, 2)
+    
+    @property
+    def sgst(self):
+        products_sum = self.products.aggregate(models.Sum('sgst', default=0, output_field=models.DecimalField()))["sgst__sum"]
+        untagged_sum = self.untagged.aggregate(models.Sum('sgst', default=0, output_field=models.DecimalField()))["sgst__sum"]
+        return round(products_sum + untagged_sum, 2)
+    
+    @property
+    def cgst(self):
+        products_sum = self.products.aggregate(models.Sum('cgst', default=0, output_field=models.DecimalField()))["cgst__sum"]
+        untagged_sum = self.untagged.aggregate(models.Sum('cgst', default=0, output_field=models.DecimalField()))["cgst__sum"]
+        return round(products_sum + untagged_sum, 2)
+    
+    @property
+    def igst(self):
+        products_sum = self.products.aggregate(models.Sum('igst', default=0, output_field=models.DecimalField()))["igst__sum"]
+        untagged_sum = self.untagged.aggregate(models.Sum('igst', default=0, output_field=models.DecimalField()))["igst__sum"]
+        return round(products_sum + untagged_sum, 2)
+    
+    @property
+    def tcs(self):
+        products_sum = self.products.aggregate(models.Sum('tcs', default=0, output_field=models.DecimalField()))["tcs__sum"]
+        untagged_sum = self.untagged.aggregate(models.Sum('tcs', default=0, output_field=models.DecimalField()))["tcs__sum"]
+        return round(products_sum + untagged_sum, 2)
+    
+    @property
+    def amount(self):
+        products_sum = self.products.aggregate(models.Sum('total', default=0, output_field=models.DecimalField()))["total__sum"]
+        untagged_sum = self.untagged.aggregate(models.Sum('total', default=0, output_field=models.DecimalField()))["total__sum"]
+        return round(products_sum + untagged_sum, 2)
 
     @property
     def gross_weight(self):
@@ -49,7 +79,7 @@ class Invoice(models.Model):
         return round(products_sum + untagged_sum, 3)
 
     def __str__(self):
-        return f"{self.customer.name} ({self.date})"
+        return f"{self.invoice_number} {self.customer.name} {self.date}"
 
 class Untagged(models.Model):
     invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE, related_name="untagged")
@@ -80,3 +110,7 @@ class Invoice_Product(models.Model):
     igst = models.DecimalField(max_digits=16, decimal_places=2)
     tcs = models.DecimalField(max_digits=16, decimal_places=2)
     total = models.DecimalField(max_digits=16, decimal_places=2)
+
+    def save(self, *args, **kwargs):
+        self.product.sold = True
+        super().save(*args, **kwargs)
