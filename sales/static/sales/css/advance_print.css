@@ -1,0 +1,237 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+@page {
+  width:210mm;
+  height:297mm;
+  margin:0;
+}
+body{
+  margin-top: 35mm;
+  margin-bottom: 25mm;
+}
+#main{
+  display: grid;
+  border-style: solid;
+  border-width: 0.5mm;
+  font-family: 'Inter', sans-serif;
+  font-style:normal;
+  font-size: 10pt;
+  margin: 0;
+}
+
+#title{
+  grid-row: 1;
+  height: 7.50mm;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom-style: solid;
+  border-bottom-width: 0.5mm;
+  text-align: center;
+  font-weight: bold;
+}
+
+#advance-details{
+  grid-row: 2;
+  height: 7.50mm;
+  display: inline-grid;
+  border-bottom-style: solid;
+  border-bottom-width: 0.5mm;
+}
+
+#advance-no{
+  grid-column: 1;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-right-style: solid;
+  border-right-width: 0.5mm;
+  padding: 0.50mm;
+}
+
+#financial-year{
+grid-column: 2;
+text-align: center;
+display: flex;
+justify-content: center;
+align-items: center;
+border-right-style: solid;
+border-right-width: 0.5mm;
+padding: 0.50mm;
+}
+
+#date{
+grid-column: 3;
+display: flex;
+justify-content: center;
+align-items: center;
+text-align: center;
+padding: 0.50mm;
+}
+
+#customer{
+  grid-row: 3;
+  padding: 0.50mm;
+  height: 30.00mm;
+  border-bottom-style: solid;
+  border-bottom-width: 0.5mm;
+}
+
+#payments-table{
+  grid-row: 4;
+  border-bottom-style: solid;
+  border-bottom-width: 0.5mm;
+}
+
+#subform{
+  width: 100%;
+  height: 75.00mm;
+  text-align: center;
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+#subform thead{
+  border-bottom: 0.5mm solid black;
+  border-collapse: separate;
+}
+
+
+#subform th, #subform td{
+  border-right: 0.5mm solid black;
+  vertical-align: top;
+}
+
+#subform thead th:nth-child(3),#subform td:nth-child(3){
+  border-right: none;
+}
+
+#subform thead th:nth-child(1),#subform td:nth-child(1){
+  width:05%;
+}
+
+#subform thead th:nth-child(2),#subform td:nth-child(2){
+  width:60%;
+}
+
+#subform thead th:nth-child(3),#subform td:nth-child(3){
+  width:35%;
+}
+
+#advance-total{
+  grid-row: 6;
+  height: 7.50mm;
+  padding: 0.50mm;
+  border-bottom-style: solid;
+  border-bottom-width: 0.5mm;
+}
+
+#advance-total-words{
+  grid-row: 7;
+  height: 7.50mm;
+  padding: 0.50mm;
+  border-bottom-style: solid;
+  border-bottom-width: 0.5mm;
+}
+
+.advance-value{
+  text-align: right;
+  float: right;
+  font-weight: bold;
+}
+
+#gst-details{
+  grid-row: 8;
+  height: 7.50mm;
+  display: inline-grid;
+  border-bottom-style: solid;
+  border-bottom-width: 0.5mm;
+}
+
+#pan{
+grid-column: 1;
+border-right-style: solid;
+border-right-width: 0.5mm;
+text-align: center;
+display: flex;
+justify-content: center;
+align-items: center;
+padding: 0.50mm;
+}
+
+#gst{
+grid-column: 2;
+border-right-style: solid;
+border-right-width: 0.5mm;
+text-align: center;
+display: flex;
+justify-content: center;
+align-items: center;
+padding: 0.50mm;
+}
+
+#state{
+grid-column: 3;
+text-align: center;
+display: flex;
+justify-content: center;
+align-items: center;
+padding: 0.50mm;
+}
+
+#bank-details{
+  grid-row: 9;
+  height: 15.00mm;
+  padding: 0.50mm;
+  border-bottom-style: solid;
+  border-bottom-width: 0.5mm;
+}
+
+#signature{
+  grid-row: 10;
+  height: 30.00mm;
+  display: inline-grid;
+  grid-template-columns: 2fr 1fr 1fr;
+}
+
+#terms{
+  grid-column: 1;
+  padding: 0.50mm;
+  border-right-style: solid;
+  border-right-width: 0.5mm;
+  font-size: 8pt;
+}
+
+p{
+  font-size: 5pt;
+}
+#customer-signature{
+  grid-column: 2;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 0.50mm;
+  border-right-style: solid;
+  border-right-width: 0.5mm;
+}
+
+#kaveri-signature{
+  grid-column: 3;
+  padding: 0.50mm;
+  text-align: center;
+  font-size: 8pt;
+}
+
+ul{
+  margin:0;
+  list-style-type: none;
+}
+
+.label{
+  text-decoration: underline;
+  font-size: 8pt;
+}
+.value{
+  font-weight: bold;
+}

@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.views import View
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, AccessMixin
 from sales.models import Advance
@@ -10,11 +10,32 @@ from django.forms.models import model_to_dict
 from django.http import JsonResponse
 
 import json
+from num2words import num2words
+import datetime
 
 class AdvanceBaseView(LoginRequiredMixin, PermissionRequiredMixin, AccessMixin):
     permission_required = ("sales.view_advance", "sales.add_advance", "sales.change_advance", "sales.delete_advance")
     raise_exception = True
     permission_denied_message = "You do not have permission to access Advance details."
+
+class AdvanceDetailView(AdvanceBaseView, DetailView):
+    model = Advance
+    permission_required = "sales.view_advance"
+    template_name = "sales/advance_print.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        amount_words = num2words(self.object.amount, to="cardinal", lang='en_IN').title()
+        amount_words = amount_words.replace("AND", "&")
+        today = datetime.date.today()
+        context["amount_words"] = amount_words
+        last_april_date = datetime.date(today.year, 4, 1)
+        if last_april_date > today:
+            last_april_date = last_april_date.replace(year=today.year - 1)
+            context["financial_year"] = f"{last_april_date.year}-{today.strftime('%y')}"
+        else:
+            context["financial_year"] = f"{today.year}-{today.replace(year=today.year+1).strftime('%y')}"
+        return context
 
 class AdvanceListView(AdvanceBaseView, ListView):
     permission_required = "sales.view_advance"

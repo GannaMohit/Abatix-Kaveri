@@ -19,7 +19,7 @@
           <span>Voucher No. :&nbsp;&nbsp;</span><span class="value">{{ voucher.voucher_number }}</span>
         </div>
         <div id="gst-bill-no">
-          <span>Year :&nbsp;&nbsp;</span><span class="value">{{ voucher.date |date:"Y" }}-{{ voucher.voucher_number }}</span>
+          <span>F. Year :&nbsp;&nbsp;</span><span class="value">{{ financial_year }}</span>
         </div>
         <div id="date">
           <span>Date: &nbsp;&nbsp;</span><span class="value">{{ voucher.date |date:"d-m-Y" }}</span>

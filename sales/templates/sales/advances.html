@@ -41,7 +41,7 @@
       <td>{{ advance.amount }}</td>
       <td>
         <a href="{% url 'advance_edit' pk=advance.pk %}"><img src="{% static 'masters/svg/edit.svg' %}" alt="Edit" title="Edit"></a>
-        <a href="{% url 'advance_edit' pk=advance.pk %}"><img src="{% static 'masters/svg/print.svg' %}" alt="Print" title="Print"></a>
+        <a href="{% url 'advance_print' pk=advance.pk %}"><img src="{% static 'masters/svg/print.svg' %}" alt="Print" title="Print"></a>
       </td>
     </tr>
     {% endfor %}

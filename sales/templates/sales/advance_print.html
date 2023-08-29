@@ -1,0 +1,106 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Receipt Print</title>
+    <link rel="stylesheet" href="{% static 'sales/css/advance_print.css' %}">
+
+  </head>
+  <body>
+    <div id="main"class="container">
+      <div id="title">
+        <span>CASH RECEIPT</span>
+      </div>
+
+      <div id="advance-details">
+        <div id="advance-no">
+          <span>Receipt No. :&nbsp;&nbsp;</span><span class="value">{{ advance.advance_number }}</span>
+        </div>
+        <div id="financial-year">
+          <span>F. Year :&nbsp;&nbsp;</span><span class="value">{{ financial_year }}</span>
+        </div>
+        <div id="date">
+          <span>Date: &nbsp;&nbsp;</span><span class="value">{{ advance.date |date:"d-m-Y" }}</span>
+        </div>
+      </div>
+
+      <div id="customer">
+        <span class="label">Customer Details</span>
+        <ul>
+          <li>{{ advance.customer.name }} {{ advance.customer.firm }}</li>
+          <li>{{ advance.customer.pan }}</li>
+          <li>{{ advance.customer.gst }}</li>
+          <li>{{ advance.customer.address }}</li>
+          <li>{{ advance.customer.city }} {{ advance.customer.pincode }}</li>
+          <li>{{ advance.customer.contact}}</li>
+        </ul>
+      </div>
+
+      <div id="payments-table">
+        <table id="subform">
+          <thead>
+          <tr>
+            <th>#</th>
+            <th>Particulars</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for payment in payments %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ payment.method }}</td>
+            <td>₹{{ payment.amount }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+        </table>
+      </div>
+        
+      <div id="advance-total">
+        <span>Total (in figures)</span>
+        <span class="advance-value">₹&nbsp;{{ advance.total }}</span>
+      </div>
+
+      <div id="advance-total-words">
+        <span>Total (in words)</span>
+        <span class="advance-value">Rs.&nbsp;{{ amount_words }}</span>
+      </div>
+
+      <div id="gst-details">
+        <div id="pan">
+          <span>PAN :&nbsp;&nbsp;</span><span class="value">AAACK9151B</span>
+        </div>
+        <div id="gst">
+          <span>GST :&nbsp;&nbsp;</span><span class="value">27AAACK9151B1ZS</span>
+        </div>
+        <div id="state">
+          <span>State :&nbsp;&nbsp;</span><span class="value">{{ advance.state }}</span>
+        </div>
+      </div>
+
+      <div id="bank-details">
+        <span class="label">Bank Details</span><br>
+        <span>Name: Kaveri Jewellers Pvt. Ltd. | A/C No. : 157500100501930 | Bank : Saraswat Co-operative Bank<br>IFSC Code : SRCB0000157 | Branch : Santacruz West</span>
+      </div>
+
+      <div id="signature">
+        <div id="terms">
+          <span class="label">Terms and Conditions</span>
+          <p>Money will be refunded anytime against our cash memo for the articles of gold bought from us at the market rate, after deducting making charges, duties,
+            taxes & refining charges as applicable. If ornaments bought in exchange, then full credit will be given for weight of gold after deducting the making charges. The weight of Stones, Kundan, Pearls and Mina will also be deducted and will not be refundable. Amout over Rs. 2500/- will be paid by cheque to the rightful owner.<br>
+            In case of non-payment, interest @18% p.a. would be charged from the date of invoice.</p>
+          <span>SUBJECT TO MUMBAI JURISDICTION</span>
+        </div>
+        <div id="customer-signature">
+          <span>Customer's signature</span>
+        </div>
+        <div id="kaveri-signature">
+          <span>For Kaveri Jewellers Pvt. Ltd.</span>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

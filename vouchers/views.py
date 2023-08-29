@@ -7,6 +7,7 @@ from masters.models import Customer
 from vouchers.forms import VoucherForm, ParticularForm, ParticularFormSet, CustomerForm, ProductFormSet
 
 from num2words import num2words
+import datetime
 
 class VoucherBaseView(LoginRequiredMixin, PermissionRequiredMixin, AccessMixin):
     permission_required = ("vouchers.view_voucher", "vouchers.add_voucher", "vouchers.change_voucher", "vouchers.delete_voucher")
@@ -23,6 +24,13 @@ class VoucherDetailView(VoucherBaseView, DetailView):
         amount_words = num2words(self.object.amount, to="cardinal", lang='en_IN').title()
         amount_words = amount_words.replace("AND", "&")
         context["amount_words"] = amount_words
+        today = datetime.date.today()
+        last_april_date = datetime.date(today.year, 4, 1)
+        if last_april_date > today:
+            last_april_date = last_april_date.replace(year=today.year - 1)
+            context["financial_year"] = f"{last_april_date.year}-{today.strftime('%y')}"
+        else:
+            context["financial_year"] = f"{today.year}-{today.replace(year=today.year+1).strftime('%y')}"
         return context
 
 class VoucherListView(VoucherBaseView, ListView):
