@@ -14,7 +14,7 @@
 <table id="table-thead">
   <thead>
     <tr>
-      <th>I.D.</th>
+      <th>No.</th>
       <th>Date</th>
       <th>Name</th>
       <th>Firm</th>
@@ -22,6 +22,7 @@
       <th>PAN</th>
       <th>Contact</th>
       <th>Amount</th>
+      <th>Actions</th>
     </tr>
   </thead>
 </table>
@@ -30,14 +31,18 @@
   <tbody>
     {% for advance in advances %}
     <tr>
-      <td><a href="{% url 'advance_edit' pk=advance.id %}">{{ advance.id }}</a></td>
-      <td><a href="<!-- TODO: URL for advance edit -->">{{ advance.date }}</a></td>
-      <td><a href="<!-- TODO: URL for advance edit -->">{{ advance.customer.name }}</a></td>
-      <td><a href="<!-- TODO: URL for advance edit -->">{{ advance.customer.firm }}</a></td>
-      <td><a href="<!-- TODO: URL for advance edit -->">{{ advance.customer.gst }}</a></td>
-      <td><a href="<!-- TODO: URL for advance edit -->">{{ advance.customer.pan }}</a></td>
-      <td><a href="<!-- TODO: URL for advance edit -->">{{ advance.customer.contact }}</a></td>
-      <td><a href="<!-- TODO: URL for advance edit -->">{{ advance.amount }}</a></td>
+      <td>{{ advance.advance_number }}</td>
+      <td>{{ advance.date |date:"d-m-Y" }}</td>
+      <td>{{ advance.customer.name }}</td>
+      <td>{{ advance.customer.firm }}</td>
+      <td>{{ advance.customer.gst }}</td>
+      <td>{{ advance.customer.pan }}</td>
+      <td>{{ advance.customer.contact }}</td>
+      <td>{{ advance.amount }}</td>
+      <td>
+        <a href="{% url 'advance_edit' pk=advance.pk %}"><img src="{% static 'masters/svg/edit.svg' %}" alt="Edit" title="Edit"></a>
+        <a href="{% url 'advance_edit' pk=advance.pk %}"><img src="{% static 'masters/svg/print.svg' %}" alt="Print" title="Print"></a>
+      </td>
     </tr>
     {% endfor %}
   </tbody>

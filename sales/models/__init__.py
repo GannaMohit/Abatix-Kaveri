@@ -8,6 +8,10 @@ class Invoice_Advance(models.Model):
     invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE, related_name="advances")
     advance = models.ForeignKey(Advance, on_delete=models.CASCADE, related_name="invoice")
 
+    def save(self, *args, **kwargs):
+        self.advance.redeemed = True
+        super().save(*args, **kwargs)
+
 class Payment(models.Model):
     method_choices = [
         ("Cash", "Cash"),

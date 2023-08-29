@@ -7,15 +7,11 @@
   <link rel="stylesheet" href="{% static 'vouchers/css/vouchers.css' %}">
 {% endblock %}
 
-{% block new_button_link %}<!-- TODO: Add link to VoucherNew -->{% endblock %}
-{% block export_button_link %}<!-- TODO: Add link to VoucherExport -->{% endblock %}
-
 {% block body %}
 </div>
 <span id="title">Vouchers</span>
   <div id="box">
 
-    <!-- TODO: New voucher URL -->
     <a href="{% url 'vouchers_new' %}"><button type="submit" name="new" id="new">New</button></a>
 
     <!-- TODO: Export voucher URL -->
@@ -46,8 +42,8 @@
                 <th>Firm</th>
                 <th>Gross Wt.</th>
                 <th>Net Wt.</th>
-                <th>Pure Wt.</th>
                 <th>Amount</th>
+                <th>Actions</th>
             </tr>
             </thead>
     </table>
@@ -56,16 +52,19 @@
       <tbody>
         {% for voucher in vouchers %}
             <tr>
-              <td><a href="{% url 'voucher_edit' pk=voucher.id %}">{{ voucher.id }}</a></td>
-              <td>{{ voucher.voucher_number }}</a></td>
-              <td>{{ voucher.type }}</a></td>
-              <td>{{ voucher.date }}</a></td>
-              <td>{{ voucher.customer.name }}</a></td>
-              <td>{{ voucher.customer.firm }}</a></td>
-              <td>{{ voucher.gross_weight }} g</a></td>
-              <td>{{ voucher.net_weight }} g</a></td>
-              <td>{{ voucher.pure_weight }} g</a></td>
-              <td>₹{{ voucher.amount }}</a></td>
+              <td>{{ voucher.id }}</td>
+              <td>{{ voucher.voucher_number }}</td>
+              <td>{{ voucher.type }}</td>
+              <td>{{ voucher.date | date:"d-m-Y" }}</td>
+              <td>{{ voucher.customer.name }}</td>
+              <td>{{ voucher.customer.firm }}</td>
+              <td>{{ voucher.gross_weight }} g</td>
+              <td>{{ voucher.net_weight }} g</td>
+              <td>₹{{ voucher.amount }}</td>
+              <td>
+                <a href="{% url 'voucher_edit' pk=voucher.pk %}"><img src="{% static 'masters/svg/edit.svg' %}" alt="Edit" title="Edit"></a>
+                <a href="{% url 'voucher_print' pk=voucher.pk %}"><img src="{% static 'masters/svg/print.svg' %}" alt="Print" title="Print"></a>
+              </td>
             </tr>
         {% endfor %}
       </tbody>

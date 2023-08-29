@@ -67,7 +67,6 @@ function updateValues(table_name, subform_name) {
 
 function deleteRow(element) {
     let tr = element.parentElement.parentElement;
-    // TODO: Add logic to add Form-#-Delete to POST data
     let delete_field = tr.querySelector("input[name$='-DELETE']");
     delete_field.checked = true;
     tr.style.display = "none";
