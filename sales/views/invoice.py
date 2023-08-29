@@ -52,7 +52,9 @@ class InvoiceCreateView(InvoiceBaseView, CreateView):
         context["advance_formset"].is_valid() and
         context["payment_formset"].is_valid()):
             try:
-                customer = Customer.objects.get(**context["customer_form"].cleaned_data)
+                customer = Customer.objects.get(contact = context["customer_form"].cleaned_data['contact'])
+                context["customer_form"].instance = customer
+                customer = context["customer_form"].save()
             except:
                 customer = context["customer_form"].save()
             
@@ -98,7 +100,7 @@ class InvoiceUpdateView(InvoiceBaseView, UpdateView):
 
     def form_valid(self, form):
         context = self.get_context_data()
-        context["customer_form"] = CustomerForm(self.request.POST, instance=self.object)
+        context["customer_form"] = CustomerForm(self.request.POST, instance=self.object.customer)
         context["product_formset"] = ProductFormSet(self.request.POST, instance=self.object)
         context["untagged_formset"] = UntaggedFormSet(self.request.POST, instance=self.object)
         context["advance_formset"] = AdvanceFormSet(self.request.POST, instance=self.object)
@@ -110,7 +112,9 @@ class InvoiceUpdateView(InvoiceBaseView, UpdateView):
         context["advance_formset"].is_valid() and
         context["payment_formset"].is_valid()):
             try:
-                customer = Customer.objects.get(**context["customer_form"].cleaned_data)
+                cust = Customer.objects.get(contact = context["customer_form"].cleaned_data['contact'])
+                context["customer_form"] = CustomerForm(self.request.POST, instance=cust)
+                customer = context["customer_form"].save()
             except:
                 customer = context["customer_form"].save()
             

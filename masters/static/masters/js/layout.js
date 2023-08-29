@@ -192,6 +192,37 @@ function calculateTax() {
   });
 }
 
+function fetchCustomer() {
+  let cust = document.querySelector("#customer_box #id_contact");
+  let csrf_token = document.querySelector("[name='csrfmiddlewaretoken']").value;
+  let data = { "contact": cust.value.toString() };
+  let headers = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': csrf_token
+    },
+    body: JSON.stringify(data)
+  }
+  fetch('/masters/_fetch_customer', headers)
+  .then(response => response.json())
+  .then(function(customer) {
+    if (Object.keys(customer).length != 0) {
+      let source = customer;
+      dest = document.querySelectorAll(`#customer_box input, #customer_box select, #customer_box textarea`);
+      for (const source_name in source) {
+        for (let j = 0; j < dest.length; j++) {
+          let dest_name = dest[j].name;
+          if (source_name == dest_name) {
+            dest[j].value = source[source_name];
+            break;
+          }
+        }
+      }
+    }
+  });
+}
+
 // document.addEventListener("keydown", function(event) {
 //   if (event.key === "Enter") {
 //     event.preventDefault();

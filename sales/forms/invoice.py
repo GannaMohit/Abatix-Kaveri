@@ -14,7 +14,7 @@ class InvoiceForm(forms.ModelForm):
 class CustomerForm(forms.ModelForm):
     class Meta:
         model = Customer
-        fields = ('name', 'firm', 'gst', 'pan', 'aadhar', 'contact', 'address', 'city', 'pincode')
+        fields = ('contact', 'name', 'firm', 'gst', 'pan', 'aadhar', 'address', 'city', 'pincode')
 
 class UntaggedForm(forms.ModelForm):
     class Meta:
