@@ -13,7 +13,7 @@ class AdvanceForm(forms.ModelForm):
 class CustomerForm(forms.ModelForm):
     class Meta:
         model = Customer
-        fields = ('name', 'firm', 'gst', 'pan', 'aadhar', 'contact', 'email', 'address', 'city', 'pincode')
+        fields = ('contact', 'name', 'firm', 'gst', 'pan', 'aadhar', 'email', 'address', 'city', 'pincode')
 
 class PaymentForm(forms.ModelForm):
     class Meta:

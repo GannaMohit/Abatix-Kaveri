@@ -5,7 +5,7 @@ from masters.models import Customer
 class CustomerForm(ModelForm):
     class Meta:
         model = Customer
-        fields = ('name', 'firm', 'gst', 'pan', 'aadhar', 'contact', 'email', 'address', 'city', 'pincode')
+        fields = ('contact', 'name', 'firm', 'gst', 'pan', 'aadhar', 'email', 'address', 'city', 'pincode')
 
 class VoucherForm(ModelForm):
     class Meta:

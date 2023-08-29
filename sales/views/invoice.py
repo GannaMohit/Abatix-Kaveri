@@ -52,8 +52,8 @@ class InvoiceCreateView(InvoiceBaseView, CreateView):
         context["advance_formset"].is_valid() and
         context["payment_formset"].is_valid()):
             try:
-                customer = Customer.objects.get(contact = context["customer_form"].cleaned_data['contact'])
-                context["customer_form"].instance = customer
+                cust = Customer.objects.get(contact = context["customer_form"].cleaned_data['contact'])
+                context["customer_form"] = CustomerForm(self.request.POST, instance=cust)
                 customer = context["customer_form"].save()
             except:
                 customer = context["customer_form"].save()

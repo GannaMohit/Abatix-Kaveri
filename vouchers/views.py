@@ -48,7 +48,9 @@ class VoucherCreateView(VoucherBaseView, CreateView):
         context["product_formset"] = ProductFormSet(self.request.POST)
         if context["customer_form"].is_valid() and context["particular_formset"].is_valid() and context["product_formset"].is_valid():
             try:
-                customer = Customer.objects.get(**context["customer_form"].cleaned_data)
+                cust = Customer.objects.get(contact = context["customer_form"].cleaned_data['contact'])
+                context["customer_form"] = CustomerForm(self.request.POST, instance=cust)
+                customer = context["customer_form"].save()
             except:
                 customer = context["customer_form"].save()
             form.instance.customer = customer
@@ -88,12 +90,14 @@ class VoucherUpdateView(VoucherBaseView, UpdateView):
 
     def form_valid(self, form):
         context = self.get_context_data()
-        context["customer_form"] = CustomerForm(self.request.POST, instance=self.object)
+        context["customer_form"] = CustomerForm(self.request.POST, instance=self.object.customer)
         context["particular_formset"] = ParticularFormSet(self.request.POST, instance=self.object)
         context["product_formset"] = ProductFormSet(self.request.POST, instance=self.object)
         if context["customer_form"].is_valid() and context["particular_formset"].is_valid() and context["product_formset"].is_valid():
             try:
-                customer = Customer.objects.get(**context["customer_form"].cleaned_data)
+                cust = Customer.objects.get(contact = context["customer_form"].cleaned_data['contact'])
+                context["customer_form"] = CustomerForm(self.request.POST, instance=cust)
+                customer = context["customer_form"].save()
             except:
                 customer = context["customer_form"].save()
             form.instance.customer = customer

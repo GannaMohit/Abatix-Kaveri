@@ -87,5 +87,8 @@ function calculateTotals() {
 
 window.onload = () => {
   let method = document.querySelector("#payment_subform #id_method");
+  let contact = document.querySelector(`#customer_box #id_contact`);
+  
   method.oninput = displayFields;
+  contact.oninput = fetchCustomer;
 }
