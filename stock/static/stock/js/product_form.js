@@ -4,9 +4,9 @@ function newStudRow(element) {
 }
 
 function submitStudRow(element) {
-  let table_name = "studs";
-  submitRow(element, table_name);
+  submitRow(element, "studs", "studs");
   calculateLessWeight();
+  setSerialNumber('studs');
 }
 
 function deleteStudRow(element) {

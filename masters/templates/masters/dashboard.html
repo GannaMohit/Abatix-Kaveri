@@ -5,7 +5,6 @@
 
 {% block link %}
 <link rel="stylesheet" href="{% static 'masters/css/dashboard.css' %}">
-<script src="{% static 'masters/js/dashboard.js' %}" charset="utf-8"></script>
 {% endblock %}
 
 {% block body %}
@@ -43,9 +42,7 @@
   </tbody>
 </table>
 
-<form action="TODO: URL for dashboard export" method="post">
-  <button type="submit" id="export" name="export">Export</button>
-</form>
+<a href="{% url 'dashboard_export' %}" download><button type="submit" id="export" name="export">Export</button></a>
 </div>
 
 </div>

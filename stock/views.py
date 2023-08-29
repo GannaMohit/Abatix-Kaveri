@@ -71,9 +71,9 @@ class ProductCreateView(ProductBaseView, CreateView):
         context["formset"] = StudFormSet(self.request.POST)
         if context["formset"].is_valid():
             self.object = form.save()
-            context["formste"].instance = self.object
+            context["formset"].instance = self.object
             context["formset"].save()
-            return super().form_valid(form)
+            return redirect(self.get_success_url())
         return self.render_to_response(context)
 
     def get_context_data(self, **kwargs):
@@ -85,7 +85,10 @@ class ProductCreateView(ProductBaseView, CreateView):
         context["formset"] = StudFormSet()
         context["stud_form"] = StudForm(label_suffix="")
         context["units"] = serializers.serialize("json", Unit.objects.all())
-        context["id"] = Product.objects.order_by("pk").last().id + 1
+        try:
+            context["id"] = Product.objects.order_by("pk").last().id + 1
+        except:
+            context["id"] = 1
         return context
 
 class ProductUpdateView(ProductBaseView, UpdateView):
@@ -101,7 +104,7 @@ class ProductUpdateView(ProductBaseView, UpdateView):
         if context["formset"].is_valid():
             self.object = form.save()
             context["formset"].save()
-            return super().form_valid(form)
+            return redirect(self.get_success_url())
         return self.render_to_response(context)
 
     def get_context_data(self, **kwargs):
@@ -111,7 +114,7 @@ class ProductUpdateView(ProductBaseView, UpdateView):
         context["product_details_form"] = ProductDetailsForm(label_suffix="", instance=self.object)
         context["making_details_form"] = MakingDetailsForm(label_suffix="", instance=self.object)
         context["formset"] = StudFormSet(instance=self.object)
-        context["stud_form"] = StudForm()
+        context["stud_form"] = StudForm(label_suffix="")
         context["units"] = serializers.serialize("json", Unit.objects.all())
         context["id"] = self.object.id
         return context

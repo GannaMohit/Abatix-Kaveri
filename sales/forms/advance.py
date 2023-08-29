@@ -7,6 +7,7 @@ class AdvanceForm(forms.ModelForm):
         model = Advance
         fields = ('advance_number', 'date', 'state')
         widgets = {
+            'advance_number': forms.TextInput(attrs={'readonly':True}),
             'date': forms.DateInput(attrs={'type':'date'})
         }
 

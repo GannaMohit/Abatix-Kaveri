@@ -3,15 +3,16 @@ from django.views import View
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms.models import model_to_dict
-from django.http import JsonResponse
+from django.http import JsonResponse, FileResponse, HttpResponse
 from .models import Unit, GST_Rate, Customer
 from django.core import serializers
-
+from django.templatetags.static import static
 from stock.models import Product
 from vouchers.models import Voucher
 
 import json
 import datetime
+import pandas as pd
 
 # Create your views here.
 class HomeView(LoginRequiredMixin, TemplateView):
@@ -60,3 +61,23 @@ class DashboardView(LoginRequiredMixin, TemplateView):
 
         context["stock"] = Product.objects.filter(sold=False).values('metal__metal', 'purity__purity', 'type__type', 'category__category').annotate(Count('pk'), Sum('gross_weight'), Sum('studs_weight'), Sum('net_weight'))
         return context
+    
+def dashboard_export(request):
+    today = datetime.date.today().strftime("%d-%m-%Y")
+    stock = Product.objects.filter(sold=False).values('metal__metal', 'purity__purity', 'type__type', 'category__category').annotate(Count('pk'), Sum('gross_weight'), Sum('studs_weight'), Sum('net_weight'))
+    df = pd.DataFrame.from_records(stock)
+    df.rename(columns = {'metal__metal':'Metal',
+                            'purity__purity': 'Purity',
+                            'type__type': 'Type',
+                            'category__category':'Category',
+                            'pk__count': 'Qty',
+                            'gross_weight__sum': 'Gross Wt.',
+                            'studs_weight__sum': 'Studding',
+                            'net_weight__sum': 'Net Wt.'},
+                            inplace=True)
+    filename = f"masters/static/masters/excels/stock({today}).xlsx"
+    df.to_excel(filename, sheet_name = "stock", header = True, index = False, )
+    response = FileResponse(filename=filename, as_attachment=True, content_type='application/ms-excel')
+    # response = HttpResponse(open(filename, 'r', encoding=), content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; stock.xlsx'
+    return response
