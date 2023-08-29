@@ -1,15 +1,29 @@
 from django.shortcuts import render, redirect
-from django.views.generic import ListView
+from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, AccessMixin
 from vouchers.models import Voucher, Particular, get_voucher_number
 from masters.models import Customer
 from vouchers.forms import VoucherForm, ParticularForm, ParticularFormSet, CustomerForm, ProductFormSet
 
+from num2words import num2words
+
 class VoucherBaseView(LoginRequiredMixin, PermissionRequiredMixin, AccessMixin):
     permission_required = ("vouchers.view_voucher", "vouchers.add_voucher", "vouchers.change_voucher", "vouchers.delete_voucher")
     raise_exception = True
     permission_denied_message = "You do not have permission to access Voucher details."
+
+class VoucherDetailView(VoucherBaseView, DetailView):
+    model = Voucher
+    permission_required = "vouchers.view_voucher"
+    template_name = "vouchers/voucher_print.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        amount_words = num2words(self.object.amount, to="cardinal", lang='en_IN').title()
+        amount_words = amount_words.replace("AND", "&")
+        context["amount_words"] = amount_words
+        return context
 
 class VoucherListView(VoucherBaseView, ListView):
     template_name = "vouchers/vouchers.html"

@@ -43,14 +43,49 @@ class Voucher(models.Model):
     @property
     def pure_weight(self):
         products_sum = 0
-        for product in self.products:
-            products_sum += product.product.net_weight * product.product.purity.purity
+        for product in self.products.all():
+            products_sum += product.product.net_weight * product.product.purity.purity / 100
         untagged_sum = 0
-        for particular in self.particulars:
-            untagged_sum += particular.net_weight * particular.purity.purity
+        for particular in self.particulars.all():
+            untagged_sum += particular.net_weight * particular.purity.purity / 100
         return round(products_sum + untagged_sum, 3)
 
-    amount = models.DecimalField(max_digits=16, decimal_places=2)
+    @property
+    def subtotal(self):
+        products_sum = self.products.aggregate(models.Sum('subtotal', default=0, output_field=models.DecimalField()))["subtotal__sum"]
+        untagged_sum = self.particulars.aggregate(models.Sum('subtotal', default=0, output_field=models.DecimalField()))["subtotal__sum"]
+        return round(products_sum + untagged_sum, 2)
+    
+    @property
+    def sgst(self):
+        products_sum = self.products.aggregate(models.Sum('sgst', default=0, output_field=models.DecimalField()))["sgst__sum"]
+        untagged_sum = self.particulars.aggregate(models.Sum('sgst', default=0, output_field=models.DecimalField()))["sgst__sum"]
+        return round(products_sum + untagged_sum, 2)
+    
+    @property
+    def cgst(self):
+        products_sum = self.products.aggregate(models.Sum('cgst', default=0, output_field=models.DecimalField()))["cgst__sum"]
+        untagged_sum = self.particulars.aggregate(models.Sum('cgst', default=0, output_field=models.DecimalField()))["cgst__sum"]
+        return round(products_sum + untagged_sum, 2)
+    
+    @property
+    def igst(self):
+        products_sum = self.products.aggregate(models.Sum('igst', default=0, output_field=models.DecimalField()))["igst__sum"]
+        untagged_sum = self.particulars.aggregate(models.Sum('igst', default=0, output_field=models.DecimalField()))["igst__sum"]
+        return round(products_sum + untagged_sum, 2)
+    
+    @property
+    def tcs(self):
+        products_sum = self.products.aggregate(models.Sum('tcs', default=0, output_field=models.DecimalField()))["tcs__sum"]
+        untagged_sum = self.particulars.aggregate(models.Sum('tcs', default=0, output_field=models.DecimalField()))["tcs__sum"]
+        return round(products_sum + untagged_sum, 2)
+
+    @property
+    def amount(self):
+        products_sum = self.products.aggregate(models.Sum('total', default=0, output_field=models.DecimalField()))["total__sum"]
+        untagged_sum = self.particulars.aggregate(models.Sum('total', default=0, output_field=models.DecimalField()))["total__sum"]
+        return round(products_sum + untagged_sum, 2)
+    
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name="vouchers")
 
     def __str__(self):
