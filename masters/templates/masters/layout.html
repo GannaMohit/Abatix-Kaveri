@@ -24,7 +24,7 @@
 
       <div id = "nav-line"></div>
       <span id = "nav-avatar"><img src="{% static 'masters/svg/Avatar.svg' %}" title="Avatar"></span>
-      <span id = "nav-logout"><a href="<!-- TODO: Add link to logout -->"><img src="{% static 'masters/svg/Logout.svg' %}" title="Logout"></a></span>
+      <span id = "nav-logout"><a href="{% url 'logout' %}"><img src="{% static 'masters/svg/Logout.svg' %}" title="Logout"></a></span>
       <div id="highlight"></div>
     </nav>
     {% block body %}
