@@ -49,6 +49,7 @@
 
 .first-row-tables tr {
   height: 2.78vh;
+  background: none !important;
 }
 
 .first-row-tables td:nth-child(1) {

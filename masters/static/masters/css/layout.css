@@ -126,3 +126,18 @@ input[type=number]::-webkit-outer-spin-button {
 input:read-only, input:disabled, select:disabled {
   background: #C4C4C4 !important; 
 }
+
+input, select, textarea {
+  padding-top: 0.2778vh;
+  padding-bottom: 0.2778vh;
+  padding-right: 0.15625vw;
+  padding-left: 0.15625vw;
+}
+
+table tbody tr:not([style*="display: none"]):nth-child(odd) {
+  background: #FFFFFF;
+}
+
+table tbody tr:not([style*="display: none"]):nth-child(even) {
+  background: #E6E6E6;
+}

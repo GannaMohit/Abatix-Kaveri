@@ -62,14 +62,6 @@ table.products_table thead th {
   padding-right: 1.5625vw;
 }
 
-table tbody tr:nth-child(2n-1) {
-  background: #FFFFFF;
-}
-
-table tbody tr:nth-child(2n) {
-  background: #E6E6E6;
-}
-
 table.products_table tbody tr td {
   height: 2.78vh;
   font-family: 'Inter';

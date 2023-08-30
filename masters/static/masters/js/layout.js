@@ -22,6 +22,7 @@ function submitRow(element, table_name, subform_name) {
 
   tbody.appendChild(clone);
   tr.id = "selected";
+  tr.style.display = "";
   tr.querySelector(".cross").style.display = "inline";
 
 

@@ -28,7 +28,7 @@ class Advance(models.Model):
         return round(sum, 3)
 
     def __str__(self):
-        return f"{self.customer.name}-{self.date}-{self.amount} "
+        return f"{self.advance_number} - {self.amount} "
 
     def get_absolute_url(self):
         return reverse("advances")
