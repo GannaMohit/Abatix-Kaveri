@@ -45,7 +45,7 @@ class Product(models.Model):
     sold = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.purity.purity} {self.metal.metal} {self.category.category}"
+        return f"{self.pk} - {self.purity.purity} {self.metal.metal} {self.category.category}"
 
     def get_absolute_url(self):
         return reverse('product_detail', kwargs={'pk' : self.pk})

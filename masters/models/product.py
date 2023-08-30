@@ -13,6 +13,9 @@ class Metal(models.Model):
         return self.metal
 
 class Purity(models.Model):
+    class Meta:
+        verbose_name = "Purity"
+        verbose_name_plural = "Purities"
     purity = models.DecimalField(max_digits=16, decimal_places=2, unique=True)
     karatage = models.CharField(max_length=32, blank=True)
     display_name = models.CharField(max_length=32, blank=True)
@@ -29,6 +32,9 @@ class Type(models.Model):
         return self.type
 
 class Category(models.Model):
+    class Meta:
+        verbose_name = "Category"
+        verbose_name_plural = "Categories"
     category = models.CharField(max_length=64, unique=True)
     abbreviation = models.CharField(max_length=16, blank=True)
 
@@ -36,6 +42,10 @@ class Category(models.Model):
         return self.category
 
 class Stud_Type(models.Model):
+    class Meta:
+        verbose_name = "Stud Type"
+        verbose_name_plural = "Stud Types"
+
     type = models.CharField(max_length=64, unique=True)
     latin_name = models.CharField(max_length=64, blank=True)
     hindi_name = models.CharField(max_length=64, blank=True)
