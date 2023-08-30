@@ -10,6 +10,8 @@ from django.templatetags.static import static
 from stock.models import Product
 from vouchers.models import Voucher
 
+from django.conf import settings
+
 import json
 import datetime
 import pandas as pd
@@ -75,9 +77,8 @@ def dashboard_export(request):
                             'studs_weight__sum': 'Studding',
                             'net_weight__sum': 'Net Wt.'},
                             inplace=True)
-    filename = f"masters/static/masters/excels/stock({today}).xlsx"
-    df.to_excel(filename, sheet_name = "stock", header = True, index = False, )
-    response = FileResponse(filename=filename, as_attachment=True, content_type='application/ms-excel')
-    # response = HttpResponse(open(filename, 'r', encoding=), content_type='application/ms-excel')
-    response['Content-Disposition'] = 'attachment; stock.xlsx'
+    filename = f"masters/{settings.MEDIA_URL}masters/exports/stock({today}).csv"
+    df.to_csv(filename, header = True, index = False)
+    response = HttpResponse(open(filename))
+    response['Content-Disposition'] = f"attachment; filename=stock({today}).csv"
     return response
