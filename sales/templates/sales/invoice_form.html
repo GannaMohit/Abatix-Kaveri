@@ -8,6 +8,19 @@
   <script src="{% static 'sales/js/invoice_form.js' %}" charset="utf-8"></script>
 {% endblock %}
 
+{% block errors %}
+  {% for key,errors in form.errors.items  %}
+    {% for error in errors %}
+      <div class="error_box">
+        <img src="{% static 'masters/svg/cross.svg' %}" title="Error" class="cross">
+        <h2>Error</h2>
+        <h3>{{ error }}</h3>
+        <img src="{% static 'masters/svg/close.svg' %}" title="Close" class="close" onclick="this.parentElement.style.display = 'none'">
+      </div>
+    {% endfor %}
+  {% endfor %}
+{% endblock %}
+
 {% block body %}
 </div>
 

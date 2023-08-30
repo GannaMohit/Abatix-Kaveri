@@ -27,6 +27,9 @@
       <span id = "nav-logout"><a href="{% url 'logout' %}"><img src="{% static 'masters/svg/Logout.svg' %}" title="Logout"></a></span>
       <div id="highlight"></div>
     </nav>
+    {% block errors %}
+      
+    {% endblock %}
     {% block body %}
     {% endblock %}
   </body>

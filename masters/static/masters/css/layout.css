@@ -110,6 +110,7 @@ nav {
 }
 
 input[type=number] {
+  appearance: textfield;
   -moz-appearance: textfield;
 }
 
@@ -140,4 +141,67 @@ table tbody tr:not([style*="display: none"]):nth-child(odd) {
 
 table tbody tr:not([style*="display: none"]):nth-child(even) {
   background: #E6E6E6;
+}
+
+.error_box {
+  position: relative;
+  top: 5.556vh;
+  left: 79.6875vw;
+  width: 18.75vw;
+  height: 5.56vh;
+  border-radius: 0.6944vh;
+  background: rgba(45, 45, 45, 0.80);
+  box-shadow: 0px 0.556vh 0.3125vw 0px rgba(0, 0, 0, 0.25);
+  z-index: 10;
+  margin-bottom: 2.78vh;
+}
+
+.error_box img.cross {
+  width: 3.125vw;
+  height: 5.56vh;
+}
+
+.error_box h2 {
+  position: absolute;
+  bottom: 2.778vh;
+  display: inline-flex;
+  width: 12.5vw;
+  height: 2.22vh;
+  text-align: left;
+  flex-shrink: 0;
+  color: #FFF;
+
+  /* Body Bold */
+  font-family: 'Inter';
+  font-size: 1.52778vh;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 2.22vh;
+  margin: 0;
+}
+
+.error_box h3 {
+  position: absolute;
+  bottom: 0.556vh;
+  display: inline-flex;
+  width: 12.5vw;
+  height: 1.667vh;
+  color: #E6E6E6;
+
+  /* Sub-Body */
+  font-family: 'Inter';
+  font-size: 1.11vh;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 1.667vh;
+  margin: 0;
+}
+
+.error_box img.close {
+  position: absolute;
+  width: 0.625vw;
+  height: 1.11vh;
+  top: 2.22vh;
+  right: 1.25vw;
+  cursor: pointer;
 }
