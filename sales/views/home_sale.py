@@ -5,6 +5,10 @@ from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMix
 from sales.models import Home_Sale
 from sales.forms.home_sale import HomeSaleForm, ProductFormSet
 from stock.models import Product
+from django.db.models import Q
+
+import datetime
+
 
 class HomeSaleBaseView(LoginRequiredMixin, PermissionRequiredMixin, AccessMixin):
     permission_required = ("sales.view_home_sale", "sales.add_home_sale", "sales.change_home_sale", "sales.delete_home_sale")
@@ -15,6 +19,30 @@ class HomeSaleListView(HomeSaleBaseView, ListView):
     template_name = "sales/home_sales.html"
     queryset = Home_Sale.objects.order_by("-date", "-pk")
     context_object_name = "home_sales"
+    def get_queryset(self):
+        today = datetime.date.today()
+        last_april_date = datetime.date(today.year, 4, 1)
+        if last_april_date > today:
+            last_april_date = last_april_date.replace(year=today.year - 1)
+        
+        start_date = self.request.GET.get("start_date", last_april_date.strftime('%Y-%m-%d'))
+        end_date = self.request.GET.get("end_date", today.strftime('%Y-%m-%d'))
+        search = self.request.GET.get("search", "")
+        queryset = Home_Sale.objects.filter(Q(date__icontains = search) | Q(pk__icontains=search), date__gte=start_date, date__lte=end_date, 
+                                          ).order_by("-date", "-pk")
+        return queryset
+    
+    def get_context_data(self, **kwargs):
+        today = datetime.date.today()
+        last_april_date = datetime.date(today.year, 4, 1)
+        if last_april_date > today:
+            last_april_date = last_april_date.replace(year=today.year - 1)
+        context = super().get_context_data(**kwargs)
+        context['start_date'] = self.request.GET.get("start_date", last_april_date.strftime('%Y-%m-%d'))
+        context["end_date"] = self.request.GET.get("end_date", today.strftime('%Y-%m-%d'))
+        context["search"] = self.request.GET.get("search", "")
+        return context
+    
 
 class HomeSaleCreateView(HomeSaleBaseView, CreateView):
     model = Home_Sale

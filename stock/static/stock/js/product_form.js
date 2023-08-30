@@ -79,6 +79,7 @@ function makeRequired(element) {
 }
 
 window.onload = () => {
+  makeRequired(document.querySelector("input[name='calculation']"));
   let gross_weight = document.querySelector("#id_gross_weight");
   gross_weight.oninput = calculateLessWeight;
 }

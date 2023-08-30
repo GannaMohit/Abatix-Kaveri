@@ -18,11 +18,11 @@
     <a href=""><button type="submit" name="export" id="export">Export</button></a>
 
     <!-- TODO: Filter vouchers URL -->
-    <form action="" method="post">
-      <select id="type" name="type" oninput="this.parentElement.submit()">
-        <option value="Issue" {% if vouchers.first.type == "Issue" %} selected {% endif %}>Issue</option>
-        <option value="Receive" {% if vouchers.first.type == 'Receive' %} selected {% endif %}>Receive</option>
-        <option value="URD" {% if vouchers.first.type == 'URD' %} selected {% endif %}>URD</option>
+    <form action="{{ request.path }}" method="get">
+      <select id="type" name="type" onchange="this.parentElement.submit()">
+        <option value="Issue" {% if type == "Issue" %} selected {% endif %}>Issue</option>
+        <option value="Receive" {% if type == 'Receive' %} selected {% endif %}>Receive</option>
+        <option value="URD" {% if type == 'URD' %} selected {% endif %}>URD</option>
       </select>
       <input id="start_date" type="date" name="start_date" value="{{ start_date }}" oninput="this.parentElement.submit()">
       <span id="TO">TO</span>

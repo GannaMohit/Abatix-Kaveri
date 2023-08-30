@@ -34,7 +34,7 @@
     {% for invoice in invoices %}
     <tr>
       <td>{{ invoice.invoice_number }}</td><!-- TODO: Give way to print invoice -->
-      <td>{{ invoice.date }}</td>
+      <td>{{ invoice.date |date:'d-m-Y' }}</td>
       <td>{{ invoice.gst_invoice }}</td>
       <td>{{ invoice.customer.name }}</td>
       <td>{{ invoice.customer.firm }}</td>

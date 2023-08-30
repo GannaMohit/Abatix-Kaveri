@@ -121,6 +121,7 @@
 }
 
 .second-row-tables-thead {
+  display: block;
   position: relative;
   top: 2.778vh;
   height: 2.78vh;
@@ -129,6 +130,7 @@
 }
 
 .second-row-tables-thead th {
+  height: 2.78vh;
   font-family: "Inter", sans-serif;
   font-style: normal;
   font-weight: bold;
