@@ -149,8 +149,6 @@ class InvoiceUpdateView(InvoiceBaseView, UpdateView):
             form.instance.customer = customer
             self.object = form.save()
             context["product_formset"].save()
-            for prod in context['product_formset'].deleted_forms:
-                prod.instance.product.sold = False
             context["untagged_formset"].save()
             context["advance_formset"].save()
             context["payment_formset"].save()

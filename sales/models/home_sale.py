@@ -30,6 +30,12 @@ class Home_Sale_Product(models.Model):
     home_sale = models.ForeignKey(Home_Sale, on_delete=models.CASCADE, related_name="products")
     product = models.OneToOneField(Product, on_delete=models.CASCADE, related_name="home_sale")
 
+    def delete(self, *args, **kwargs):
+        self.product.sold = False
+        self.product.save()
+        return super().delete(*args, **kwargs)
+
     def save(self, *args, **kwargs):
         self.product.sold = True
+        self.product.save()
         super().save(*args, **kwargs)

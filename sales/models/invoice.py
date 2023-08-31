@@ -114,6 +114,12 @@ class Invoice_Product(models.Model):
     tcs = models.DecimalField(max_digits=16, decimal_places=2)
     total = models.DecimalField(max_digits=16, decimal_places=2)
 
+    def delete(self, *args, **kwargs):
+        self.product.sold = False
+        self.product.save()
+        return super().delete(*args, **kwargs)
+
     def save(self, *args, **kwargs):
         self.product.sold = True
+        self.product.save()
         super().save(*args, **kwargs)
