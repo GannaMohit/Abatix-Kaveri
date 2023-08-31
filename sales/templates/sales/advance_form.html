@@ -44,10 +44,10 @@
         {% for payment in payment_formset %}
           <tr>
             <td id="id_#_table">{{ forloop.counter }}</td>
-            <td id="id_date_table">{{ payment.date }}</td>
-            <td id="id_method_table">{{ payment.method }}</td>
-            <td id="id_name_table">{{ payment.name }}</td>
-            <td id="id_amount_table">{{ payment.amount }}</td>
+            <td id="id_date_table">{{ payment.date.value }}</td>
+            <td id="id_method_table">{{ payment.method.value }}</td>
+            <td id="id_name_table">{{ payment.name.value }}</td>
+            <td id="id_amount_table">{{ payment.amount.value }}</td>
             <td hidden>
               {{ payment.as_div }}
             </td>

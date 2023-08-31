@@ -17,7 +17,7 @@ class HomeSaleBaseView(LoginRequiredMixin, PermissionRequiredMixin, AccessMixin)
 
 class HomeSaleListView(HomeSaleBaseView, ListView):
     template_name = "sales/home_sales.html"
-    queryset = Home_Sale.objects.order_by("-date", "-pk")
+    queryset = Home_Sale.objects.order_by("-pk")
     context_object_name = "home_sales"
     def get_queryset(self):
         today = datetime.date.today()
@@ -29,7 +29,7 @@ class HomeSaleListView(HomeSaleBaseView, ListView):
         end_date = self.request.GET.get("end_date", today.strftime('%Y-%m-%d'))
         search = self.request.GET.get("search", "")
         queryset = Home_Sale.objects.filter(Q(date__icontains = search) | Q(pk__icontains=search), date__gte=start_date, date__lte=end_date, 
-                                          ).order_by("-date", "-pk")
+                                          ).order_by("-pk")
         return queryset
     
     def get_context_data(self, **kwargs):

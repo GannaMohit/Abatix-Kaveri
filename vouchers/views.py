@@ -36,7 +36,7 @@ class VoucherDetailView(VoucherBaseView, DetailView):
 
 class VoucherListView(VoucherBaseView, ListView):
     template_name = "vouchers/vouchers.html"
-    queryset = Voucher.objects.filter(type='Issue').order_by("-date", "-pk")
+    queryset = Voucher.objects.filter(type='Issue').order_by("-voucher_number")
     context_object_name = "vouchers"
 
     def get_queryset(self):
@@ -50,7 +50,7 @@ class VoucherListView(VoucherBaseView, ListView):
         search = self.request.GET.get("search", "")
         type = self.request.GET.get("type", "Issue")
         queryset = Voucher.objects.filter(Q(customer__name__icontains = search) | Q(customer__firm__icontains=search), date__gte=start_date, date__lte=end_date, type=type
-                                          ).order_by("-date", "-voucher_number")
+                                          ).order_by("-voucher_number")
         return queryset
     
     def get_context_data(self, **kwargs):

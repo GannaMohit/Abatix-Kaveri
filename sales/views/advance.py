@@ -42,7 +42,7 @@ class AdvanceDetailView(AdvanceBaseView, DetailView):
 class AdvanceListView(AdvanceBaseView, ListView):
     permission_required = "sales.view_advance"
     template_name = "sales/advances.html"
-    queryset = Advance.objects.order_by("-date")
+    queryset = Advance.objects.order_by("-advance_number")
     context_object_name = "advances"
 
     def get_queryset(self):
@@ -55,7 +55,7 @@ class AdvanceListView(AdvanceBaseView, ListView):
         end_date = self.request.GET.get("end_date", today.strftime('%Y-%m-%d'))
         search = self.request.GET.get("search", "")
         queryset = Advance.objects.filter(Q(customer__name__icontains = search) | Q(customer__firm__icontains=search), date__gte=start_date, date__lte=end_date, 
-                                          ).order_by("-date", "-advance_number")
+                                          ).order_by("-advance_number")
         return queryset
     
     def get_context_data(self, **kwargs):
@@ -153,6 +153,7 @@ class AdvanceFetchAjax(AdvanceBaseView, View):
         try:
             advance = Advance.objects.get(pk=id)
             advance_dict = model_to_dict(advance)
+            advance_dict['name'] = advance.customer.name
         except:
             advance_dict = {}
         return JsonResponse(advance_dict)

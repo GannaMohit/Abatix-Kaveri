@@ -1,5 +1,6 @@
 from django.contrib import admin
 from .models import *
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 
 # Register your models here.
@@ -20,7 +21,8 @@ class InvoicePaymentInline(admin.StackedInline):
     extra = 0
     exclude = ('advance',)
 
-class InvoiceAdmin(admin.ModelAdmin):
+class InvoiceAdmin(PermissionRequiredMixin, admin.ModelAdmin):
+    permission_required = ''
     inlines = [
         InvoiceProductInline,
         InvoiceUntaggedInline,

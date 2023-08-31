@@ -33,7 +33,7 @@ class InvoiceDetailView(InvoiceBaseView, DetailView):
 class InvoiceListView(InvoiceBaseView, ListView):
     permission_required = "sales.view_invoice"
     template_name = "sales/invoices.html"
-    queryset = Invoice.objects.order_by("-date", "-pk")
+    queryset = Invoice.objects.order_by("-invoice_number")
     context_object_name = "invoices"
 
     def get_queryset(self):
@@ -46,7 +46,7 @@ class InvoiceListView(InvoiceBaseView, ListView):
         end_date = self.request.GET.get("end_date", today.strftime('%Y-%m-%d'))
         search = self.request.GET.get("search", "")
         queryset = Invoice.objects.filter(Q(customer__name__icontains = search) | Q(customer__firm__icontains=search), date__gte=start_date, date__lte=end_date, 
-                                          ).order_by("-date", "-invoice_number")
+                                          ).order_by("-pk")
         return queryset
     
     def get_context_data(self, **kwargs):

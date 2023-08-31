@@ -149,8 +149,11 @@ function setSerialNumber(table_name) {
 
 function calculateNetWeight() {
   let gw = document.getElementById('id_gross_weight');
+  let sw = document.getElementById('id_studs_weight');
   let lw = document.getElementById('id_less_weight');
   let nw = document.getElementById('id_net_weight');
+
+  sw.value = sw.value != "" ? Number(sw.value).toFixed(3): 0.000;
 
   nw.value = Number(gw.value - lw.value).toFixed(3) 
 }

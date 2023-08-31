@@ -83,7 +83,7 @@ nav {
 .new_button, .clear_button, .submit_button {
   position: absolute;
   bottom: 2.78vh;
-  height: 20px;
+  height: 2.78vh;
 
   font-family: 'Inter';
   font-style: normal;

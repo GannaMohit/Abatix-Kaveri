@@ -155,12 +155,17 @@
       <tbody>
         {% for advance in advance_formset %}
           <tr>
-            <td id="id_advance_table">{{ advance.advance.value }}</td>
+            <td id="id_advance_table">{{ advance.advance.pk }}</td>
             <td id="id_date_table">{{ advance.instance.advance.date }}</td>
-            <td id="id_name_table">{{ advance.instance.advance.name }}</td>
+            <td id="id_name_table">{{ advance.instance.advance.customer.name }}</td>
             <td id="id_amount_table">{{ advance.instance.advance.amount }}</td>
             <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteRow(this)"></td>
-            <td hidden>{{ advance.as_div }}</td>
+            <td hidden>
+              {{ advance.as_div }}
+              <div><input name="name-__prefix__-date" value="{{ advance.instance.advance.date }}"></div>
+              <div><input name="name-__prefix__-name" value="{{ advance.instance.advance.customer.name }}"></div>
+              <div><input name="name-__prefix__-amount" value="{{ advance.instance.advance.amount }}"></div>
+            </td>
           </tr>
         {% endfor %}
         <tr style="display: none;">
@@ -169,7 +174,12 @@
           <td id="id_name_table"></td>
           <td id="id_amount_table"></td>
           <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteRow(this)" style="display:none;"></td>
-          <td hidden>{{ advance_formset.empty_form.as_div }}</td>
+          <td hidden>
+            {{ advance_formset.empty_form.as_div }}
+            <div><input name="name-__prefix__-date" value=""></div>
+            <div><input name="name-__prefix__-name" value=""></div>
+            <div><input name="name-__prefix__-amount" value=""></div>
+          </td>
         </tr>
       </tbody>
     </table>
