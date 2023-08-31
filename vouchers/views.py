@@ -83,9 +83,12 @@ class VoucherCreateView(VoucherBaseView, CreateView):
         context["product_formset"] = ProductFormSet(self.request.POST)
         if context["customer_form"].is_valid() and context["particular_formset"].is_valid() and context["product_formset"].is_valid():
             try:
-                cust = Customer.objects.get(contact = context["customer_form"].cleaned_data['contact'])
-                context["customer_form"] = CustomerForm(self.request.POST, instance=cust)
-                customer = context["customer_form"].save()
+                if context["customer_form"].cleaned_data['contact'] != "":
+                    cust = Customer.objects.get(contact = context["customer_form"].cleaned_data['contact'])
+                    context["customer_form"] = CustomerForm(self.request.POST, instance=cust)
+                    customer = context["customer_form"].save()
+                else:
+                    customer = context["customer_form"].save()
             except:
                 customer = context["customer_form"].save()
             form.instance.customer = customer
@@ -130,9 +133,12 @@ class VoucherUpdateView(VoucherBaseView, UpdateView):
         context["product_formset"] = ProductFormSet(self.request.POST, instance=self.object)
         if context["customer_form"].is_valid() and context["particular_formset"].is_valid() and context["product_formset"].is_valid():
             try:
-                cust = Customer.objects.get(contact = context["customer_form"].cleaned_data['contact'])
-                context["customer_form"] = CustomerForm(self.request.POST, instance=cust)
-                customer = context["customer_form"].save()
+                if context["customer_form"].cleaned_data['contact'] != "":
+                    cust = Customer.objects.get(contact = context["customer_form"].cleaned_data['contact'])
+                    context["customer_form"] = CustomerForm(self.request.POST, instance=cust)
+                    customer = context["customer_form"].save()
+                else:
+                    customer = context["customer_form"].save()
             except:
                 customer = context["customer_form"].save()
             form.instance.customer = customer

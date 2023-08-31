@@ -81,9 +81,12 @@ class AdvanceCreateView(AdvanceBaseView, CreateView):
         context["payment_formset"] = PaymentFormSet(self.request.POST)
         if context["customer_form"].is_valid() and context["payment_formset"].is_valid():
             try:
-                cust = Customer.objects.get(contact = context["customer_form"].cleaned_data['contact'])
-                context["customer_form"] = CustomerForm(self.request.POST, instance=cust)
-                customer = context["customer_form"].save()
+                if context["customer_form"].cleaned_data['contact'] != "":
+                    cust = Customer.objects.get(contact = context["customer_form"].cleaned_data['contact'])
+                    context["customer_form"] = CustomerForm(self.request.POST, instance=cust)
+                    customer = context["customer_form"].save()
+                else:
+                    customer = context["customer_form"].save()
             except:
                 customer = context["customer_form"].save()
             form.instance.customer = customer
@@ -121,9 +124,12 @@ class AdvanceUpdateView(AdvanceBaseView, UpdateView):
         context["payment_formset"] = PaymentFormSet(self.request.POST, instance=self.object)
         if context["customer_form"].is_valid() and context["payment_formset"].is_valid():
             try:
-                cust = Customer.objects.get(contact = context["customer_form"].cleaned_data['contact'])
-                context["customer_form"] = CustomerForm(self.request.POST, instance=cust)
-                customer = context["customer_form"].save()
+                if context["customer_form"].cleaned_data['contact'] != "":
+                    cust = Customer.objects.get(contact = context["customer_form"].cleaned_data['contact'])
+                    context["customer_form"] = CustomerForm(self.request.POST, instance=cust)
+                    customer = context["customer_form"].save()
+                else:
+                    customer = context["customer_form"].save()
             except:
                 customer = context["customer_form"].save()
             form.instance.customer = customer

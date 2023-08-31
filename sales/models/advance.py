@@ -10,7 +10,7 @@ def get_advance_number():
     last_april_date = datetime.date(today.year, 4, 1)
     if last_april_date > today:
         last_april_date = last_april_date.replace(year=today.year - 1)
-    return Advance.objects.filter(date__gt = last_april_date).count() + 1
+    return Advance.objects.filter(date__gte = last_april_date).count() + 1
 
 def get_gst_state():
     return GST_State.objects.get(state="Maharashtra")

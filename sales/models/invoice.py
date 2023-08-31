@@ -9,14 +9,14 @@ def get_invoice_number():
     last_april_date = datetime.date(today.year, 4, 1)
     if last_april_date > today:
         last_april_date = last_april_date.replace(year=today.year - 1)
-    return Invoice.objects.filter(date__gt = last_april_date).count() + 1
+    return Invoice.objects.filter(date__gte = last_april_date).count() + 1
 
 def get_gst_invoice():
     today = datetime.date.today()
     last_april_date = datetime.date(today.year, 4, 1)
     if last_april_date > today:
         last_april_date = last_april_date.replace(year=today.year - 1)
-    invoice_number = Invoice.objects.filter(date__gt = last_april_date).count() + 1
+    invoice_number = Invoice.objects.filter(date__gte = last_april_date).count() + 1
     return f"{last_april_date.year}-{invoice_number}"
 
 def get_gst_state():

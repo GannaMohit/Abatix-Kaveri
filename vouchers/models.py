@@ -12,8 +12,7 @@ def get_voucher_number(type):
     last_april_date = datetime.date(today.year, 4, 1)
     if last_april_date > today:
         last_april_date = last_april_date.replace(year=today.year - 1)
-    last_april_date_time = datetime.datetime.combine(last_april_date, datetime.time.min)
-    return Voucher.objects.filter(date__gt = last_april_date_time, type=type).count() + 1
+    return Voucher.objects.filter(date__gte = last_april_date, type=type).count() + 1
 
 def get_gst_state():
     return GST_State.objects.get(state="Maharashtra")
