@@ -16,6 +16,15 @@ class CustomerForm(forms.ModelForm):
         model = Customer
         fields = ('contact', 'name', 'firm', 'gst', 'pan', 'aadhar', 'email', 'address', 'city', 'pincode')
 
+    def clean_name(self):
+        return self.cleaned_data['name'].title()
+    
+    def clean_firm(self):
+        return self.cleaned_data['firm'].title()
+    
+    def clean_city(self):
+        return self.cleaned_data['city'].title()
+
 class PaymentForm(forms.ModelForm):
     class Meta:
         model = Payment

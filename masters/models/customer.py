@@ -17,4 +17,5 @@ class Customer(models.Model):
     country = models.CharField(max_length=64, blank=True)
 
     def __str__(self):
-        return self.name
+        return f"{self.name}"
+    

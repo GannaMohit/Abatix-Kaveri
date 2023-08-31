@@ -16,6 +16,15 @@ class CustomerForm(forms.ModelForm):
         model = Customer
         fields = ('contact', 'name', 'firm', 'gst', 'pan', 'aadhar', 'address', 'city', 'pincode')
 
+    def clean_name(self):
+        return self.cleaned_data['name'].title()
+    
+    def clean_firm(self):
+        return self.cleaned_data['firm'].title()
+    
+    def clean_city(self):
+        return self.cleaned_data['city'].title()
+
 class UntaggedForm(forms.ModelForm):
     class Meta:
         model = Untagged
