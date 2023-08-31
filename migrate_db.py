@@ -41,12 +41,25 @@ def migrate_masters_product():
                     density=metal['density'])
         obj.save()
 
+    new_metal = Metal(metal="None",
+                    symbol=None,
+                    colour=None,
+                    melting_point=None,
+                    boiling_point=None,
+                    density=None)
+    new_metal.save()
+
     purities = db.execute("SELECT * FROM Purities ORDER BY id").fetchall()
     for purity in purities:
         obj = Purity(purity=purity['purity'],
                     karatage=purity['karatage'],
                     display_name=purity['display_name'])
         obj.save()
+    
+    new_purity = Purity(purity=0.00,
+                    karatage='0KT',
+                    display_name=" ")
+    new_purity.save()
 
     types = db.execute("SELECT * FROM Types ORDER BY id")
     for type in types:
@@ -54,12 +67,21 @@ def migrate_masters_product():
                     hsn=HSN.objects.get(pk=type['hsn_id']),
                     abbreviation=type['abbreviation'])
         obj.save()
+    
+    new_type = Type(type="None",
+                    hsn=HSN.objects.get(code=7113),
+                    abbreviation='NA')
+    new_type.save()
 
     categories = db.execute("SELECT * FROM Categories ORDER BY id").fetchall()
     for category in categories:
         obj = Category(category=category['category'],
                     abbreviation=category['abbreviation'])
         obj.save()
+
+    new_category = Category(category="None",
+                    abbreviation="None")
+    new_category.save()
 
 def migrate_masters_stud():
     stud_types = db.execute("SELECT * FROM Stud_Types ORDER BY id").fetchall()
@@ -90,45 +112,53 @@ def migrate_stock():
                     old_description=vendor['old_description'])
         obj.save()
 
+    new_vendor = Vendor(name="None",
+                    firm="",
+                    contact="",
+                    email="",
+                    old_id="",
+                    old_description="")
+    new_vendor.save()
+
     products = db.execute("SELECT * FROM Products ORDER BY id").fetchall()
     for product in products:
         # TODO: Take care of blank entries in the db.
-        obj = Product(register_id= None if product['register_id'] == "" else product['register_id'],
-                    metal=Metal.objects.get(pk=product['metal']),
-                    purity_id=product['purity'], # TODO: Handle case for purity 0
-                    type=Type.objects.get(pk=product['type']),
-                    category=Category.objects.get(pk=product['category']),
-                    pieces=product['pieces'],
-                    gross_weight=product['gross_weight'],
-                    studs_weight=product['studding'],
-                    less_weight=product['less_weight'],
-                    net_weight=product['net_weight'],
-                    rate=0.0 if product['rate'] == "" else float(product['rate']), #TODO: Take care of blank entries of rate (maybe using date?)
-                    calculation=product['calculation'],
-                    making_charges= 0.0 if product['making_charges'] == "" else float(product['making_charges']),
-                    wastage= 0.0 if product['wastage'] == "" else float(product['wastage']),
-                    mrp= 0.0 if product['mrp'] == "" else float(product['mrp']),
+        obj = Product(register_id= product['register_id'],
+                    metal=Metal.objects.get(metal="None") if product['metal'] == '' else Metal.objects.get(pk=product['metal']),
+                    purity = Purity.objects.get(purity=0.00) if product['purity'] == '' or product['purity']=='0' else Purity.objects.get(pk=product['purity']),
+                    type=Type.objects.get(type='None') if product['type'] == '' else Type.objects.get(pk=product['type']),
+                    category=Category.objects.get(category="None") if product['category'] == '' else Category.objects.get(pk=product['category']),
+                    pieces=0 if product['pieces']=='' else product['pieces'],
+                    gross_weight=0.00 if product['gross_weight']=='' else product['gross_weight'],
+                    studs_weight=product['studding'], #TODO: studs_weight calculated
+                    less_weight=product['less_weight'], #TODO: less_weight calculated
+                    net_weight=product['net_weight'], #TODO: net_weight calculated
+                    rate=5100.00 if product['rate'] == "" else float(product['rate']), #TODO: Take care of blank entries of rate (maybe using date?)
+                    calculation="Making Charges" if product['calculation'] == '' else product['calculation'],
+                    making_charges=None if product['making_charges'] == "" else float(product['making_charges']),
+                    wastage=None if product['wastage'] == "" else float(product['wastage']),
+                    mrp=None if product['mrp'] == "" else float(product['mrp']),
                     description=product['description'],
-                    vendor_id=product['vendor_id'],
+                    vendor=Vendor.objects.get(name='None') if product['vendor_id'] == '' else Vendor.objects.get(pk=product['vendor_id']), #TODO: Take care of products without a vendor
                     purchase_date=product['purchase_date'],
                     lot_number= None if product['lot_number'] == '' else product['lot_number'],
                     design_code=product['design_code'],
                     old_id=product['old_id'],
                     sold=int(product['sold']) == 1)
         obj.save()
-    studs = db.execute("SELECT * FROM Product_Studs ORDER BY id").fetchall()
-    for stud in studs:
-        obj = Stud(product=Product.objects.get(pk=stud['product_id']),
-                    type=Stud_Type.objects.get(pk=stud['type']),
-                    less=int(stud['less']) == 1,
-                    colour=stud['colour'],
-                    shape=stud['shape'],
-                    quantity=1 if stud['quantity'] == "" else stud["quantity"],
-                    weight=stud['weight'],
-                    unit=Unit.objects.get(pk=stud['unit']),
-                    rate=0.0 if stud['rate'] == "" else stud["rate"],
-                    value=0.0 if stud['value'] == "" else stud["value"])
-        obj.save()
+        studs = db.execute("SELECT * FROM Product_Studs ORDER BY id WHERE product_id=?", (product.pk,)).fetchall()
+        for stud in studs:
+            obje = Stud(product=Product.objects.get(pk=stud['product_id']),
+                        type=Stud_Type.objects.get(pk=stud['type']),
+                        less=int(stud['less']) == 1,
+                        colour=stud['colour'],
+                        shape=stud['shape'],
+                        quantity=1 if stud['quantity'] == "" else stud["quantity"],
+                        weight=stud['weight'],
+                        unit=Unit.objects.get(pk=stud['unit']),
+                        rate=0.0 if stud['rate'] == "" else stud["rate"],
+                        value=0.0 if stud['value'] == "" else stud["value"])
+            obje.save()
 
 def migrate_invoice():
     invoices = db.execute("SELECT * FROM Bills ORDER BY id").fetchall()
@@ -304,8 +334,8 @@ migrate_masters_gst()
 migrate_masters_product()
 migrate_masters_stud()
 # migrate_stock()
-# migrate_invoice()
-# migrate_home_sale()
-# migrate_advance()
 # migrate_payment()
+# migrate_home_sale()
+# migrate_invoice()
+# migrate_advance()
 # migrate_vouchers()

@@ -56,7 +56,7 @@ class HomeSaleCreateView(HomeSaleBaseView, CreateView):
         context["formset"] = ProductFormSet(self.request.POST)
         if context["formset"].is_valid():
             self.object = form.save()
-            context["formste"].instance = self.object
+            context["formset"].instance = self.object
             context["formset"].save()
             return redirect(self.get_success_url())
         return self.render_to_response(context)
@@ -89,5 +89,5 @@ class HomeSaleUpdateView(HomeSaleBaseView, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["formset"] = ProductFormSet(instance=self.object)
-        context["id"] = Home_Sale.objects.order_by("pk").last().id + 1
+        context["id"] = self.object.pk
         return context
