@@ -155,7 +155,7 @@
       <tbody>
         {% for advance in advance_formset %}
           <tr>
-            <td id="id_advance_table">{{ advance.advance.pk }}</td>
+            <td id="id_advance_table">{{ advance.advance.advance_number }}</td>
             <td id="id_date_table">{{ advance.instance.advance.date |date:'Y-m-d' }}</td>
             <td id="id_name_table">{{ advance.instance.advance.customer.name }}</td>
             <td id="id_amount_table">{{ advance.instance.advance.amount }}</td>
