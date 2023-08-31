@@ -25,7 +25,7 @@ class Voucher(models.Model):
     ("URD", "URD")
     ])
     state = models.ForeignKey(GST_State, default=get_gst_state, on_delete=models.CASCADE, related_name='vouchers')
-    date = models.DateField()
+    date = models.DateField(default=datetime.date.today)
 
     @property
     def gross_weight(self):

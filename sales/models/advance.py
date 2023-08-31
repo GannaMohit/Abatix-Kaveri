@@ -17,7 +17,7 @@ def get_gst_state():
 
 class Advance(models.Model):
     advance_number = models.IntegerField(default=get_advance_number, verbose_name='Adv. No.')
-    date = models.DateField()
+    date = models.DateField(default=datetime.date.today)
     state = models.ForeignKey(GST_State, on_delete=models.CASCADE, related_name='advances', default=get_gst_state)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE, related_name="advances")
     redeemed = models.BooleanField(default=False)

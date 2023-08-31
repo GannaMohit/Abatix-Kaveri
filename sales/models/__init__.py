@@ -31,7 +31,7 @@ class Payment(models.Model):
     ]
     method = models.CharField(max_length=16, choices=method_choices)
     amount = models.DecimalField(max_digits=16, decimal_places=2)
-    date = models.DateField()
+    date = models.DateField(default=datetime.date.today)
     name = models.CharField(max_length=64, blank=True)
 
     card_bank = models.CharField(max_length=64, blank=True, verbose_name='Bank')

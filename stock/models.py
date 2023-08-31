@@ -2,6 +2,8 @@ from django.db import models
 from masters.models import Metal, Purity, Type, Category, Stud_Type, Unit
 from django.urls import reverse
 
+import datetime
+
 # Create your models here.
 class Vendor(models.Model):
     name = models.CharField(max_length=64)
@@ -38,7 +40,7 @@ class Product(models.Model):
 
     description = models.TextField(blank=True)
     vendor = models.ForeignKey(Vendor, on_delete=models.CASCADE, related_name="products")
-    purchase_date = models.DateField(verbose_name="Date")
+    purchase_date = models.DateField(default=datetime.date.today, verbose_name="Date")
     lot_number = models.IntegerField(blank=True, null=True, verbose_name="Lot Number")
     design_code = models.CharField(max_length=32, blank=True, verbose_name='Design Code')
     old_id = models.CharField(max_length=16, blank=True, verbose_name='Jilaba ID')

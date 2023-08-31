@@ -3,7 +3,7 @@ from stock.models import Product
 from django.urls import reverse
 
 class Home_Sale(models.Model):
-    date = models.DateField()
+    date = models.DateField(default=datetime.date.today)
 
     @property
     def gross_weight(self):
