@@ -2,6 +2,8 @@ from django.db import models
 from stock.models import Product
 from django.urls import reverse
 
+import datetime
+
 class Home_Sale(models.Model):
     date = models.DateField(default=datetime.date.today)
 
