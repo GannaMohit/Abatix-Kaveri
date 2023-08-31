@@ -214,11 +214,11 @@ def migrate_home_sale():
         obj = Home_Sale(date=home_sale['date'])
         obj.save()
 
-    home_sale_products = db.execute("SELECT * FROM Home_Sale_Products ORDER BY id").fetchall()
-    for home_sale_product in home_sale_products:
-        obj = Home_Sale_Product(home_sale_id=home_sale_product["home_sale_id"],
-                                product_id=home_sale_product["product_id"])
-        obj.save()
+        home_sale_products = db.execute("SELECT * FROM Home_Sale_Products ORDER BY id WHERE home_sale_id=?", (home_sale.pk,)).fetchall()
+        for home_sale_product in home_sale_products:
+            obj = Home_Sale_Product(home_sale_id=home_sale_product["home_sale_id"],
+                                    product_id=home_sale_product["product_id"])
+            obj.save()
 
 def migrate_advance():
     advances = db.execute("SELECT * FROM Advances ORDER BY id").fetchall()
@@ -333,9 +333,9 @@ def migrate_vouchers():
 migrate_masters_gst()
 migrate_masters_product()
 migrate_masters_stud()
-# migrate_stock()
+migrate_stock()
+migrate_home_sale()
 # migrate_payment()
-# migrate_home_sale()
 # migrate_invoice()
 # migrate_advance()
 # migrate_vouchers()
