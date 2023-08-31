@@ -92,4 +92,6 @@ window.onload = () => {
   
   method.oninput = displayFields;
   contact.oninput = fetchCustomer;
+  
+  calculateTotals();
 }

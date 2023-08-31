@@ -129,8 +129,8 @@ input:read-only, input:disabled, select:disabled {
 }
 
 input, select, textarea {
-  padding-top: 0.2778vh;
-  padding-bottom: 0.2778vh;
+  padding-top: 0;
+  padding-bottom: 0;
   padding-right: 0.15625vw;
   padding-left: 0.15625vw;
 }

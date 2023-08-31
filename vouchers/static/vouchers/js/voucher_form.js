@@ -110,4 +110,6 @@ window.onload = () => {
   lw.oninput = calculateNetWeight;
   type.oninput = changeVoucherNumber;
   contact.oninput = fetchCustomer;
+
+  calculateTotals();
 }

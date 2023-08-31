@@ -165,12 +165,14 @@ window.onload = () => {
   let lw = document.getElementById('id_less_weight');
   let subtotal = document.querySelector(`#id_subtotal`);
   let contact = document.querySelector(`#customer_box #id_contact`);
-
+  
   subtotal.oninput = calculateTax;
   gw.oninput = calculateNetWeight;
   lw.oninput = calculateNetWeight;
   method.oninput = displayFields;
   contact.oninput = fetchCustomer;
+  
+  calulateTotals();
 }
 
 

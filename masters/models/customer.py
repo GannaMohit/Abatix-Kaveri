@@ -3,7 +3,7 @@ from masters.models.gst import GST_State
 
 # Create your models here.
 class Customer(models.Model):
-    name = models.CharField(max_length=64)
+    name = models.CharField(max_length=64, blank=True)
     firm = models.CharField(max_length=64, blank=True)
     pan = models.CharField(max_length=64, blank=True)
     gst = models.CharField(max_length=64, blank=True)

@@ -73,7 +73,7 @@
             <td>{{ product.purity }}</td>
             <td>{{ product.gross_weight }} g</td>
             <td>{{ product.net_weight }} g</td>
-            <td>{{ product.rate }}+MC</td>
+            <td>{{ product.rate |floatformat:0 }}0+MC</td>
             <td>₹{{ product.total }}</td>
           </tr>
           {% endfor %}
@@ -96,6 +96,9 @@
           <ul>
             {% for payment in invoice.payments.all %}
             <li><span>{{ payment.amount }}</span><span>&nbsp;&nbsp;</span><span>{{ payment.method }}</span></li>
+            {% endfor %}
+            {% for payment in invoice.advances.all %}
+            <li><span>Advance</span><span>&nbsp;&nbsp;</span><span>{{ payment.amount }}</span></li>
             {% endfor %}
           </ul>
         </div>
