@@ -17,7 +17,7 @@
   </ul>
     <div id="box">
       <a href="{% block new_button_link %}{% endblock %}"><button type="submit" name="new" id="new">New</button></a>
-      <a href="{% block export_button_link %}{% endblock %}"><button type="submit" name="export" id="export">Export</button></a>
+      
       <form action="{{ request.path }}" method="get">
         <input id="start_date" type="date" name="start_date" value="{{ start_date }}" oninput="this.parentElement.submit()">
         <span id="TO">TO</span>

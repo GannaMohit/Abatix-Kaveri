@@ -34,7 +34,7 @@
       </tr>
       <tr>
         <td>Register</td>
-        <td>{{ product.register_id }}</td>
+        <td>{{ product.register_id |default_if_none:"" }}</td>
       </tr>
       <tr>
         <td>Design Code</td>
@@ -112,11 +112,11 @@
       </tr>
       <tr>
         <td>Wastage</td>
-        <td>{{ product.wastage }}</td>
+        <td>{{ product.wastage|default_if_none:"" }}</td>
       </tr>
       <tr>
         <td>M.R.P.</td>
-        <td>{{ product.mrp }}</td>
+        <td>{{ product.mrp|default_if_none:"" }}</td>
       </tr>
       <tr>
         <td style="padding-bottom: 8.33vh;">Calculation</td>

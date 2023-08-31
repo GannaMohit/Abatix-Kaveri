@@ -172,6 +172,4 @@ window.onload = () => {
   contact.oninput = fetchCustomer;
 }
 
-// TODO: calculateTax()
-
 

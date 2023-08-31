@@ -1,4 +1,5 @@
 from django.shortcuts import redirect
+from django.template.loader import render_to_string
 from django.db.models import Sum
 from .models import Product
 import os
@@ -20,65 +21,25 @@ def PrintTag(request, pk):
 
     if gram_weight is None:
         if carat_weight is None:
-            studding_weight = ""
+            studs_weight = ""
         else:
-            studding_weight = f"{carat_weight}ct"
+            studs_weight = f"{carat_weight}ct"
     else:
         if carat_weight is None:
-            studding_weight = f"{gram_weight}g"
+            studs_weight = f"{gram_weight}g"
         else:
-            studding_weight = f"{gram_weight}g+{carat_weight}ct"
+            studs_weight = f"{gram_weight}g+{carat_weight}ct"
 
-    if product.gross_weight == product.net_weight:
-        zpl = f'''^XA
-^PR12
-^LRY
-^MD30
-^PW560
-^LL120
-^PON
-^FO30,13.5,0^ADN^FD{product.type.abbreviation}^FS
-^FO50,13.5,0^ADN^FD-^FS
-^FO70,13.5,0^ADN^FD{product.category.category}^FS
-^FO30,38.5,0^ADN^FD{product.purity.display_name}^FS
-^FO160,38.5,0^ADN^FDR{product.register_id}^FS
-^FO30,60,0^B3N,N,30,Y,N^FD{pk}^FS
-^FO320,13.5,0^ADN^FDG. WT.^FS
-^FO420,13.5,0^ADN^FD:^FS
-^FO440,13.50,0^A0N,24,24^FD{product.gross_weight} g^FS
-^FO320,63.5,0^A0N,24,24^FD{studding_weight}^FS
-^FO320,88.5,0^ADN^FD{product.vendor.old_id}^FS
-^FO420,88.5,0^A0N,24,24^FD{calculation_value}^FS
-^PQ1
-^XZ'''
+    if product.category.category == 'Bangle':
+        zpl = render_to_string("stock/tags/bangle.txt", context=locals())
+    elif abs( product.gross_weight - product.net_weight ) > 0.0005:
+        zpl = render_to_string("stock/tags/mangalsutra.txt", context=locals())
     else:
-        zpl = f'''^XA
-^PR12
-^LRY
-^MD30
-^PW560
-^LL120
-^PON
-^FO30,13.5,0^ADN^FD{product.type.abbreviation}^FS
-^FO50,13.5,0^ADN^FD-^FS
-^FO70,13.5,0^ADN^FD{product.category.category}^FS
-^FO30,38.5,0^ADN^FD{product.purity.display_name}^FS
-^FO160,38.5,0^ADN^FDR{product.register_id}^FS
-^FO30,60,0^B3N,N,30,Y,N^FD{pk}^FS
-^FO320,13.5,0^ADN^FDG. WT.^FS
-^FO420,13.5,0^ADN^FD:^FS
-^FO440,13.50,0^A0N,24,24^FD{product.gross_weight} g^FS
-^FO320,38.5,0^ADN^FDN. WT.^FS
-^FO420,38.5,0^ADN^FD:^FS
-^FO440,38.50,0^A0N,24,24^FD{product.net_weight} g^FS
-^FO320,63.5,0^A0N,24,24^FD{studding_weight}^FS
-^FO320,88.5,0^ADN^FD{product.vendor.old_id}^FS
-^FO420,88.5,0^A0N,24,24^FD{calculation_value}^FS
-^PQ1
-^XZ'''
+        zpl = render_to_string("stock/tags/normal.txt", context=locals())
     tag_file = open("temp_tag.zpl","w")
     tag_file.write(zpl)
     tag_file.close()
-    os.system("lpr -P CL-E321Z -o raw '/home/kaveri/.var/www/Abatix/temp_tag.zpl'")
-    os.remove("temp_tag.zpl")
+    print(os.path.abspath(tag_file.name))
+    os.system(f"lpr -P CL-E321Z -o raw '{os.path.abspath(tag_file.name)}'")
+    # os.remove("temp_tag.zpl")
     return redirect("product_detail", pk=pk)

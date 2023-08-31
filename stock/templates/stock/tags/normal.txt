@@ -1,0 +1,21 @@
+^XA
+^PR12
+^LRY
+^MD30
+^PW560
+^LL120
+^PON
+^FO30,13.5,0^ADN^FD{{ product.type.abbreviation }}^FS
+^FO50,13.5,0^ADN^FD-^FS
+^FO70,13.5,0^ADN^FD{{ product.category.category }}^FS
+^FO30,38.5,0^ADN^FD{{ product.purity.display_name }}^FS
+^FO160,38.5,0^ADN^FDR{{ product.register_id |default_if_none:"" }}^FS
+^FO30,60,0^B3N,N,30,Y,N^FD{{ product.pk }}^FS
+^FO320,13.5,0^ADN^FDG. WT.^FS
+^FO420,13.5,0^ADN^FD:^FS
+^FO440,13.50,0^A0N,24,24^FD{{ product.gross_weight }} g^FS
+^FO320,63.5,0^A0N,24,24^FD{{ studs_weight }}^FS
+^FO320,88.5,0^ADN^FD{{ product.vendor.old_id }}^FS
+^FO420,88.5,0^A0N,24,24^FD{{ calculation_value }}^FS
+^PQ1
+^XZ

@@ -14,10 +14,7 @@
 
     <a href="{% url 'vouchers_new' %}"><button type="submit" name="new" id="new">New</button></a>
 
-    <!-- TODO: Export voucher URL -->
-    <a href=""><button type="submit" name="export" id="export">Export</button></a>
 
-    <!-- TODO: Filter vouchers URL -->
     <form action="{{ request.path }}" method="get">
       <select id="type" name="type" onchange="this.parentElement.submit()">
         <option value="Issue" {% if type == "Issue" %} selected {% endif %}>Issue</option>

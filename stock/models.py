@@ -15,7 +15,7 @@ class Vendor(models.Model):
         return f"{self.name} {self.firm} ({self.old_id})"
 
 class Product(models.Model):
-    register_id = models.IntegerField(blank=True, null=True, verbose_name='Register')
+    register_id = models.CharField(max_length=16,blank=True, null=True, verbose_name='Register')
     metal = models.ForeignKey(Metal, on_delete=models.CASCADE, related_name="products")
     purity = models.ForeignKey(Purity, on_delete=models.CASCADE, related_name="products")
     type = models.ForeignKey(Type, on_delete=models.CASCADE, related_name="products")
