@@ -131,3 +131,5 @@ function calculateTotals() {
   lwTotal.innerHTML = temp3.toLocaleString() + " g";
   nwTotal.innerHTML = temp4.toLocaleString() + " g";
 }
+
+disbaleEnter();

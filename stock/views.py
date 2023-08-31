@@ -43,7 +43,7 @@ class ProductDetailView(ProductBaseView, DetailView):
                 temp_qs = self.queryset.filter(id__gt = kwargs["pk"])
                 if temp_qs.exists():
                     return redirect("product_detail", pk=temp_qs.first().id)
-            elif "prev" in request.POST: # The previous button implementation
+            elif "previous" in request.POST: # The previous button implementation
                 temp_qs = self.queryset.filter(id__lt = kwargs["pk"])
                 if temp_qs.exists():
                     return redirect("product_detail", pk=temp_qs.last().id)

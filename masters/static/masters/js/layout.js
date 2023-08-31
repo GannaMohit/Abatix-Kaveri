@@ -223,9 +223,10 @@ function fetchCustomer() {
   });
 }
 
-// document.addEventListener("keydown", function(event) {
-//   if (event.key === "Enter") {
-//     event.preventDefault();
-//     document.dispatchEvent( new KeyboardEvent( 'keydown', { 'key': "Tab" } ) );
-//   }
-// });
+function disbaleEnter() {
+  document.addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+    }
+  }); 
+}

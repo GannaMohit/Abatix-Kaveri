@@ -98,6 +98,7 @@ function calulateTotals() {
 }
 
 window.onload = () => {
+  disbaleEnter();
   let type = document.querySelector("#voucher_box #id_type");
   let gw = document.getElementById('id_gross_weight');
   let lw = document.getElementById('id_less_weight');

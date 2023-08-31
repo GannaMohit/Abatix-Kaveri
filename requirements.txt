@@ -1,0 +1,4 @@
+django
+pandas
+num2words
+openpyxl

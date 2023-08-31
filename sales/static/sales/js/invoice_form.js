@@ -159,6 +159,7 @@ function calulateTotals() {
 }
 
 window.onload = () => {
+  disbaleEnter();
   let method = document.querySelector("#payment_subform_div #id_method");
   let gw = document.getElementById('id_gross_weight');
   let lw = document.getElementById('id_less_weight');
