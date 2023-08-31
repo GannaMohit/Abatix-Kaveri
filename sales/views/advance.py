@@ -141,8 +141,8 @@ class AdvanceUpdateView(AdvanceBaseView, UpdateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["payment_formset"] = PaymentFormSet(instance=self.object)
-        context["payment_form"] = PaymentForm()
-        context["customer_form"] = CustomerForm(instance=self.object.customer)
+        context["payment_form"] = PaymentForm(label_suffix="")
+        context["customer_form"] = CustomerForm(label_suffix="", instance=self.object.customer)
         context["id"] = self.object.id
         return context
     
@@ -154,6 +154,7 @@ class AdvanceFetchAjax(AdvanceBaseView, View):
             advance = Advance.objects.get(pk=id)
             advance_dict = model_to_dict(advance)
             advance_dict['name'] = advance.customer.name
+            advance_dict['amount'] = advance.amount
         except:
             advance_dict = {}
         return JsonResponse(advance_dict)

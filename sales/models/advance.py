@@ -25,10 +25,10 @@ class Advance(models.Model):
     @property
     def amount(self):
         sum = self.payments.aggregate(models.Sum('amount', default=0, output_field=models.DecimalField()))["amount__sum"]
-        return round(sum, 3)
+        return round(sum, 2)
 
     def __str__(self):
-        return f"{self.advance_number} - {self.amount} "
+        return f"{self.advance_number}"
 
     def get_absolute_url(self):
         return reverse("advances")
