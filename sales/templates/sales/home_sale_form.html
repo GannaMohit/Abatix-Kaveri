@@ -44,6 +44,7 @@
           <td>{{ product_form.instance.product.less_weight }}</td>
           <td>{{ product_form.instance.product.net_weight }}</td>
           <td>{{ product_form.instance.product.register_id }}</td>
+          <td hidden>{{ product_form.DELETE.as_hidden  }}</td>
           <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteRow(this)"></td>
         </tr>
         {% endfor %}
@@ -58,6 +59,7 @@
           <td></td>
           <td></td>
           <td></td>
+          <td hidden>{{ formset.empty_form.DELETE.as_hidden }}</td>
           <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteRow(this)" hidden></td>
         </tr>
       </tbody>

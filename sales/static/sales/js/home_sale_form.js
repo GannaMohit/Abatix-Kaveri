@@ -96,12 +96,15 @@ document.addEventListener("keydown", function(event) {
 });
 
 function deleteRow(element) {
-  element.parentElement.parentElement.style.display = "none";
+  let tr = element.parentElement.parentElement;
   calculateTotals()
   let selected = document.getElementById('selected-1');
   if (selected !== null) {
     selected.id = "";
   }
+  let delete_field = tr.querySelector("input[name$='-DELETE']");
+  delete_field.checked = true;
+  tr.style.display = "none";
   // TODO: Write logic to add the form in FORM-#-DELETE
 }
 

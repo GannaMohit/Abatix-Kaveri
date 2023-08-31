@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import redirect
 from django.views.generic import ListView
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin, AccessMixin
@@ -58,7 +58,7 @@ class HomeSaleCreateView(HomeSaleBaseView, CreateView):
             self.object = form.save()
             context["formste"].instance = self.object
             context["formset"].save()
-            return super().form_valid(form)
+            return redirect(self.get_success_url())
         return self.render_to_response(context)
 
     def get_context_data(self, **kwargs):
@@ -83,7 +83,7 @@ class HomeSaleUpdateView(HomeSaleBaseView, UpdateView):
         if context["formset"].is_valid():
             self.object = form.save()
             context["formset"].save()
-            return super().form_valid(form)
+            return redirect(self.get_success_url())
         return self.render_to_response(context)
 
     def get_context_data(self, **kwargs):

@@ -39,7 +39,6 @@ def PrintTag(request, pk):
     tag_file = open("temp_tag.zpl","w")
     tag_file.write(zpl)
     tag_file.close()
-    print(os.path.abspath(tag_file.name))
     os.system(f"lpr -P CL-E321Z -o raw '{os.path.abspath(tag_file.name)}'")
     # os.remove("temp_tag.zpl")
     return redirect("product_detail", pk=pk)
