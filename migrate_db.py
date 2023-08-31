@@ -42,8 +42,8 @@ def migrate_masters_product():
         obj.save()
 
     new_metal = Metal(metal="None",
-                    symbol=None,
-                    colour=None,
+                    symbol="",
+                    colour="",
                     melting_point=None,
                     boiling_point=None,
                     density=None)
@@ -125,28 +125,28 @@ def migrate_stock():
         # TODO: Take care of blank entries in the db.
         obj = Product(register_id= product['register_id'],
                     metal=Metal.objects.get(metal="None") if product['metal'] == '' else Metal.objects.get(pk=product['metal']),
-                    purity = Purity.objects.get(purity=0.00) if product['purity'] == '' or product['purity']=='0' else Purity.objects.get(pk=product['purity']),
+                    purity = Purity.objects.get(purity=0.00) if (product['purity'] == '' or int(product['purity'])==0) else Purity.objects.get(pk=product['purity']),
                     type=Type.objects.get(type='None') if product['type'] == '' else Type.objects.get(pk=product['type']),
                     category=Category.objects.get(category="None") if product['category'] == '' else Category.objects.get(pk=product['category']),
                     pieces=0 if product['pieces']=='' else product['pieces'],
                     gross_weight=0.00 if product['gross_weight']=='' else product['gross_weight'],
-                    studs_weight=product['studding'], #TODO: studs_weight calculated
-                    less_weight=product['less_weight'], #TODO: less_weight calculated
-                    net_weight=product['net_weight'], #TODO: net_weight calculated
-                    rate=5100.00 if product['rate'] == "" else float(product['rate']), #TODO: Take care of blank entries of rate (maybe using date?)
+                    studs_weight=0.00 if product['studding']=='' else product['studding'], 
+                    less_weight=0.00 if product['less_weight']=='' else product['less_weight'], 
+                    net_weight=0.00 if product['net_weight']=='' else product['net_weight'], 
+                    rate=5100.00 if product['rate'] == "" else float(product['rate']),
                     calculation="Making Charges" if product['calculation'] == '' else product['calculation'],
                     making_charges=None if product['making_charges'] == "" else float(product['making_charges']),
                     wastage=None if product['wastage'] == "" else float(product['wastage']),
                     mrp=None if product['mrp'] == "" else float(product['mrp']),
                     description=product['description'],
                     vendor=Vendor.objects.get(name='None') if product['vendor_id'] == '' else Vendor.objects.get(pk=product['vendor_id']), #TODO: Take care of products without a vendor
-                    purchase_date=product['purchase_date'],
+                    purchase_date="2021-12-31" if product['purchase_date'] == "" else product["purchase_date"],
                     lot_number= None if product['lot_number'] == '' else product['lot_number'],
                     design_code=product['design_code'],
                     old_id=product['old_id'],
                     sold=int(product['sold']) == 1)
         obj.save()
-        studs = db.execute("SELECT * FROM Product_Studs ORDER BY id WHERE product_id=?", (product.pk,)).fetchall()
+        studs = db.execute("SELECT * FROM Product_Studs WHERE product_id=? ORDER BY id", (obj.pk,)).fetchall()
         for stud in studs:
             obje = Stud(product=Product.objects.get(pk=stud['product_id']),
                         type=Stud_Type.objects.get(pk=stud['type']),
@@ -154,7 +154,7 @@ def migrate_stock():
                         colour=stud['colour'],
                         shape=stud['shape'],
                         quantity=1 if stud['quantity'] == "" else stud["quantity"],
-                        weight=stud['weight'],
+                        weight=0.0 if stud['weight'] == "" else stud["weight"],
                         unit=Unit.objects.get(pk=stud['unit']),
                         rate=0.0 if stud['rate'] == "" else stud["rate"],
                         value=0.0 if stud['value'] == "" else stud["value"])
@@ -214,7 +214,7 @@ def migrate_home_sale():
         obj = Home_Sale(date=home_sale['date'])
         obj.save()
 
-        home_sale_products = db.execute("SELECT * FROM Home_Sale_Products ORDER BY id WHERE home_sale_id=?", (home_sale.pk,)).fetchall()
+        home_sale_products = db.execute("SELECT * FROM Home_Sale_Products WHERE home_sale_id=? ORDER BY id", (obj.pk,)).fetchall()
         for home_sale_product in home_sale_products:
             obj = Home_Sale_Product(home_sale_id=home_sale_product["home_sale_id"],
                                     product_id=home_sale_product["product_id"])
