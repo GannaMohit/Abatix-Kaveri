@@ -335,35 +335,6 @@ table#studs_table td:nth-child(10), table#studs_table th:nth-child(10) {
   margin-left: 1.5625vw;
 }
 
-.new_button, .clear_button, .submit_button {
-  position: absolute;
-  bottom: 2.78vh;
-  height: 20px;
-
-  font-family: 'Inter';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 1.5278vh;
-
-  background: #2D2D2D;
-  border: 0px;
-  border-radius: 0.2778vh;
-  color: #FFFFFF;
-  cursor: pointer;
-}
-
-.new_button {
-  color: #FFFFFF;
-}
-
-.clear_button {
-  background: #FF0000;
-}
-
-.submit_button {
-  background: #4164DF;
-}
-
 #stud_new {
   width: 9.375vw;
   left: 1.5625vw;

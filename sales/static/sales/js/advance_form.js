@@ -6,6 +6,7 @@ function newPaymentRow(element) {
 function submitPaymentRow(element) {
   submitRow(element, 'payments', 'payments');
   calculateTotals();
+  setSerialNumber();
 }
 
 function deletePaymentRow(element) {

@@ -12,6 +12,7 @@
 <input type="hidden" id="id_voucher_number_issue" value="{{ voucher_number_issue }}">
 <input type="hidden" id="id_voucher_number_receive" value="{{ voucher_number_receive }}">
 <input type="hidden" id="id_voucher_number_urd" value="{{ voucher_number_urd }}">
+<input type="hidden" id="id_voucher_number_purchase_bill" value="{{ voucher_number_purchase_bill }}">
 
 
 <form action="{{request.path }}" method="post">
@@ -37,7 +38,7 @@
       <thead>
         <tr>
           <th>#</th>
-          <th>Tagged Particulars</th>
+          <th>Tagged</th>
           <th>Purity</th>
           <th>Pcs.</th>
           <th>Gross Wt.</th>
@@ -94,7 +95,7 @@
       <thead>
         <tr>
           <th>#</th>
-          <th>Untagged Particulars</th>
+          <th>Untagged</th>
           <th>Purity</th>
           <th>Pcs.</th>
           <th>Gross Wt.</th>

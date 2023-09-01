@@ -98,7 +98,7 @@
             <li><span>{{ payment.amount }}</span><span>&nbsp;&nbsp;</span><span>{{ payment.method }}</span></li>
             {% endfor %}
             {% for payment in invoice.advances.all %}
-            <li><span>Advance</span><span>&nbsp;&nbsp;</span><span>{{ payment.amount }}</span></li>
+            <li><span>{{ payment.advance.amount }}</span><span>&nbsp;&nbsp;</span><span>Advance</span></li>
             {% endfor %}
           </ul>
         </div>

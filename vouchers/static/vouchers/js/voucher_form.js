@@ -46,6 +46,7 @@ function changeVoucherNumber() {
   let issue = document.querySelector("#id_voucher_number_issue");
   let receive = document.querySelector("#id_voucher_number_receive");
   let urd = document.querySelector("#id_voucher_number_urd");
+  let purchase_bill = document.querySelector("#id_voucher_number_purchase_bill")
 
   switch (type.value) {
     case "Issue": 
@@ -56,6 +57,9 @@ function changeVoucherNumber() {
       break;
     case "URD":
       voucher_number.value = urd.value;
+      break;
+    case "Purchase Bill":
+      voucher_number.value = purchase_bill.value;
       break;
     default:
       break;

@@ -22,7 +22,8 @@ class Voucher(models.Model):
     type = models.CharField(max_length=16, choices=[
     ("Issue", "Issue"),
     ("Receive", "Receive"),
-    ("URD", "URD")
+    ("URD", "URD"),
+    ("Purchase Bill", "Purchase_Bill")
     ])
     state = models.ForeignKey(GST_State, default=get_gst_state, on_delete=models.CASCADE, related_name='vouchers')
     date = models.DateField(default=datetime.date.today)
@@ -96,8 +97,8 @@ class Voucher(models.Model):
 class Particular(models.Model):
     voucher = models.ForeignKey(Voucher, on_delete=models.CASCADE, related_name="particulars")
     metal = models.ForeignKey(Metal, on_delete=models.CASCADE, related_name="particulars")
-    type = models.ForeignKey(Type, on_delete=models.CASCADE, related_name="particulars")
     purity = models.ForeignKey(Purity, on_delete=models.CASCADE, related_name="particulars")
+    type = models.ForeignKey(Type, on_delete=models.CASCADE, related_name="particulars")
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name="particulars")
     pieces = models.IntegerField(default=1)
     gross_weight = models.DecimalField(max_digits=16, decimal_places=3, verbose_name="Gross Wt.")

@@ -1,5 +1,8 @@
 from django import forms
-from sales.models import Invoice, Payment, Invoice_Product, Untagged, Invoice_Advance
+from django.core.files.base import File
+from django.db.models.base import Model
+from django.forms.utils import ErrorList
+from sales.models import Invoice, Payment, Invoice_Product, Untagged, Invoice_Advance, Advance
 from masters.models import Customer
 
 class InvoiceForm(forms.ModelForm):
@@ -56,6 +59,10 @@ class InvoiceAdvanceForm(forms.ModelForm):
     class Meta:
         model = Invoice_Advance
         fields = ('advance',)
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['advance'].queryset = Advance.objects.filter(redeemed=False)
 
 ProductFormSet = forms.inlineformset_factory(Invoice, Invoice_Product, fields=fields, extra=0, can_delete=True)
 
