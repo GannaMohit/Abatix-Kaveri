@@ -6,7 +6,7 @@ from django.db import models
 
 class Invoice_Advance(models.Model):
     invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE, related_name="advances")
-    advance = models.OneToOneField(Advance, on_delete=models.CASCADE, related_name="invoice")
+    advance = models.ForeignKey(Advance, on_delete=models.CASCADE, related_name="invoice")
 
     def delete(self, *args, **kwargs):
         self.advance.redeemed = False

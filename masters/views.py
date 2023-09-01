@@ -6,7 +6,6 @@ from django.forms.models import model_to_dict
 from django.http import JsonResponse, FileResponse
 from .models import Unit, GST_Rate, Customer
 from django.core import serializers
-from django.templatetags.static import static
 from stock.models import Product
 from vouchers.models import Voucher
 
@@ -77,7 +76,7 @@ def dashboard_export(request):
                             'studs_weight__sum': 'Studding',
                             'net_weight__sum': 'Net Wt.'},
                             inplace=True)
-    filename = f"masters/{settings.MEDIA_URL}masters/exports/stock({today}).xlsx"
+    filename = settings.MEDIA_ROOT + f"masters/exports/stock({today}).xlsx"
     df.to_excel(filename, header = True, index = False)
     response = FileResponse(open(filename, 'rb'), as_attachment=True)
     response['Content-Disposition'] = f"attachment; filename=stock({today}).xlsx"

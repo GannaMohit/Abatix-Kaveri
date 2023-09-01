@@ -16,8 +16,8 @@ def PrintTag(request, pk):
         calculation = "MRP."
         calculation_value = f"₹{product.mrp}"
 
-    gram_weight = product.studs.filter(unit__unit="gram").aggregate(Sum('weight'))["weight__sum"]
-    carat_weight = product.studs.filter(unit__unit="carat").aggregate(Sum('weight'))["weight__sum"]
+    gram_weight = round(product.studs.filter(unit__unit="gram").aggregate(Sum('weight'))["weight__sum"], 2)
+    carat_weight = round(product.studs.filter(unit__unit="carat").aggregate(Sum('weight'))["weight__sum"], 2)
 
     if gram_weight is None:
         if carat_weight is None:
@@ -40,5 +40,5 @@ def PrintTag(request, pk):
     tag_file.write(zpl)
     tag_file.close()
     os.system(f"lpr -P CL-E321Z -o raw '{os.path.abspath(tag_file.name)}'")
-    # os.remove("temp_tag.zpl")
+    os.remove("temp_tag.zpl")
     return redirect("product_detail", pk=pk)
