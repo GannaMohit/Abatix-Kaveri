@@ -67,7 +67,7 @@
         </thead>
         {% for stud in formset %}
         <tr>
-          <td>{{ forloop.counter }}{{ stud.id }}</td>
+          <td>{{ forloop.counter }}</td>
           <td id="id_type_table">{{ stud.instance.type }}</td>
           <td id="id_less_table">{{ stud.less.value | yesno |title }}</td>
           <td id="id_colour_table">{{ stud.colour.value }}</td>
