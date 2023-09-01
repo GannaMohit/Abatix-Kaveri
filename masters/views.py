@@ -3,7 +3,7 @@ from django.views import View
 from django.views.generic.base import TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms.models import model_to_dict
-from django.http import JsonResponse, FileResponse, HttpResponse
+from django.http import JsonResponse, FileResponse
 from .models import Unit, GST_Rate, Customer
 from django.core import serializers
 from django.templatetags.static import static
@@ -77,8 +77,8 @@ def dashboard_export(request):
                             'studs_weight__sum': 'Studding',
                             'net_weight__sum': 'Net Wt.'},
                             inplace=True)
-    filename = f"masters/{settings.MEDIA_URL}masters/exports/stock({today}).csv"
-    df.to_csv(filename, header = True, index = False)
-    response = HttpResponse(open(filename))
-    response['Content-Disposition'] = f"attachment; filename=stock({today}).csv"
+    filename = f"masters/{settings.MEDIA_URL}masters/exports/stock({today}).xlsx"
+    df.to_excel(filename, header = True, index = False)
+    response = FileResponse(open(filename, 'rb'), as_attachment=True)
+    response['Content-Disposition'] = f"attachment; filename=stock({today}).xlsx"
     return response
