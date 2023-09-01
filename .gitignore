@@ -5,3 +5,4 @@ kaveri.db*
 .*
 */media/*/exports/*
 */migrations/*
+env/

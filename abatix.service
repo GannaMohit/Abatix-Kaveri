@@ -1,0 +1,9 @@
+[Unit]
+Description=Abatix Service
+
+[Service]
+WorkingDirectory=/home/kaveri/.var/www/abatix/
+ExecStart=/bin/bash /home/kaveri/.var/www/abatix/abatix.sh
+
+[Install]
+WantedBy=multi-user.target
