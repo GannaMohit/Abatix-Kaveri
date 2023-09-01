@@ -23,7 +23,7 @@ class Voucher(models.Model):
     ("Issue", "Issue"),
     ("Receive", "Receive"),
     ("URD", "URD"),
-    ("Purchase Bill", "Purchase_Bill")
+    ("Purchase Bill", "Purchase Bill")
     ])
     state = models.ForeignKey(GST_State, default=get_gst_state, on_delete=models.CASCADE, related_name='vouchers')
     date = models.DateField(default=datetime.date.today)

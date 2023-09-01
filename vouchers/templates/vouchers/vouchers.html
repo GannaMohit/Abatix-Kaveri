@@ -20,6 +20,7 @@
         <option value="Issue" {% if type == "Issue" %} selected {% endif %}>Issue</option>
         <option value="Receive" {% if type == 'Receive' %} selected {% endif %}>Receive</option>
         <option value="URD" {% if type == 'URD' %} selected {% endif %}>URD</option>
+        <option value="Purchase Bill" {% if type == 'Purchase Bill' %} selected {% endif %}>Purchase Bill</option>
       </select>
       <input id="start_date" type="date" name="start_date" value="{{ start_date }}" oninput="this.parentElement.submit()">
       <span id="TO">TO</span>

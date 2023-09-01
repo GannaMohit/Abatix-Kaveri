@@ -638,6 +638,7 @@ div#totals_box div p {
 
   border-radius: 2.78vh;
   background: #2D2D2D;
+  z-index: 15;
 }
 
 #invoice_submit {
@@ -658,6 +659,7 @@ div#totals_box div p {
 
   border-radius: 2.78vh;
   background: #A44B85;
+  z-index: 15;
 }
 
 #selected  {

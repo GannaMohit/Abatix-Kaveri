@@ -68,14 +68,14 @@
         {% for stud in formset %}
         <tr>
           <td>{{ forloop.counter }}{{ stud.id }}</td>
-          <td id="id_type_table">{{ stud.type.value }}</td>
-          <td id="id_less_table">{{ stud.less.value }}</td>
+          <td id="id_type_table">{{ stud.instance.type }}</td>
+          <td id="id_less_table">{{ stud.less.value | yesno |title }}</td>
           <td id="id_colour_table">{{ stud.colour.value }}</td>
           <td id="id_shape_table">{{ stud.shape.value }}</td>
           <td id="id_quantity_table">{{ stud.quantity.value }}</td>
-          <td><p id="id_weight_table">{{ stud.weight.value }}</p> <p id="id_unit_table">{{ stud.unit.value }}</p></td>
-          <td id="id_rate_table">{{ stud_formset.rate.value }}</td>
-          <td id="id_value_table">{{ stud_formset.value.value }}</td>
+          <td><p id="id_weight_table">{{ stud.weight.value }}</p> <p id="id_unit_table">{{ stud.instance.unit.symbol }}</p></td>
+          <td id="id_rate_table">{{ stud.rate.value }}</td>
+          <td id="id_value_table">{{ stud.value.value }}</td>
           <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteStudRow(this)"></td>
           <td hidden>
             {{ stud.as_div }}
