@@ -61,7 +61,7 @@
             <td>{{ product.product.purity }}</td>
             <td>{{ product.product.gross_weight }} g</td>
             <td>{{ product.product.net_weight }} g</td>
-            <td>{{ product.rate }}+MC</td>
+            <td>{{ product.rate |floatformat:0 }}0+MC</td>
             <td>₹{{ product.total }}</td>
           </tr>
           {% endfor %}
