@@ -354,26 +354,6 @@ div#totals_box div p {
 #voucher_cancel {
     position: absolute;
     bottom: 2.778vh;
-    right: 23.4375vw;
-    display: inline-block;
-    width: 9.375vw;
-    height: 5.56vh;
-    color: #FFF;
-    text-align: center;
-    /* Body Bold */
-    font-size: 1.52778vh;
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;
-
-    border-radius: 2.78vh;
-    background: #2D2D2D;
-}
-
-#voucher_clear {
-    position: absolute;
-    bottom: 2.778vh;
     right: 12.5vw;
     display: inline-block;
     width: 9.375vw;
@@ -388,7 +368,7 @@ div#totals_box div p {
     line-height: normal;
 
     border-radius: 2.78vh;
-    background: #F00;
+    background: #2D2D2D;
 }
 
 #voucher_submit {

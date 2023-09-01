@@ -10,12 +10,12 @@ function submitParticularRow(element) {
   submitRow(element, table_name, subform_name);
   setSerialNumber(table_name);
   calculateTaxTable();
-  calulateTotals();
+  calculateTotals();
 }
 
 function deleteParticularRow(element) {
   deleteRow(element);
-  calulateTotals();
+  calculateTotals();
 }
 
 function switchProductFields(element) {
@@ -79,7 +79,7 @@ function calculateTaxTable() {
   }
 }
 
-function calulateTotals() {
+function calculateTotals() {
   let gross_weight_inputs = document.querySelectorAll(`.products_table #id_gross_weight_table`);
   let net_weight_inputs = document.querySelectorAll(`.products_table #id_net_weight_table`);
   let purity_inputs = document.querySelectorAll(`.products_table #id_purity_table`);

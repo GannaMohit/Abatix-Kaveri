@@ -23,14 +23,26 @@ function submitProductRow(element) {
 
 function submitAdvanceRow(element) {
   submitRow(element, 'advances', 'advances');
+  calulateTotals();
 }
 
 function submitPaymentRow(element) {
   submitRow(element, 'payments', 'payments');
   setSerialNumber('payments');
+  calulateTotals();
 }
 
 function deleteProductRow(element) {
+  deleteRow(element);
+  calulateTotals();
+}
+
+function deleteAdvanceRow(element) {
+  deleteRow(element);
+  calulateTotals();
+}
+
+function deletePaymentRow(element) {
   deleteRow(element);
   calulateTotals();
 }
@@ -146,16 +158,22 @@ function calulateTotals() {
   let subtotal_inputs = document.querySelectorAll(`.products_table #id_subtotal_table`);
   let tax_inputs = document.querySelectorAll(`.products_table #id_tax_table`);
   let total_inputs = document.querySelectorAll(`.products_table #id_total_table`);
+  let payment_inputs = document.querySelectorAll(`#payments_table #id_amount_table`);
+  let advance_inputs = document.querySelectorAll(`#advances_table #id_amount_table`);
   let delete_inputs = document.querySelectorAll(`.products_table [name$='-DELETE']`);
 
   let nw = document.getElementById('id_net_weight_total');
   let sub = document.getElementById('id_subtotal_total');
   let tax = document.getElementById('id_tax_total');
   let tot = document.getElementById('id_total_total');
+  let pay = document.getElementById('id_payment_total');
+  let pay_1 = Number(calulateTotal(payment_inputs, document.querySelectorAll(`#payments_table [name$='-DELETE']`)))
+  let pay_2 = Number(calulateTotal(advance_inputs, document.querySelectorAll(`#advances_table [name$='-DELETE']`)))
   nw.innerText = `${Number(calulateTotal(net_weight_inputs, delete_inputs)).toFixed(3)} g`;
   sub.innerText = `₹${Number(calulateTotal(subtotal_inputs, delete_inputs)).toFixed(2)}`;
   tax.innerText = `₹${Number(calulateTotal(tax_inputs, delete_inputs)).toFixed(2)}`;
   tot.innerText = `₹${Number(calulateTotal(total_inputs, delete_inputs)).toFixed(2)}`;
+  pay.innerText = `₹${Number(pay_1+pay_2).toFixed(2)}`;
 }
 
 window.onload = () => {

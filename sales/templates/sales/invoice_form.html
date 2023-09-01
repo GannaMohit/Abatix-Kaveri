@@ -155,11 +155,11 @@
       <tbody>
         {% for advance in advance_formset %}
           <tr>
-            <td id="id_advance_table">{{ advance.advance.advance_number }}</td>
+            <td id="id_advance_table">{{ advance.instance.advance.advance_number }}</td>
             <td id="id_date_table">{{ advance.instance.advance.date |date:'Y-m-d' }}</td>
             <td id="id_name_table">{{ advance.instance.advance.customer.name }}</td>
             <td id="id_amount_table">{{ advance.instance.advance.amount }}</td>
-            <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteRow(this)"></td>
+            <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteAdvanceRow(this)"></td>
             <td hidden>
               {{ advance.as_div }}
               <div><input name="name-__prefix__-date" value="{{ advance.instance.advance.date |date:'Y-m-d' }}"></div>
@@ -173,7 +173,7 @@
           <td id="id_date_table"></td>
           <td id="id_name_table"></td>
           <td id="id_amount_table"></td>
-          <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteRow(this)" style="display:none;"></td>
+          <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteAdvanceRow(this)" style="display:none;"></td>
           <td hidden>
             {{ advance_formset.empty_form.as_div }}
             <div><input name="name-__prefix__-date" value=""></div>
@@ -207,7 +207,7 @@
             <td id="id_method_table">{{ payment.method.value }}</td>
             <td id="id_date_table">{{ payment.date.value |date:"Y-m-d" }}</td>
             <td id="id_amount_table">{{ payment.amount.value }}</td>
-            <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteRow(this)"></td>
+            <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deletePaymentRow(this)"></td>
             <td hidden>
               {{ payment.as_div }}
             </td>
@@ -218,7 +218,7 @@
           <td id="id_method_table"></td>
           <td id="id_date_table"></td>
           <td id="id_amount_table"></td>
-          <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deleteRow(this)" style="display: none;"></td>
+          <td><img class="cross" src="{% static 'sales/svg/cross.svg' %}" onclick="deletePaymentRow(this)" style="display: none;"></td>
           <td hidden>
             {{ payment_formset.empty_form.as_div }}
           </td>
@@ -245,10 +245,13 @@
       <p>Total</p>
       <span id="id_total_total"></span>
     </div>
+    <div>
+      <p>Total Payments</p>
+      <span id="id_payment_total"></span>
+    </div>
   </div>
 
   <a href="{% url 'invoices' %}"><button type="button" class="new_button" id="invoice_cancel">Cancel</button></a>
-  <button type="reset" class="clear_button" id="invoice_clear">Reset</button>
   <button type="submit" class="submit_button" id="invoice_submit">Submit</button>
 </form>
 
@@ -271,7 +274,7 @@
 
     
     <button type="reset" class="clear_button" id="product_clear">Clear</button>
-    <button type="submit" class="submit_button" id="product_submit">Submit</button>
+    <button type="submit" class="submit_button" id="product_submit">Save</button>
   </form>
 </div>
 
@@ -282,7 +285,7 @@
     <input type="text" name="date" id="id_date" hidden>
     <input type="text" name="name" id="id_name" hidden>
     <input type="text" name="amount" id="id_amount" hidden>
-    <button type="submit" class="submit_button" id="advance_submit">Submit</button>
+    <button type="submit" class="submit_button" id="advance_submit">Save</button>
   </form>
 </div>
 
@@ -293,7 +296,7 @@
       {{ payment_form.as_div }}
     </div>
     <button type="reset" class="clear_button" id="payment_clear">Clear</button>
-    <button type="submit" class="submit_button" id="payment_submit">Submit</button>
+    <button type="submit" class="submit_button" id="payment_submit">Save</button>
   </form>
 </div>
 

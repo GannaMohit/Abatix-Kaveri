@@ -11,7 +11,7 @@ class Invoice_Advance(models.Model):
     def delete(self, *args, **kwargs):
         self.advance.redeemed = False
         self.advance.save()
-        super().save(*args, **kwargs)
+        super().delete(*args, **kwargs)
 
     def save(self, *args, **kwargs):
         self.advance.redeemed = True
