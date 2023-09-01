@@ -113,6 +113,7 @@
   border: 0.078125vw solid #2D2D2D;
   box-sizing: border-box;
   border-radius: 0.390625vw;
+  line-height: 5.56vh;
 }
 
 #TO {
@@ -128,6 +129,7 @@
   font-style: normal;
   font-weight: bold;
   font-size: 11px;
+  line-height: 5.56vh;
 }
 
 #end_date {
@@ -145,6 +147,7 @@
   border: 0.078125vw solid #2D2D2D;
   box-sizing: border-box;
   border-radius: 0.390625vw;
+  line-height: 5.56vh;
 }
 
 #search_icon {
@@ -170,4 +173,5 @@
   box-sizing: border-box;
   border-radius: 0.390625vw;
   padding-left: 3.125vw;
+  line-height: 5.56vh;
 }

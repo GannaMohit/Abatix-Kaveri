@@ -98,6 +98,15 @@ h1 {
     background: #FFFFFF;
     border: 0.1389vh solid #2D2D2D;
     border-radius: 0.278vh;
+    color: #2D2D2D;
+    text-align: center;
+
+    /* Sub-Body Bold */
+    font-family: 'Inter';
+    font-size: 1.11vh;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 1.11vh;
 }
 
 #voucher_box div:nth-child(1), #voucher_box div:nth-child(2) {

@@ -96,6 +96,7 @@
   font-style: normal;
   font-weight: bold;
   font-size: 0.859375vw;
+  line-height: 5.56vh;
   text-align: center;
   color: #2D2D2D;
   border: 0.078125vw solid #2D2D2D;
@@ -109,6 +110,7 @@
   justify-content: center;
   width: 3.125vw;
   height: 5.56vh;
+  line-height: 5.56vh;
   position: absolute;
   top: 5.56vh;
   left: 53.125vw;
@@ -129,6 +131,7 @@
   font-weight: bold;
   font-size: 0.859375vw;
   text-align: center;
+  line-height: 5.56vh;
   color: #2D2D2D;
   border: 0.078125vw solid #2D2D2D;
   box-sizing: border-box;
@@ -158,6 +161,7 @@
   box-sizing: border-box;
   border-radius: 0.390625vw;
   padding-left: 3.125vw;
+  line-height: 5.56vh;
 }
 
 #table-thead {
@@ -256,4 +260,17 @@
 #table td a {
   text-decoration: none;
   color: #2D2D2D;
+}
+
+#table img {
+  width: 1.5625vw;
+  height: 2.78vh;
+}
+
+#table tbody a:nth-of-type(1) img {
+  margin-right: 0.78125vw;
+}
+
+#table tbody a:nth-of-type(2) img {
+  margin-left: 0.78125vw;
 }
