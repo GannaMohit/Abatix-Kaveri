@@ -67,6 +67,9 @@ def dashboard_export(request):
     today = datetime.date.today().strftime("%d-%m-%Y")
     stock = Product.objects.filter(sold=False).values('metal__metal', 'purity__purity', 'type__type', 'category__category').annotate(Count('pk'), Sum('gross_weight'), Sum('studs_weight'), Sum('net_weight'))
     df = pd.DataFrame.from_records(stock)
+    df.gross_weight__sum = df.gross_weight__sum.apply(lambda x: round(x, 3))
+    df.studs_weight__sum = df.studs_weight__sum.apply(lambda x: round(x, 3))
+    df.net_weight__sum = df.net_weight__sum.apply(lambda x: round(x, 3))
     df.rename(columns = {'metal__metal':'Metal',
                             'purity__purity': 'Purity',
                             'type__type': 'Type',

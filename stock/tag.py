@@ -16,18 +16,21 @@ def PrintTag(request, pk):
         calculation = "MRP."
         calculation_value = f"₹{product.mrp}"
 
-    gram_weight = round(product.studs.filter(unit__unit="gram").aggregate(Sum('weight'))["weight__sum"], 2)
-    carat_weight = round(product.studs.filter(unit__unit="carat").aggregate(Sum('weight'))["weight__sum"], 2)
+    gram_weight = product.studs.filter(unit__unit="gram").aggregate(Sum('weight'))["weight__sum"]
+    carat_weight = product.studs.filter(unit__unit="carat").aggregate(Sum('weight'))["weight__sum"]
 
     if gram_weight is None:
         if carat_weight is None:
             studs_weight = ""
         else:
+            carat_weight = round(carat_weight, 2)
             studs_weight = f"{carat_weight}ct"
     else:
+        gram_weight = round(gram_weight, 2)
         if carat_weight is None:
             studs_weight = f"{gram_weight}g"
         else:
+            carat_weight = round(carat_weight, 2)
             studs_weight = f"{gram_weight}g+{carat_weight}ct"
 
     if product.category.category == 'Bangle':
