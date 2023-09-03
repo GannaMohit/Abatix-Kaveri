@@ -65,7 +65,7 @@ class DashboardView(LoginRequiredMixin, TemplateView):
     
 def dashboard_export(request):
     today = datetime.date.today().strftime("%d-%m-%Y")
-    stock = Product.objects.filter(sold=False).values('metal__metal', 'purity__purity', 'type__type', 'category__category').annotate(Count('pk'), Sum('gross_weight'), Sum('studs_weight'), Sum('net_weight'), Count('pieces'))
+    stock = Product.objects.filter(sold=False).values('metal__metal', 'purity__purity', 'type__type', 'category__category').annotate(Count('pk'), Sum('gross_weight'), Sum('studs_weight'), Sum('net_weight'), Sum('pieces'))
     df = pd.DataFrame.from_records(stock)
 
     df.purity__purity = df.purity__purity.astype(float)
@@ -85,7 +85,7 @@ def dashboard_export(request):
                             'gross_weight__sum': 'gross_weight',
                             'studs_weight__sum': 'studding',
                             'net_weight__sum': 'net_weight',
-                            'pieces__count': 'pieces'},
+                            'pieces__sum': 'pieces'},
                             inplace=True)
     filename = settings.MEDIA_ROOT + f"masters/exports/stock({today}).xlsx"
     df.to_excel(filename, header = True, index = False)
