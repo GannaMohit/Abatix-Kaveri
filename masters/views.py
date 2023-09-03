@@ -65,19 +65,24 @@ class DashboardView(LoginRequiredMixin, TemplateView):
     
 def dashboard_export(request):
     today = datetime.date.today().strftime("%d-%m-%Y")
-    stock = Product.objects.filter(sold=False).values('metal__metal', 'purity__purity', 'type__type', 'category__category').annotate(Count('pk'), Sum('gross_weight'), Sum('studs_weight'), Sum('net_weight'))
+    stock = Product.objects.filter(sold=False).values('metal__metal', 'purity__purity', 'type__type', 'category__category').annotate(Count('pk'), Sum('gross_weight'), Sum('studs_weight'), Sum('net_weight'), Count('pieces'))
     df = pd.DataFrame.from_records(stock)
+    df.gross_weight__sum = df.gross_weight__sum.astype(float)
+    df.studs_weight__sum = df.studs_weight__sum.astype(float)
+    df.net_weight__sum = df.net_weight__sum.astype(float)
+
     df.gross_weight__sum = df.gross_weight__sum.apply(lambda x: round(x, 3))
     df.studs_weight__sum = df.studs_weight__sum.apply(lambda x: round(x, 3))
     df.net_weight__sum = df.net_weight__sum.apply(lambda x: round(x, 3))
-    df.rename(columns = {'metal__metal':'Metal',
-                            'purity__purity': 'Purity',
-                            'type__type': 'Type',
-                            'category__category':'Category',
-                            'pk__count': 'Qty',
-                            'gross_weight__sum': 'Gross Wt.',
-                            'studs_weight__sum': 'Studding',
-                            'net_weight__sum': 'Net Wt.'},
+    df.rename(columns = {'metal__metal': 'metal',
+                            'purity__purity': 'purity',
+                            'type__type': 'type',
+                            'category__category': 'category',
+                            'pk__count': 'qty',
+                            'gross_weight__sum': 'gross_weight',
+                            'studs_weight__sum': 'studding',
+                            'net_weight__sum': 'net_weight',
+                            'pieces__count': 'pieces'},
                             inplace=True)
     filename = settings.MEDIA_ROOT + f"masters/exports/stock({today}).xlsx"
     df.to_excel(filename, header = True, index = False)
