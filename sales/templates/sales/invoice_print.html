@@ -62,7 +62,7 @@
             <td>{{ product.product.gross_weight }} g</td>
             <td>{{ product.product.net_weight }} g</td>
             <td>{{ product.rate |floatformat:0 }}0+MC</td>
-            <td>₹{{ product.total }}</td>
+            <td>₹{{ product.subtotal }}</td>
           </tr>
           {% endfor %}
           {% for product in invoice.untagged.all %}
@@ -74,7 +74,7 @@
             <td>{{ product.gross_weight }} g</td>
             <td>{{ product.net_weight }} g</td>
             <td>{{ product.rate |floatformat:0 }}0+MC</td>
-            <td>₹{{ product.total }}</td>
+            <td>₹{{ product.subtotal }}</td>
           </tr>
           {% endfor %}
         </tbody>
