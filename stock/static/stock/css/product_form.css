@@ -253,7 +253,7 @@ table#studs_table td:nth-child(10), table#studs_table th:nth-child(10) {
   height: 30.556vh;
   top: 52.778vh;
   right: 4.6875vw;
-  background: rgba(237, 237, 237, 0.60);
+  background: rgba(237, 237, 237, 0.8);
   border-radius: 0px 1.389vh 1.389vh 0px;
   box-sizing: border-box;
 }

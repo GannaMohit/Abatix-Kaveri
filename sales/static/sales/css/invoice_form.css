@@ -216,7 +216,7 @@ table.products_table th:last-child, table.products_table td:last-child {
   padding-right: 1.5625vw;
   box-sizing: border-box;
 
-  background: rgba(237, 237, 237, 0.4);
+  background: rgba(237, 237, 237, 0.8);
   border-radius: 0px 0px 1.389vh 1.389vh;
 }
 
