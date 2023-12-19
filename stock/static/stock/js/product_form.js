@@ -42,7 +42,7 @@ function calculateLessWeight() {
       if (weight_inputs[i].value != '') {
         if (Boolean(delete_inputs[i].checked) == false) {
           value = units.find(unit => unit["pk"] == unit_inputs[i].value)["fields"]["value_gram"] * weight_inputs[i].value;
-          if (Boolean(less_inputs[i].value) == true) {
+          if (Boolean(less_inputs[i].checked) == true) {
             less += value;
           }
           studding += value;

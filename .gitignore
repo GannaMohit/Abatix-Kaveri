@@ -5,3 +5,4 @@ kaveri.db*
 .*
 */migrations/*
 env/
+staticfiles/
