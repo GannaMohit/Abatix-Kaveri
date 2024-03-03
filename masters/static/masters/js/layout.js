@@ -57,6 +57,7 @@ function updateValues(table_name, subform_name) {
         }
         else if (source[i].type == "checkbox"){
           cell_value.innerText = source[i].checked ? "Yes" : "No";
+          dest.checked = source[i].checked;
         }
         else {
           cell_value.innerText = source[i].value;

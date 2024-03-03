@@ -67,7 +67,7 @@
         </thead>
         {% for stud in formset %}
         <tr>
-          <td>{{ forloop.counter }}</td>
+          <td id="id_serial_number_table">{{ forloop.counter }}</td>
           <td id="id_type_table">{{ stud.instance.type }}</td>
           <td id="id_less_table">{{ stud.less.value | yesno |title }}</td>
           <td id="id_colour_table">{{ stud.colour.value }}</td>
@@ -83,7 +83,7 @@
         </tr>
         {% endfor %}
         <tr style="display: none;">
-          <td></td>
+          <td id="id_serial_number_table"></td>
           <td id="id_type_table"></td>
           <td id="id_less_table"></td>
           <td id="id_colour_table"></td>
