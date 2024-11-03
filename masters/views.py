@@ -92,3 +92,32 @@ def dashboard_export(request):
     response = FileResponse(open(filename, 'rb'), as_attachment=True)
     response['Content-Disposition'] = f"attachment; filename=stock({today}).xlsx"
     return response
+
+def stock_export(request):
+    today = datetime.date.today().strftime("%d-%m-%Y")
+    stock = Product.objects.filter(sold=False).values(
+        'id', 'register_id', 'metal__metal', 'purity__purity', 'type__type', 'category__category',
+        'gross_weight', 'studs_weight', 'less_weight', 'net_weight',
+        'rate', 'calculation', 'making_charges', 'wastage', 'mrp',
+        'vendor__name', 'purchase_date')
+    df = pd.DataFrame.from_records(stock)
+
+    df.purity__purity = df.purity__purity.astype(float)
+    df.gross_weight = df.gross_weight.astype(float)
+    df.studs_weight = df.studs_weight.astype(float)
+    df.net_weight = df.net_weight.astype(float)
+
+    df.purity__purity = df.purity__purity.apply(lambda x: round(x, 2))
+    df.gross_weight = df.gross_weight.apply(lambda x: round(x, 3))
+    df.studs_weight = df.studs_weight.apply(lambda x: round(x, 3))
+    df.net_weight = df.net_weight.apply(lambda x: round(x, 3))
+    df.rename(columns = {'metal__metal': 'metal',
+                            'purity__purity': 'purity',
+                            'type__type': 'type',
+                            'category__category': 'category'},
+                            inplace=True)
+    filename = settings.MEDIA_ROOT + f"masters/exports/fullstock({today}).xlsx"
+    df.to_excel(filename, header = True, index = False)
+    response = FileResponse(open(filename, 'rb'), as_attachment=True)
+    response['Content-Disposition'] = f"attachment; filename=fullstock({today}).xlsx"
+    return response

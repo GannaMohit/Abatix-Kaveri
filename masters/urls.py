@@ -1,6 +1,6 @@
 from django.urls import path
 from django.contrib.auth.views import LoginView, LogoutView
-from .views import HomeView, UnitsFetchAjax, DashboardView, TaxesFetchAjax, CustomerFetchAjax, dashboard_export
+from .views import HomeView, UnitsFetchAjax, DashboardView, TaxesFetchAjax, CustomerFetchAjax, dashboard_export, stock_export
 
 urlpatterns = [
     path("", LoginView.as_view(template_name="masters/login.html", redirect_authenticated_user=True), name="login"),
@@ -10,5 +10,6 @@ urlpatterns = [
     path("masters/_fetch_units", UnitsFetchAjax.as_view(), name='fetch_units'),
     path("masters/_fetch_taxes", TaxesFetchAjax.as_view(), name='fetch_taxes'),
     path("masters/dashboard/_export", dashboard_export, name='dashboard_export'),
+    path("masters/dashboard/_export_full_stock", stock_export, name='stock_export'),
     path("masters/_fetch_customer", CustomerFetchAjax.as_view(), name='fetch_customer')
 ]
